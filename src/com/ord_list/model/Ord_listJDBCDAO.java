@@ -63,7 +63,7 @@ public class Ord_listJDBCDAO implements Ord_list_interface {
 			pstmt = con.prepareStatement(UPDATE);
 
 			pstmt.setInt(1, ord_listvo.getAMONT());
-			pstmt.setString(2, ord_listvo.getORD_NO());
+			pstmt.setString(2, ord_listvo.getOrd_no());
 			pstmt.setString(3, ord_listvo.getPROD_NO());
 			pstmt.executeUpdate();
 		} catch (ClassNotFoundException e) {
@@ -240,7 +240,7 @@ public class Ord_listJDBCDAO implements Ord_list_interface {
 		// 查詢
 		List<Ord_listVO> list = dao.getAll();
 		for (Ord_listVO aord_list : list) {
-			System.out.println(aord_list.getORD_NO());
+			System.out.println(aord_list.getOrd_no());
 			System.out.println(aord_list.getPROD_NO());
 			System.out.println(aord_list.getAMONT());
 			System.out.println("---------------------");

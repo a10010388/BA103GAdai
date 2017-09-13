@@ -3,6 +3,7 @@
 <%@ page import="com.store.model.*"%>
 <%
 	StoreVO storeVO = (StoreVO) request.getAttribute("storeVO"); //EmpServlet.java (Concroller), 存入req的empVO物件 (包括幫忙取出的empVO, 也包括輸入資料錯誤時的empVO物件)
+	
 %>
 <html>
 <head>
@@ -38,46 +39,44 @@
 		<table border="0">
 			<tr>
 				<td>店家編號:<font color=red><b>*</b></font></td>
-				<td><%=storeVO.getSTORE_NO()%></td>
+				<td><%=storeVO.getStore_no()%></td>
 			</tr>
 			<tr>
 				<td>店家名稱::<font color=red><b>*</b></font></td>
-				<td><input type="TEXT" name="STORE_NAME" size="45"
-					value="<%=storeVO.getSTORE_NAME()%>" /></td>
+				<td><input type="TEXT" name="store_name" size="45"
+					value="<%=storeVO.getStore_name()%>" /></td>
 			</tr>
-			<tr>
-				<td>統一編號::<font color=red><b>*</b></font></td>
-				<td><%=storeVO.getTAX_ID_NO()%></td>
-			</tr>
+			
 			<tr>
 				<td>審核狀態:<font color=red><b>*</b></font></td>
-				<td><input type="TEXT" name="TAX_ID_NO" size="45"
-					value="<%=storeVO.getSTORE_STAT()%>" /></td>
+				<td><input type="TEXT" name="store_stat" size="45"
+					value="<%=storeVO.getStore_stat()%>" /></td>
 			</tr>
 			<tr>
 				<td>店家電話:</td>
-				<td><input type="TEXT" name="STORE_PHONE" size="45"
-					value="<%=storeVO.getSTORE_PHONE()%>" /></td>
+				<td><input type="TEXT" name="store_phone" size="45"
+					value="<%=storeVO.getStore_phone()%>" /></td>
 			</tr>
 			<tr>
 				<td>店家住址:</td>
-				<td><input type="TEXT" name="STORE_ADD" size="45"
-					value="<%=storeVO.getSTORE_ADD()%>" /></td>
+				<td><input type="TEXT" name="store_add" size="45"
+					value="<%=storeVO.getStore_add()%>" /></td>
 			</tr>
 			<tr>
 				<td>店家介紹:</td>
-				<td><input type="TEXT" name="STORE_CONT" size="45"
-					value="<%=storeVO.getSTORE_CONT()%>" /></td>
+				<td><input type="TEXT" name="store_cont" size="45"
+					value="<%=storeVO.getStore_cont()%>" /></td>
 			</tr>
 			<tr>
 				<td>免運費金額:</td>
-				<td><input type="TEXT" name="STORE_FREE_SHIP" size="45"
-					value="<%=storeVO.getSTORE_FREE_SHIP()%>" /></td>
+				<td><input type="TEXT" name="store_free_ship" size="45"
+					value="<%=storeVO.getStore_free_ship()%>" /></td>
 			</tr>
 
 		</table>
-		<br> <input type="hidden" name="action" value="update"> <input
-			type="hidden" name="STORE_NO" value="<%=storeVO.getSTORE_NO()%>">
+		<br> <input type="hidden" name="action" value="update"> 
+		<input
+			type="hidden" name="store_no" value="<%=storeVO.getStore_no()%>">
 		<input type="submit" value="送出修改">
 	</FORM>
 

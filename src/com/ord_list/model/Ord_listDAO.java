@@ -71,7 +71,7 @@ public class Ord_listDAO implements Ord_list_interface{
 			con = ds.getConnection();
 			pstmt = con.prepareStatement(UPDATE);
 			pstmt.setInt(1, ord_listvo.getAMONT());
-			pstmt.setString(2, ord_listvo.getORD_NO());
+			pstmt.setString(2, ord_listvo.getOrd_no());
 			pstmt.setString(3, ord_listvo.getPROD_NO());
 			pstmt.executeUpdate();
 		} catch (SQLException se) {

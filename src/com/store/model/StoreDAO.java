@@ -49,41 +49,41 @@ public class StoreDAO implements StoreDAO_interface{
 			con = ds.getConnection();
 			pstmt = con.prepareStatement(INSERT_STMT);	
 
-			pstmt.setString(1, storeVO.getMEM_AC());
-			pstmt.setString(2, storeVO.getTAX_ID_NO());
+			pstmt.setString(1, storeVO.getMem_ac());
+			pstmt.setString(2, storeVO.getTax_id_no());
 			
-			byte [] WIN_ID_PIC = storeVO.getWIN_ID_PIC();
+			byte [] WIN_ID_PIC = storeVO.getWin_id_pic();
 			Blob blobWIN_ID_PIC = con.createBlob();
 			
 			blobWIN_ID_PIC.setBytes(1, WIN_ID_PIC);
 			pstmt.setBlob(3, blobWIN_ID_PIC);
 
-			pstmt.setString(4, storeVO.getSTORE_PHONE());
-			pstmt.setString(5, storeVO.getSTORE_ADD());
-			pstmt.setString(6, storeVO.getSTORE_ADD_LAT());
-			pstmt.setString(7, storeVO.getSTORE_ADD_LON());
-			pstmt.setString(8, storeVO.getSTORE_NAME());
-			pstmt.setString(9, storeVO.getSTORE_CONT());
-			byte [] STORE_PIC1 = storeVO.getSTORE_PIC1();
+			pstmt.setString(4, storeVO.getStore_phone());
+			pstmt.setString(5, storeVO.getStore_add());
+			pstmt.setString(6, storeVO.getStore_add_lat());
+			pstmt.setString(7, storeVO.getStore_add_lon());
+			pstmt.setString(8, storeVO.getStore_name());
+			pstmt.setString(9, storeVO.getStore_cont());
+			byte [] STORE_PIC1 = storeVO.getStore_pic1();
 			Blob blobSTORE_PIC1 = con.createBlob();
 			blobSTORE_PIC1.setBytes(1, STORE_PIC1);
 			pstmt.setBlob(10, blobSTORE_PIC1);
 			
-			byte [] STORE_PIC2 = storeVO.getSTORE_PIC2();
+			byte [] STORE_PIC2 = storeVO.getStore_pic2();
 			Blob blobSTORE_PIC2 = con.createBlob();
 			blobSTORE_PIC2.setBytes(1, STORE_PIC2);
 			pstmt.setBlob(11, blobSTORE_PIC2);
 			
-			byte [] STORE_PIC3 = storeVO.getSTORE_PIC3();
+			byte [] STORE_PIC3 = storeVO.getStore_pic3();
 			Blob blobSTORE_PIC3 = con.createBlob();
 			blobSTORE_PIC3.setBytes(1, STORE_PIC3);
 			pstmt.setBlob(12, blobSTORE_PIC3);
 			
 			
-			pstmt.setInt(13, storeVO.getSTORE_FREE_SHIP());
-			pstmt.setString(14, storeVO.getSTORE_STAT());
-			pstmt.setString(15, storeVO.getSTORE_STAT_CONT());
-			pstmt.setDate(16, storeVO.getSTORE_STAT_CDATE());
+			pstmt.setInt(13, storeVO.getStore_free_ship());
+			pstmt.setString(14, storeVO.getStore_stat());
+			pstmt.setString(15, storeVO.getStore_stat_cont());
+			pstmt.setDate(16, storeVO.getStore_stat_cdate());
 
 			pstmt.executeUpdate();
 
@@ -121,10 +121,10 @@ public class StoreDAO implements StoreDAO_interface{
 			pstmt = con.prepareStatement(UPDATE);
 			
 
-			pstmt.setString(1, StoreVO.getSTORE_NAME());
-			pstmt.setString(2, StoreVO.getSTORE_PHONE());
-			pstmt.setString(3, StoreVO.getSTORE_ADD());
-			pstmt.setString(4, StoreVO.getSTORE_NO());
+			pstmt.setString(1, StoreVO.getStore_name());
+			pstmt.setString(2, StoreVO.getStore_phone());
+			pstmt.setString(3, StoreVO.getStore_add());
+			pstmt.setString(4, StoreVO.getStore_no());
 
 			pstmt.executeUpdate();
 
@@ -203,23 +203,23 @@ public class StoreDAO implements StoreDAO_interface{
 			rs = pstmt.executeQuery();
 			while (rs.next()) {
 				storeVO = new StoreVO();
-				storeVO.setSTORE_NO(rs.getString("STORE_NO"));
-				storeVO.setMEM_AC(rs.getString("MEM_AC"));
-				storeVO.setTAX_ID_NO(rs.getString("TAX_ID_NO"));
-				storeVO.setWIN_ID_PIC(rs.getBytes("WIN_ID_PIC"));
-				storeVO.setSTORE_PHONE(rs.getString("STORE_PHONE"));
-				storeVO.setSTORE_ADD(rs.getString("STORE_ADD"));
-				storeVO.setSTORE_ADD_LAT(rs.getString("STORE_ADD_LAT"));
-				storeVO.setSTORE_ADD_LON(rs.getString("STORE_ADD_LON"));
-				storeVO.setSTORE_NAME(rs.getString("STORE_NAME"));
-				storeVO.setSTORE_CONT(rs.getString("STORE_CONT"));
-				storeVO.setSTORE_PIC1(rs.getBytes("STORE_PIC1"));
-				storeVO.setSTORE_PIC2(rs.getBytes("STORE_PIC2"));
-				storeVO.setSTORE_PIC3(rs.getBytes("STORE_PIC3"));
-				storeVO.setSTORE_FREE_SHIP(rs.getInt("STORE_FREE_SHIP"));
-				storeVO.setSTORE_STAT(rs.getString("STORE_STAT"));
-				storeVO.setSTORE_STAT_CONT(rs.getString("STORE_STAT_CONT"));
-				storeVO.setSTORE_STAT_CDATE(rs.getDate("STORE_STAT_CDATE"));
+				storeVO.setStore_no(rs.getString("store_no"));
+				storeVO.setMem_ac(rs.getString("mem_ac"));
+				storeVO.setTax_id_no(rs.getString("tax_id_no"));
+				storeVO.setWin_id_pic(rs.getBytes("win_id_pic"));
+				storeVO.setStore_phone(rs.getString("store_phone"));
+				storeVO.setStore_add(rs.getString("store_add"));
+				storeVO.setStore_add_lat(rs.getString("store_add_lat"));
+				storeVO.setStore_add_lon(rs.getString("store_add_lon"));
+				storeVO.setStore_name(rs.getString("store_name"));
+				storeVO.setStore_cont(rs.getString("store_cont"));
+				storeVO.setStore_pic1(rs.getBytes("store_pic1"));
+				storeVO.setStore_pic2(rs.getBytes("store_pic2"));
+				storeVO.setStore_pic3(rs.getBytes("store_pic3"));
+				storeVO.setStore_free_ship(rs.getInt("store_free_ship"));
+				storeVO.setStore_stat(rs.getString("store_stat"));
+				storeVO.setStore_stat_cont(rs.getString("store_stat_cont"));
+				storeVO.setStore_stat_cdate(rs.getDate("store_stat_cdate"));
 			}
 
 		} catch (SQLException se) {
@@ -267,23 +267,23 @@ public class StoreDAO implements StoreDAO_interface{
 			
 			while (rs.next()) {
 				storeVO = new StoreVO();
-				storeVO.setSTORE_NO(rs.getString("STORE_NO"));
-				storeVO.setMEM_AC(rs.getString("MEM_AC"));
-				storeVO.setTAX_ID_NO(rs.getString("TAX_ID_NO"));
-				storeVO.setWIN_ID_PIC(rs.getBytes("WIN_ID_PIC"));
-				storeVO.setSTORE_PHONE(rs.getString("STORE_PHONE"));
-				storeVO.setSTORE_ADD(rs.getString("STORE_ADD"));
-				storeVO.setSTORE_ADD_LAT(rs.getString("STORE_ADD_LAT"));
-				storeVO.setSTORE_ADD_LON(rs.getString("STORE_ADD_LON"));
-				storeVO.setSTORE_NAME(rs.getString("STORE_NAME"));
-				storeVO.setSTORE_CONT(rs.getString("STORE_CONT"));
-				storeVO.setSTORE_PIC1(rs.getBytes("STORE_PIC1"));
-				storeVO.setSTORE_PIC2(rs.getBytes("STORE_PIC2"));
-				storeVO.setSTORE_PIC3(rs.getBytes("STORE_PIC3"));
-				storeVO.setSTORE_FREE_SHIP(rs.getInt("STORE_FREE_SHIP"));
-				storeVO.setSTORE_STAT(rs.getString("STORE_STAT"));
-				storeVO.setSTORE_STAT_CONT(rs.getString("STORE_STAT_CONT"));
-				storeVO.setSTORE_STAT_CDATE(rs.getDate("STORE_STAT_CDATE"));
+				storeVO.setStore_no(rs.getString("store_no"));
+				storeVO.setMem_ac(rs.getString("mem_ac"));
+				storeVO.setTax_id_no(rs.getString("tax_id_no"));
+				storeVO.setWin_id_pic(rs.getBytes("win_id_pic"));
+				storeVO.setStore_phone(rs.getString("store_phone"));
+				storeVO.setStore_add(rs.getString("store_add"));
+				storeVO.setStore_add_lat(rs.getString("store_add_lat"));
+				storeVO.setStore_add_lon(rs.getString("store_add_lon"));
+				storeVO.setStore_name(rs.getString("store_name"));
+				storeVO.setStore_cont(rs.getString("store_cont"));
+				storeVO.setStore_pic1(rs.getBytes("store_pic1"));
+				storeVO.setStore_pic2(rs.getBytes("store_pic2"));
+				storeVO.setStore_pic3(rs.getBytes("store_pic3"));
+				storeVO.setStore_free_ship(rs.getInt("store_free_ship"));
+				storeVO.setStore_stat(rs.getString("store_stat"));
+				storeVO.setStore_stat_cont(rs.getString("store_stat_cont"));
+				storeVO.setStore_stat_cdate(rs.getDate("store_stat_cdate"));
 				list.add(storeVO); 
 				// Store the row in the list
 			}

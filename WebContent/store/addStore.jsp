@@ -1,13 +1,14 @@
-<%@ page contentType="text/html; charset=UTF-8" pageEncoding="Big5"%>
+<%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ page import="com.store.model.*"%>
 <%
 	StoreVO storeVO = (StoreVO) request.getAttribute("storeVO");
+	
 %>
 
 <html>
 <head>
-<title>©±®a·s¼W - addStore.jsp</title>
+<title>åº—å®¶æ–°å¢ž - addStore.jsp</title>
 </head>
 <link rel="stylesheet" type="text/css" href="js/calendar.css">
 <script language="JavaScript" src="js/calendarcode.js"></script>
@@ -18,16 +19,16 @@
 	<table border='1' cellpadding='5' cellspacing='0' width='400'>
 		<tr bgcolor='#CCCCFF' align='center' valign='middle' height='20'>
 			<td>
-				<h3>©±®a¸ê®Æ·s¼W - addEmp.jsp</h3>
+				<h3>åº—å®¶è³‡æ–™æ–°å¢ž - addEmp.jsp</h3>
 			</td>
-			<td><a href="select_page.jsp">¦^­º­¶</a></td>
+			<td><a href="select_page.jsp">å›žé¦–é </a></td>
 		</tr>
 	</table>
 
-	<h3>¸ê®Æ©±®a:</h3>
-	<%-- ¿ù»~ªí¦C --%>
+	<h3>è³‡æ–™åº—å®¶:</h3>
+	<%-- éŒ¯èª¤è¡¨åˆ— --%>
 	<c:if test="${not empty errorMsgs}">
-		<font color='red'>½Ð­×¥¿¥H¤U¿ù»~:
+		<font color='red'>è«‹ä¿®æ­£ä»¥ä¸‹éŒ¯èª¤:
 			<ul>
 				<c:forEach var="message" items="${errorMsgs}">
 					<li>${message}</li>
@@ -41,94 +42,94 @@
 		<table border="0">
 
 			<tr>
-				<td>²Î¤@½s¸¹:</td>
-				<td><input type="TEXT" name="TAX_ID_NO" size="45"
-					value="<%=(storeVO == null) ? "85487596" : storeVO.getTAX_ID_NO()%>" /></td>
+				<td>çµ±ä¸€ç·¨è™Ÿ:</td>
+				<td><input type="TEXT" name="tax_id_no" size="45"
+					value="<%=(storeVO == null) ? "85487596" : storeVO.getTax_id_no()%>" /></td>
 			</tr>
 			<tr>
-				<td>¤½¥q¹q¸Ü:</td>
-				<td><input type="TEXT" name="STORE_PHONE" size="45"
-					value="<%=(storeVO == null) ? "02-12345678" : storeVO.getSTORE_PHONE()%>" /></td>
+				<td>å…¬å¸é›»è©±:</td>
+				<td><input type="TEXT" name="store_phone" size="45"
+					value="<%=(storeVO == null) ? "02-12345678" : storeVO.getStore_phone()%>" /></td>
 			</tr>
 			<tr>
 
-				<td>©±®a¦í§}:</td>
-				<td><input type="TEXT" name="STORE_ADD" size="45"
-					value="<%=(storeVO == null) ? "¤¤Ãc¥«¤¤¥¡¸ô" : storeVO.getSTORE_ADD()%>" /></td>
+				<td>åº—å®¶ä½å€:</td>
+				<td><input type="TEXT" name="store_add" size="45"
+					value="<%=(storeVO == null) ? "ä¸­å£¢å¸‚ä¸­å¤®è·¯" : storeVO.getStore_add()%>" /></td>
 				</td>
 			</tr>
 			<tr>
-				<td>©±®a¦WºÙ:</td>
-				<td><input type="TEXT" name="STORE_NAME" size="45"
-					value="<%=(storeVO == null) ? "¶ý¶ý¼L" : storeVO.getSTORE_NAME()%>" /></td>
+				<td>åº—å®¶åç¨±:</td>
+				<td><input type="TEXT" name="store_name" size="45"
+					value="<%=(storeVO == null) ? "åª½åª½å˜´" : storeVO.getStore_name()%>" /></td>
 			</tr>
 			<tr>
-				<td>©±®a¤¶²Ð:</td>
-				<td><input type="TEXT" name="STORE_CONT" size="45"
-					value="<%=(storeVO == null) ? "¶ý¶ý¼L±þ¹L¤H" : storeVO.getSTORE_CONT()%>" /></td>
+				<td>åº—å®¶ä»‹ç´¹:</td>
+				<td><input type="TEXT" name="store_cont" size="45"
+					value="<%=(storeVO == null) ? "åª½åª½å˜´æ®ºéŽäºº" : storeVO.getStore_cont()%>" /></td>
 			</tr>
 			<tr>
-				<td>±b¸¹:</td>
-				<td><input type="TEXT" name="MEM_AC" size="45"
-					value="<%=(storeVO == null) ? "BBBBAAA" : storeVO.getMEM_AC()%>" /></td>
+				<td>å¸³è™Ÿ:</td>
+				<td><input type="TEXT" name="mem_ac" size="45"
+					value="<%=(storeVO == null) ? "BA105" : storeVO.getMem_ac()%>" /></td>
 			</tr>
 			<tr>
-				<td>ÃÒ¥ó·Ó:</td>
-				<td><input type="file" name="WIN_ID_PIC"></td>
+				<td>è­‰ä»¶ç…§:</td>
+				<td><input type="file" name="win_id_pic"></td>
 			</tr>
 			<tr>
-				<td>½n«×:</td>
-				<td><input type="TEXT" name="STORE_ADD_LAT" size="45"
-					value="<%=(storeVO == null) ? "121.447666" : storeVO.getSTORE_ADD_LAT()%>" /></td>
+				<td>ç·¯åº¦:</td>
+				<td><input type="TEXT" name="store_add_lat" size="45"
+					value="<%=(storeVO == null) ? "121.447666" : storeVO.getStore_add_lat()%>" /></td>
 			</tr>
 			<tr>
-				<td>¸g«×:</td>
-				<td><input type="TEXT" name="STORE_ADD_LON" size="45"
-					value="<%=(storeVO == null) ? "121.447666" : storeVO.getSTORE_ADD_LON()%>" /></td>
+				<td>ç¶“åº¦:</td>
+				<td><input type="TEXT" name="store_add_lon" size="45"
+					value="<%=(storeVO == null) ? "121.447666" : storeVO.getStore_add_lon()%>" /></td>
 			</tr>
 			<tr>
-				<td>©±®a·Ó1:</td>
-				<td><input type="file" name="STORE_PIC1"></td>
+				<td>åº—å®¶ç…§1:</td>
+				<td><input type="file" name="store_pic1"></td>
 			</tr>
 			<tr>
-				<td>©±®a·Ó2:</td>
-				<td><input type="file" name="STORE_PIC2"></td>
+				<td>åº—å®¶ç…§2:</td>
+				<td><input type="file" name="store_pic2"></td>
 			</tr>
 			<tr>
-				<td>©±®a·Ó3:</td>
-				<td><input type="file" name="STORE_PIC3"></td>
+				<td>åº—å®¶ç…§3:</td>
+				<td><input type="file" name="store_pic3"></td>
 			</tr>
 			<tr>
-				<td>¼f®Öª¬ºA:</td>
-				<td><input type="TEXT" name="STORE_STAT" size="45"
-					value="<%=(storeVO == null) ? "«Ý¼f®Ö" : storeVO.getSTORE_STAT()%>" /></td>
+				<td>å¯©æ ¸ç‹€æ…‹:</td>
+				<td><input type="TEXT" name="store_stat" size="45"
+					value="<%=(storeVO == null) ? "å¾…å¯©æ ¸" : storeVO.getStore_stat()%>" /></td>
 			</tr>
 			<tr>
-				<td>§K¹B¶Oª÷ÃB:</td>
-				<td><input type="TEXT" name="STORE_FREE_SHIP" size="45"
-					value="<%=(storeVO == null) ? "1000" : storeVO.getSTORE_FREE_SHIP()%>" /></td>
+				<td>å…é‹è²»é‡‘é¡:</td>
+				<td><input type="TEXT" name="store_free_ship" size="45"
+					value="<%=(storeVO == null) ? "1000" : storeVO.getStore_free_ship()%>" /></td>
 			</tr>
 			<tr>
 				<%
 					java.sql.Date date_SQL = new java.sql.Date(System.currentTimeMillis());
 				%>
-				<td>¶±¥Î¤é´Á:</td>
+				<td>é›‡ç”¨æ—¥æœŸ:</td>
 				<td bgcolor="#CCCCFF"><input class="cal-TextBox"
-					onFocus="this.blur()" size="9" readonly type="text" name="STORE_STAT_CDATE"
-					value="<%=(storeVO == null) ? date_SQL : storeVO.getSTORE_STAT_CDATE()%>">
+					onFocus="this.blur()" size="9" readonly type="text" name="store_stat_cdate"
+					value="<%=(storeVO == null) ? date_SQL : storeVO.getStore_stat_cdate()%>">
 					<a class="so-BtnLink" href="javascript:calClick();return false;"
 					onmouseover="calSwapImg('BTN_date', 'img_Date_OVER',true);"
 					onmouseout="calSwapImg('BTN_date', 'img_Date_UP',true);"
-					onclick="calSwapImg('BTN_date', 'img_Date_DOWN');showCalendar('form1','STORE_STAT_CDATE','BTN_date');return false;">
+					onclick="calSwapImg('BTN_date', 'img_Date_DOWN');showCalendar('form1','store_stat_cdate','BTN_date');return false;">
 						<img align="middle" border="0" name="BTN_date"
-						src="images/btn_date_up.gif" width="22" height="17" alt="¶}©l¤é´Á">
+						src="images/btn_date_up.gif" width="22" height="17" alt="é–‹å§‹æ—¥æœŸ">
 				</a></td>
 			</tr>
 			</FORM>
 			</tr>
 		</table>
 		<br> <input type="hidden" name="action" value="insert"> <input
-			type="submit" value="°e¥X·s¼W">
+			type="submit" value="é€å‡ºæ–°å¢ž">
 	</FORM>
 </body>
 

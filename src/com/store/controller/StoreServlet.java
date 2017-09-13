@@ -23,7 +23,7 @@ import javax.servlet.http.Part;
 import com.store.model.StoreService;
 import com.store.model.StoreVO;
 
-@MultipartConfig()
+@MultipartConfig(fileSizeThreshold=1024*1024,maxFileSize=5*1024*1024,maxRequestSize=5*5*1024*1024)
 
 public class StoreServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
@@ -33,10 +33,13 @@ public class StoreServlet extends HttpServlet {
 	}
 
 	protected void doPost(HttpServletRequest req, HttpServletResponse res) throws ServletException, IOException {
+//		res.setContentType("image/gif");
+		req.setCharacterEncoding("UTF-8");
 		
-
+		
+		System.out.println(req.getParameter("action"));
 		String action = req.getParameter("action");
-		System.out.println(action);
+		
 		if ("getOne_For_Display".equals(action)) { // 來自select_page.jsp的請求
 
 			List<String> errorMsgs = new LinkedList<String>();
@@ -48,7 +51,7 @@ public class StoreServlet extends HttpServlet {
 				/***************************
 				 * 1.接收請求參數 - 輸入格式的錯誤處理
 				 **********************/
-				String str = req.getParameter("STORE_NO");
+				String str = req.getParameter("store_no");
 				if (str == null || (str.trim()).length() == 0) {
 					errorMsgs.add("請輸入店家編號");
 				}
@@ -59,9 +62,9 @@ public class StoreServlet extends HttpServlet {
 					return;// 程式中斷
 				}
 
-				String STORE_NO = null;
+				String store_no = null;
 				try {
-					STORE_NO = new String(str);
+					store_no = new String(str);
 
 				} catch (Exception e) {
 					errorMsgs.add("員工編號格式不正確");
@@ -75,7 +78,7 @@ public class StoreServlet extends HttpServlet {
 
 				/*************************** 2.開始查詢資料 *****************************************/
 				StoreService storeSvc = new StoreService();
-				StoreVO storeVO = storeSvc.getonestore(STORE_NO);
+				StoreVO storeVO = storeSvc.getonestore(store_no);
 				if (storeVO == null) {
 					errorMsgs.add("查無資料");
 				}
@@ -111,11 +114,11 @@ public class StoreServlet extends HttpServlet {
 
 			try {
 				/*************************** 1.接收請求參數 ****************************************/
-				String STORE_NO = new String(req.getParameter("STORE_NO"));
+				String store_no = new String(req.getParameter("store_no"));
 
 				/*************************** 2.開始查詢資料 ****************************************/
 				StoreService storeSvc = new StoreService();
-				StoreVO storeVO = storeSvc.getonestore(STORE_NO);
+				StoreVO storeVO = storeSvc.getonestore(store_no);
 
 				/***************************
 				 * 3.查詢完成,準備轉交(Send the Success view)
@@ -134,35 +137,47 @@ public class StoreServlet extends HttpServlet {
 			}
 		}
 		if ("update".equals(action)) { // 來自update_emp_input.jsp的請求
-
+			
 			List<String> errorMsgs = new LinkedList<String>();
 			// Store this set in the request scope, in case we need to
 			// send the ErrorPage view.
 			req.setAttribute("errorMsgs", errorMsgs);
 
 			try {
+				
 				/***************************
 				 * 1.接收請求參數 - 輸入格式的錯誤處理
 				 **********************/
-				String STORE_NAME = req.getParameter("STORE_NAME").trim();
-				System.out.println(STORE_NAME);
-				String TAX_ID_NO = req.getParameter("TAX_ID_NO").trim();
-				String STORE_STAT = req.getParameter("STORE_STAT").trim();
-				String STORE_PHONE = req.getParameter("STORE_PHONE").trim();
-				String STORE_ADD = req.getParameter("STORE_ADD").trim();
-				String STORE_CONT = req.getParameter("STORE_CONT").trim();
-				Integer STORE_FREE_SHIP = new Integer(req.getParameter("STORE_FREE_SHIP").trim());
+				System.out.println("-*********************");
+				String store_no = req.getParameter("store_no").trim();
+				String store_name = req.getParameter("store_name").trim();
+				
+				String store_stat = req.getParameter("store_stat").trim();
+				String store_phone = req.getParameter("store_phone").trim();
+				String store_add = req.getParameter("store_add").trim();
+				String store_cont = req.getParameter("store_cont").trim();
+				Integer store_free_ship = new Integer(req.getParameter("store_free_ship").trim());
 
-				String STORE_NO = req.getParameter("STORE_NO").trim();
+				System.out.println("------------------");
+				
+//				String store_name = req.getParameter("store_name").trim();
+//				String store_add = req.getParameter("store_add").trim();
+//				String store_phone = req.getParameter("store_phone").trim();
+//				String store_cont = req.getParameter("store_cont").trim();
+//				String store_stat = req.getParameter("store_stat").trim();
+//				Integer store_free_ship = new Integer(req.getParameter("store_free_ship").trim());
+								
+				
+				
 				StoreVO storeVO = new StoreVO();
-				storeVO.setSTORE_NAME(STORE_NAME);
-				storeVO.setTAX_ID_NO(TAX_ID_NO);
-				storeVO.setSTORE_STAT(STORE_STAT);
-				storeVO.setSTORE_PHONE(STORE_PHONE);
-				storeVO.setSTORE_ADD(STORE_ADD);
-				storeVO.setSTORE_CONT(STORE_CONT);
-				storeVO.setSTORE_NO(STORE_NO);
-				storeVO.setSTORE_FREE_SHIP(STORE_FREE_SHIP);
+				storeVO.setStore_name(store_name);
+				
+				storeVO.setStore_stat(store_stat);
+				storeVO.setStore_phone(store_phone);
+				storeVO.setStore_add(store_add);
+				storeVO.setStore_cont(store_cont);
+				storeVO.setStore_no(store_no);
+				storeVO.setStore_free_ship(store_free_ship);
 
 				// Send the use back to the form, if there were errors
 				if (!errorMsgs.isEmpty()) {
@@ -174,8 +189,8 @@ public class StoreServlet extends HttpServlet {
 
 				/*************************** 2.開始修改資料 *****************************************/
 				StoreService storeSvc = new StoreService();
-				storeVO = storeSvc.updatesotre(STORE_NO, TAX_ID_NO, STORE_PHONE, STORE_ADD, STORE_NAME, STORE_CONT,
-						STORE_FREE_SHIP, STORE_STAT);
+				storeVO = storeSvc.updatesotre(store_no, store_phone, store_add, store_name, store_cont,
+						store_free_ship, store_stat);
 
 				/***************************
 				 * 3.修改完成,準備轉交(Send the Success view)
@@ -203,79 +218,81 @@ public class StoreServlet extends HttpServlet {
 				/***********************
 				 * 1.接收請求參數 - 輸入格式的錯誤處理
 				 *************************/
-				String STORE_NAME = req.getParameter("STORE_NAME").trim();
-				String TAX_ID_NO = req.getParameter("TAX_ID_NO").trim();
-				String STORE_ADD = req.getParameter("STORE_ADD").trim();
-				String STORE_PHONE = req.getParameter("TAX_ID_NO").trim();
-				String STORE_CONT = req.getParameter("STORE_CONT").trim();
-				String MEM_AC = req.getParameter("MEM_AC").trim();
-				InputStream WIN_ID_PIC = req.getPart("WIN_ID_PIC").getInputStream();
+				String store_name = req.getParameter("store_name").trim();
+				String tax_id_no = req.getParameter("tax_id_no").trim();
+				String store_add = req.getParameter("store_add").trim();
+				String store_phone = req.getParameter("store_phone").trim();
+				String store_cont = req.getParameter("store_cont").trim();
+				String mem_ac = req.getParameter("mem_ac").trim();
+				
+				InputStream win_id_pic = req.getPart("win_id_pic").getInputStream();
 				ByteArrayOutputStream id_pic = new ByteArrayOutputStream();
 				int idpic;
-				byte[] WIN_ID_PICimg = new byte[16384];
+				byte[] idimg = new byte[16384];
 
-				while ((idpic = WIN_ID_PIC.read(WIN_ID_PICimg, 0, WIN_ID_PICimg.length)) != -1) {
-					id_pic.write(WIN_ID_PICimg, 0, idpic);
+				while ((idpic = win_id_pic.read(idimg, 0, idimg.length)) != -1) {
+					id_pic.write(idimg, 0, idpic);
 				}
-				id_pic.flush();
-				String STORE_ADD_LAT =req.getParameter("STORE_ADD_LAT").trim();
-				String STORE_ADD_LON =req.getParameter("STORE_ADD_LON").trim();
+				byte [] idimg1 = id_pic.toByteArray();
 				
-				InputStream STORE_PIC11 = req.getPart("STORE_PIC1").getInputStream();
+				
+				String store_add_lat =req.getParameter("store_add_lat").trim();
+				String store_add_lon =req.getParameter("store_add_lon").trim();
+				
+				InputStream storepic1 = req.getPart("store_pic1").getInputStream();
 				ByteArrayOutputStream spic_1 = new ByteArrayOutputStream();
 				int spic1;
-				byte[] STORE_PIC1 = new byte[16384];
+				byte[] sphoto1 = new byte[16384];
 
-				while ((spic1 = STORE_PIC11.read(STORE_PIC1, 0, STORE_PIC1.length)) != -1) {
-					spic_1.write(STORE_PIC1, 0, spic1);
+				while ((spic1 = storepic1.read(sphoto1, 0, sphoto1.length)) != -1) {
+					spic_1.write(sphoto1, 0, spic1);
 				}
-				spic_1.flush();
+				byte [] sphoto1_1 = spic_1.toByteArray();
 				
-				InputStream STORE_PIC22 = req.getPart("STORE_PIC2").getInputStream();
+				InputStream storepic2 = req.getPart("store_pic2").getInputStream();
 				ByteArrayOutputStream spic_2 = new ByteArrayOutputStream();
 				int spic2;
-				byte[] STORE_PIC2 = new byte[16384];
-
-				while ((spic2 = STORE_PIC22.read(STORE_PIC2, 0, STORE_PIC2.length)) != -1) {
-					spic_2.write(STORE_PIC2, 0, spic2);
+				byte[] sphoto2 = new byte[16384];
+				while ((spic2 = storepic2.read(sphoto2, 0, sphoto2.length)) != -1) {
+					spic_2.write(sphoto2, 0, spic2);
 				}
-				spic_2.flush();
+				byte [] sphoto2_1 = spic_2.toByteArray();
 				
-				InputStream STORE_PIC33 = req.getPart("STORE_PIC3").getInputStream();
+				InputStream storepic3 = req.getPart("store_pic3").getInputStream();
 				ByteArrayOutputStream spic_3 = new ByteArrayOutputStream();
 				int spic3;
-				byte[] STORE_PIC3 = new byte[16384];
+				byte[] sphoto3 = new byte[16384];
 
-				while ((spic3 = STORE_PIC33.read(STORE_PIC3, 0, STORE_PIC3.length)) != -1) {
-					spic_3.write(STORE_PIC3, 0, spic3);
+				while ((spic3 = storepic3.read(sphoto3, 0, sphoto3.length)) != -1) {
+					spic_3.write(sphoto3, 0, spic3);
 				}
-				spic_3.flush();
+				byte [] sphoto3_1 = spic_3.toByteArray();
 				
-				String STORE_STAT = req.getParameter("STORE_STAT").trim();
-				Integer STORE_FREE_SHIP = new Integer(req.getParameter("STORE_FREE_SHIP").trim());
+				String store_stat = req.getParameter("store_stat").trim();
+				Integer store_free_ship = new Integer(req.getParameter("store_free_ship").trim());
 				java.sql.Date STORE_STAT_CDATE = null;
 				try {
-					STORE_STAT_CDATE = java.sql.Date.valueOf(req.getParameter("STORE_STAT_CDATE").trim());
+					STORE_STAT_CDATE = java.sql.Date.valueOf(req.getParameter("store_stat_cdate").trim());
 				} catch (IllegalArgumentException e) {
 					STORE_STAT_CDATE=new java.sql.Date(System.currentTimeMillis());
 					errorMsgs.add("請輸入日期!");
 				}
 
 				StoreVO storeVO = new StoreVO();
-//				storeVO.setSTORE_NAME(STORE_NAME);
-//				storeVO.setTAX_ID_NO(TAX_ID_NO);
-//				storeVO.setSTORE_ADD(STORE_ADD);
-//				storeVO.setSTORE_PHONE(STORE_PHONE);
-//				storeVO.setSTORE_CONT(STORE_CONT);
-//				storeVO.setMEM_AC(MEM_AC);
-//				storeVO.setWIN_ID_PIC(WIN_ID_PICimg);
-//				storeVO.setSTORE_ADD_LAT(STORE_ADD_LAT);
-//				storeVO.setSTORE_ADD_LON(STORE_ADD_LON);
-//				storeVO.setSTORE_PIC1(STORE_PIC1);
-//				storeVO.setSTORE_PIC2(STORE_PIC2);
-//				storeVO.setSTORE_PIC2(STORE_PIC3);
-//				storeVO.setSTORE_STAT(STORE_STAT);
-//				storeVO.setSTORE_FREE_SHIP(STORE_FREE_SHIP);
+//				storeVO.setStore_name(store_name);
+//				storeVO.setTax_id_no(tax_id_no);
+//				storeVO.setStore_add(store_add);
+//				storeVO.setStore_phone(store_phone);
+//				storeVO.setStore_cont(store_cont);
+//				storeVO.setMem_ac(mem_ac);
+//				storeVO.setWin_id_pic(win_id_pic);
+//				storeVO.setStore_add_lat(store_add_lat);
+//				storeVO.setStore_add_lon(store_add_lon);
+//				storeVO.setSTORE_PIC1(store_pic1);
+//				storeVO.setSTORE_PIC2(store_pic2);
+//				storeVO.setSTORE_PIC2(store_pic3);
+//				storeVO.setSTORE_STAT(store_stat);
+//				storeVO.setStore_free_ship(store_free_ship);
 
 				// Send the use back to the form, if there were errors
 				if (!errorMsgs.isEmpty()) {
@@ -287,7 +304,7 @@ public class StoreServlet extends HttpServlet {
 
 				/*************************** 2.開始新增資料 ***************************************/
 				StoreService storeSvc = new StoreService();
-				storeVO = storeSvc.addStore(MEM_AC, TAX_ID_NO, WIN_ID_PICimg, STORE_PHONE, STORE_ADD, STORE_ADD_LAT, STORE_ADD_LON, STORE_NAME, STORE_CONT, STORE_PIC1, STORE_PIC2, STORE_PIC3, STORE_FREE_SHIP, STORE_STAT_CDATE, STORE_STAT);
+				storeVO = storeSvc.addStore(mem_ac, tax_id_no, idimg1, store_phone, store_add, store_add_lat, store_add_lon, store_name, store_cont, sphoto1_1, sphoto2_1, sphoto3_1, store_free_ship, STORE_STAT_CDATE, store_stat);
 
 				/***************************
 				 * 3.新增完成,準備轉交(Send the Success view)

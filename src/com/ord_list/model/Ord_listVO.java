@@ -1,26 +1,28 @@
 package com.ord_list.model;
 
 public class Ord_listVO {
-	String ORD_NO;
-	String PROD_NO;
-	Integer AMONT;
-	public String getORD_NO() {
-		return ORD_NO;
+	String ord_no;
+	String prod_no;
+	Integer amont;
+	
+	
+	public String getOrd_no() {
+		return ord_no;
 	}
 	public void setORD_NO(String oRD_NO) {
-		ORD_NO = oRD_NO;
+		ord_no = oRD_NO;
 	}
 	public String getPROD_NO() {
-		return PROD_NO;
+		return prod_no;
 	}
 	public void setPROD_NO(String pROD_NO) {
-		PROD_NO = pROD_NO;
+		prod_no = pROD_NO;
 	}
 	public Integer getAMONT() {
-		return AMONT;
+		return amont;
 	}
 	public void setAMONT(Integer aMONT) {
-		AMONT = aMONT;
+		amont = aMONT;
 	}
 	
 

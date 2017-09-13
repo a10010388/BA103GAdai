@@ -36,18 +36,18 @@
 		<th>店家照3</th>
 		</tr>
 		<tr align='center' valign='middle'}>
-			<td><%=storeVO.getSTORE_NO()%></td>
-			<td><%=storeVO.getMEM_AC()%></td>
-			<td><%=storeVO.getTAX_ID_NO()%></td>
-			<td width ='80'><%=storeVO.getSTORE_STAT()%></td>
-			<td width='300'><%=storeVO.getSTORE_ADD()%></td>
-			<td width ='80'><%=storeVO.getSTORE_NAME()%></td>
-			<td><%=storeVO.getSTORE_CONT()%></td>
+			<td><%=storeVO.getStore_no()%></td>
+			<td><%=storeVO.getMem_ac()%></td>
+			<td><%=storeVO.getTax_id_no()%></td>
+			<td width ='80'><%=storeVO.getStore_stat()%></td>
+			<td width='300'><%=storeVO.getStore_add()%></td>
+			<td width ='80'><%=storeVO.getStore_name()%></td>
+			<td><%=storeVO.getStore_cont()%></td>
 			
-			<td><%=storeVO.getWIN_ID_PIC()%></td>
-			<td><%=storeVO.getSTORE_PIC1()%></td>
-			<td><%=storeVO.getSTORE_PIC2()%></td>
-			<td><%=storeVO.getSTORE_PIC3()%></td>
+			<td><%=storeVO.getWin_id_pic()%></td>
+			<td><%=storeVO.getStore_pic1()%></td>
+			<td><%=storeVO.getStore_pic2()%></td>
+			<td><%=storeVO.getStore_pic3()%></td>
 		</tr>
 
 	</table>
