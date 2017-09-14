@@ -10,8 +10,7 @@
 <head>
 <title>店家新增 - addStore.jsp</title>
 </head>
-<link rel="stylesheet" type="text/css" href="js/calendar.css">
-<script language="JavaScript" src="js/calendarcode.js"></script>
+
 <div id="popupcalendar" class="text"></div>
 
 <body bgcolor='white'>
@@ -21,7 +20,7 @@
 			<td>
 				<h3>店家資料新增 - addEmp.jsp</h3>
 			</td>
-			<td><a href="select_page.jsp">回首頁</a></td>
+			<td><a href="<%=request.getContextPath()%>/BackEnd/store/select_page.jsp">回首頁</a></td>
 		</tr>
 	</table>
 
@@ -37,7 +36,7 @@
 		</font>
 	</c:if>
 
-	<FORM METHOD="POST" ACTION="store.do" name="form1"
+	<FORM METHOD="POST" ACTION="<%=request.getContextPath()%>/store/store.do" name="form1"
 		enctype="multipart/form-data">
 		<table border="0">
 
@@ -73,10 +72,7 @@
 				<td><input type="TEXT" name="mem_ac" size="45"
 					value="<%=(storeVO == null) ? "BA105" : storeVO.getMem_ac()%>" /></td>
 			</tr>
-			<tr>
-				<td>證件照:</td>
-				<td><input type="file" name="win_id_pic"></td>
-			</tr>
+			
 			<tr>
 				<td>緯度:</td>
 				<td><input type="TEXT" name="store_add_lat" size="45"
@@ -87,18 +83,7 @@
 				<td><input type="TEXT" name="store_add_lon" size="45"
 					value="<%=(storeVO == null) ? "121.447666" : storeVO.getStore_add_lon()%>" /></td>
 			</tr>
-			<tr>
-				<td>店家照1:</td>
-				<td><input type="file" name="store_pic1"></td>
-			</tr>
-			<tr>
-				<td>店家照2:</td>
-				<td><input type="file" name="store_pic2"></td>
-			</tr>
-			<tr>
-				<td>店家照3:</td>
-				<td><input type="file" name="store_pic3"></td>
-			</tr>
+			
 			<tr>
 				<td>審核狀態:</td>
 				<td><input type="TEXT" name="store_stat" size="45"
@@ -114,16 +99,26 @@
 					java.sql.Date date_SQL = new java.sql.Date(System.currentTimeMillis());
 				%>
 				<td>雇用日期:</td>
-				<td bgcolor="#CCCCFF"><input class="cal-TextBox"
-					onFocus="this.blur()" size="9" readonly type="text" name="store_stat_cdate"
-					value="<%=(storeVO == null) ? date_SQL : storeVO.getStore_stat_cdate()%>">
-					<a class="so-BtnLink" href="javascript:calClick();return false;"
-					onmouseover="calSwapImg('BTN_date', 'img_Date_OVER',true);"
-					onmouseout="calSwapImg('BTN_date', 'img_Date_UP',true);"
-					onclick="calSwapImg('BTN_date', 'img_Date_DOWN');showCalendar('form1','store_stat_cdate','BTN_date');return false;">
-						<img align="middle" border="0" name="BTN_date"
-						src="images/btn_date_up.gif" width="22" height="17" alt="開始日期">
-				</a></td>
+				<td >
+				<input type="DATE" name="store_stat_cdate" size="45"
+					value="<%=(storeVO == null) ? date_SQL : storeVO.getStore_stat_cdate()%>" />
+				</td>
+			</tr>
+			<tr>
+				<td>證件照:</td>
+				<td><input type="file" name="win_id_pic"></td>
+			</tr>
+			<tr>
+				<td>店家照1:</td>
+				<td><input type="file" name="store_pic1"></td>
+			</tr>
+			<tr>
+				<td>店家照2:</td>
+				<td><input type="file" name="store_pic2"></td>
+			</tr>
+			<tr>
+				<td>店家照3:</td>
+				<td><input type="file" name="store_pic3"></td>
 			</tr>
 			</FORM>
 			</tr>

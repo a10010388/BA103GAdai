@@ -31,7 +31,7 @@
 		<br>
 
 		<li>
-			<FORM METHOD="post" ACTION="store.do">
+			<FORM METHOD="post" ACTION="<%=request.getContextPath()%>/store/store.do">
 				<b>輸入店家編號 (如S1000000001):</b> <input type="text" name="store_no">
 				<input type="submit" value="送出"> <input type="hidden"
 					name="action" value="getOne_For_Display">
@@ -42,7 +42,7 @@
 			class="com.store.model.StoreService" />
 
 		<li>
-			<FORM METHOD="post" ACTION="store.do">
+			<FORM METHOD="post" ACTION="<%=request.getContextPath()%>/store/store.do">
 				<b>選擇店家編號:</b> <select size="1" name=store_no>
 					<c:forEach var="StoreVO" items="${storeSvc.all}">
 						<option value="${StoreVO.store_no}">${StoreVO.store_no}
@@ -53,7 +53,7 @@
 		</li>
 
 		<li>
-			<FORM METHOD="post" ACTION="store.do">
+			<FORM METHOD="post" ACTION="<%=request.getContextPath()%>/store/store.do">
 				<b>選擇店家姓名:</b> <select size="1" name="store_no">
 					<c:forEach var="StoreVO" items="${storeSvc.all}">
 						<option value="${StoreVO.store_no}">${StoreVO.store_name}

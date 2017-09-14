@@ -40,8 +40,8 @@ public class StoreService {
 		dao.insert(storeVO);
 	}
 	
-	public StoreVO updatesotre(String store_no, String store_phone,String store_add,String store_name,String store_cont 
-			,Integer store_free_ship,String store_stat){
+	public StoreVO updatesotre(String tax_id_no, byte[] win_id_pic,String store_phone,String store_add,String store_add_lat 
+			,String store_add_lon,String store_name,String store_cont,byte[] store_pic1,byte[] store_pic2 ,byte[] store_pic3,Integer store_free_ship,String store_stat,String store_stat_cont,Date store_stat_cdate,String store_no){
 		StoreVO storevo = new StoreVO();
 		storevo.setStore_no(store_no);
 		storevo.setStore_phone(store_phone);
@@ -50,6 +50,15 @@ public class StoreService {
 		storevo.setStore_cont(store_cont);
 		storevo.setStore_free_ship(store_free_ship);
 		storevo.setStore_stat(store_stat);
+		storevo.setTax_id_no(tax_id_no);
+		storevo.setWin_id_pic(win_id_pic);
+		storevo.setStore_add_lat(store_add_lat);
+		storevo.setStore_add_lon(store_add_lon);
+		storevo.setStore_pic1(store_pic1);
+		storevo.setStore_pic2(store_pic2);
+		storevo.setStore_pic3(store_pic3);
+		storevo.setStore_stat_cdate(store_stat_cdate);
+		storevo.setStore_stat_cont(store_stat_cont);
 		dao.update(storevo);
 		
 		return dao.findByPrimaryKey(store_no);

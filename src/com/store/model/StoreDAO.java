@@ -24,7 +24,7 @@ public class StoreDAO implements StoreDAO_interface{
 	static {
 		try {
 			Context ctx = new InitialContext();
-			ds = (DataSource) ctx.lookup("java:comp/env/jdbc/TestDB1");
+			ds = (DataSource) ctx.lookup("java:comp/env/jdbc/BA103G4DB");
 		} catch (NamingException e) {
 			e.printStackTrace();
 		}
@@ -37,7 +37,7 @@ public class StoreDAO implements StoreDAO_interface{
 			+ "STORE_ADD_LON,STORE_NAME,STORE_CONT,STORE_PIC1,STORE_PIC2,STORE_PIC3,STORE_FREE_SHIP,"
 			+ "STORE_STAT,STORE_STAT_CONT,STORE_STAT_CDATE FROM store where STORE_NO = ?";
 	private static final String DELETE = "DELETE FROM store where STORE_NO = ?";
-	private static final String UPDATE = "UPDATE store set STORE_NAME=?, STORE_PHONE=?, STORE_ADD=? where STORE_NO = ?";
+	private static final String UPDATE = "UPDATE store set TAX_ID_NO=?, WIN_ID_PIC=?, STORE_PHONE=? ,STORE_ADD=?,STORE_ADD_LAT=?,STORE_ADD_LON=?,STORE_NAME=?,STORE_CONT=?,STORE_PIC1=?,STORE_PIC2=?,STORE_PIC3=?,STORE_FREE_SHIP=?,STORE_STAT=?,STORE_STAT_CONT=?,STORE_STAT_CDATE=?  where STORE_NO = ?";
 
 
 	@Override
@@ -111,7 +111,7 @@ public class StoreDAO implements StoreDAO_interface{
 	}
 
 	@Override
-	public void update(StoreVO StoreVO) {
+	public void update(StoreVO storeVO) {
 		Connection con = null;
 		PreparedStatement pstmt = null;
 
@@ -121,11 +121,41 @@ public class StoreDAO implements StoreDAO_interface{
 			pstmt = con.prepareStatement(UPDATE);
 			
 
-			pstmt.setString(1, StoreVO.getStore_name());
-			pstmt.setString(2, StoreVO.getStore_phone());
-			pstmt.setString(3, StoreVO.getStore_add());
-			pstmt.setString(4, StoreVO.getStore_no());
-
+			pstmt.setString(1, storeVO.getTax_id_no());
+			
+			byte [] WIN_ID_PIC = storeVO.getWin_id_pic();
+			Blob blobWIN_ID_PIC = con.createBlob();
+			blobWIN_ID_PIC.setBytes(1, WIN_ID_PIC);
+			pstmt.setBlob(2, blobWIN_ID_PIC);
+			
+			
+			pstmt.setString(3, storeVO.getStore_phone());
+			pstmt.setString(4, storeVO.getStore_add());
+			pstmt.setString(5, storeVO.getStore_add_lat());
+			pstmt.setString(6, storeVO.getStore_add_lon());
+			pstmt.setString(7, storeVO.getStore_name());
+			pstmt.setString(8, storeVO.getStore_cont());
+			
+			byte [] STORE_PIC1 = storeVO.getStore_pic1();
+			Blob blobSTORE_PIC1 = con.createBlob();
+			blobSTORE_PIC1.setBytes(1, STORE_PIC1);
+			pstmt.setBlob(9, blobSTORE_PIC1);
+			
+			byte [] STORE_PIC2 = storeVO.getStore_pic2();
+			Blob blobSTORE_PIC2 = con.createBlob();
+			blobSTORE_PIC2.setBytes(1, STORE_PIC2);
+			pstmt.setBlob(10, blobSTORE_PIC2);
+			
+			byte [] STORE_PIC3 = storeVO.getStore_pic3();
+			Blob blobSTORE_PIC3 = con.createBlob();
+			blobSTORE_PIC3.setBytes(1, STORE_PIC3);
+			pstmt.setBlob(11, blobSTORE_PIC3);
+			
+			pstmt.setInt(12, storeVO.getStore_free_ship());
+			pstmt.setString(13, storeVO.getStore_stat());
+			pstmt.setString(14, storeVO.getStore_cont());
+			pstmt.setDate(15, storeVO.getStore_stat_cdate());
+			pstmt.setString(16, storeVO.getStore_no());
 			pstmt.executeUpdate();
 
 			// Handle any driver errors

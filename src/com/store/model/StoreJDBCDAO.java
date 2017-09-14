@@ -21,7 +21,7 @@ public class StoreJDBCDAO implements StoreDAO_interface {
 			+ "STORE_ADD_LON,STORE_NAME,STORE_CONT,STORE_PIC1,STORE_PIC2,STORE_PIC3,STORE_FREE_SHIP,"
 			+ "STORE_STAT,STORE_STAT_CONT,STORE_STAT_CDATE FROM store where STORE_NO = ?";
 	private static final String DELETE = "DELETE FROM store where STORE_NO = ?";
-	private static final String UPDATE = "UPDATE store set STORE_NAME=?, STORE_PHONE=?, STORE_ADD=? where STORE_NO = ?";
+	private static final String UPDATE = "UPDATE store set TAX_ID_NO=?, WIN_ID_PIC=?, STORE_PHONE=? ,STORE_ADD=?,STORE_ADD_LAT=?,STORE_ADD_LON=?,STORE_NAME=?,STORE_CONT=?,STORE_PIC1=?,STORE_PIC2=?,STORE_PIC3=?,STORE_FREE_SHIP=?,STORE_STAT=?,STORE_STAT_CONT=?,STORE_STAT_CDATE=?  where STORE_NO = ?";
 
 	@Override
 	public void insert(StoreVO storeVO) {
@@ -109,10 +109,41 @@ public class StoreJDBCDAO implements StoreDAO_interface {
 			con = DriverManager.getConnection(url, userid, passwd);
 			pstmt = con.prepareStatement(UPDATE);
 
-			pstmt.setString(1, storeVO.getStore_name());
-			pstmt.setString(2, storeVO.getStore_phone());
-			pstmt.setString(3, storeVO.getStore_add());
-			pstmt.setString(4, storeVO.getStore_no());
+			pstmt.setString(1, storeVO.getTax_id_no());
+			
+			byte [] WIN_ID_PIC = storeVO.getWin_id_pic();
+			Blob blobWIN_ID_PIC = con.createBlob();
+			blobWIN_ID_PIC.setBytes(1, WIN_ID_PIC);
+			pstmt.setBlob(2, blobWIN_ID_PIC);
+			
+			
+			pstmt.setString(3, storeVO.getStore_phone());
+			pstmt.setString(4, storeVO.getStore_add());
+			pstmt.setString(5, storeVO.getStore_add_lat());
+			pstmt.setString(6, storeVO.getStore_add_lon());
+			pstmt.setString(7, storeVO.getStore_name());
+			pstmt.setString(8, storeVO.getStore_cont());
+			
+			byte [] STORE_PIC1 = storeVO.getStore_pic1();
+			Blob blobSTORE_PIC1 = con.createBlob();
+			blobSTORE_PIC1.setBytes(1, STORE_PIC1);
+			pstmt.setBlob(9, blobSTORE_PIC1);
+			
+			byte [] STORE_PIC2 = storeVO.getStore_pic2();
+			Blob blobSTORE_PIC2 = con.createBlob();
+			blobSTORE_PIC2.setBytes(1, STORE_PIC2);
+			pstmt.setBlob(10, blobSTORE_PIC2);
+			
+			byte [] STORE_PIC3 = storeVO.getStore_pic3();
+			Blob blobSTORE_PIC3 = con.createBlob();
+			blobSTORE_PIC3.setBytes(1, STORE_PIC3);
+			pstmt.setBlob(11, blobSTORE_PIC3);
+			
+			pstmt.setInt(12, storeVO.getStore_free_ship());
+			pstmt.setString(13, storeVO.getStore_stat());
+			pstmt.setString(14, storeVO.getStore_cont());
+			pstmt.setDate(15, storeVO.getStore_stat_cdate());
+			pstmt.setString(16, storeVO.getStore_no());
 
 			pstmt.executeUpdate();
 
@@ -326,39 +357,65 @@ public class StoreJDBCDAO implements StoreDAO_interface {
 		StoreJDBCDAO dao = new StoreJDBCDAO();
 //
 //		// 新增
-		StoreVO sotreVO1 = new StoreVO();
-		sotreVO1.setMem_ac("dantea");
-		sotreVO1.setTax_id_no("86933444");
-		byte [] win_id_pic = getPictureByteArray("C:\\Users\\Java\\Desktop\\photo\\picFrom\\6.jpg");
-		
-		sotreVO1.setWin_id_pic(win_id_pic);
-		sotreVO1.setStore_phone("0912-345-789");
-		sotreVO1.setStore_add("桃園市楊梅區高獅路5號");
-		sotreVO1.setStore_add_lat("24.922551");
-		sotreVO1.setStore_add_lon("121.148549");
-		sotreVO1.setStore_name("混蛋咖啡聽");
-		sotreVO1.setStore_cont("混蛋咖啡聽是一群混蛋開的");
-		byte [] store_pic1 = getPictureByteArray("C:\\Users\\Java\\Desktop\\photo\\picFrom\\851.jpg");
-		sotreVO1.setStore_pic1(store_pic1);
-		byte [] store_pic2 = getPictureByteArray("C:\\Users\\Java\\Desktop\\photo\\picFrom\\852.jpg");
-		sotreVO1.setStore_pic2(store_pic2);
-		byte [] store_pic3 = getPictureByteArray("C:\\Users\\Java\\Desktop\\photo\\picFrom\\853.jpg");
-		sotreVO1.setStore_pic3(store_pic3);
-		sotreVO1.setStore_free_ship(1000);
-		sotreVO1.setStore_stat("審核不通過");
-		sotreVO1.setStore_stat_cont("混蛋不准開");
-		java.util.Date stat_cdate = new java.util.Date();
-		java.sql.Date store_stat_cdate = new java.sql.Date(stat_cdate.getTime());
-		sotreVO1.setStore_stat_cdate(store_stat_cdate);
-		dao.insert(sotreVO1);
+//		StoreVO sotreVO1 = new StoreVO();
+//		sotreVO1.setMem_ac("dantea");
+//		sotreVO1.setTax_id_no("86931444");
+//		byte [] win_id_pic = getPictureByteArray("C:\\Users\\Java\\Desktop\\photo\\picFrom\\6.jpg");
+//		
+//		sotreVO1.setWin_id_pic(win_id_pic);
+//		sotreVO1.setStore_phone("0912-345-789");
+//		sotreVO1.setStore_add("桃園市楊梅區高獅路5號");
+//		sotreVO1.setStore_add_lat("24.922551");
+//		sotreVO1.setStore_add_lon("121.148549");
+//		sotreVO1.setStore_name("混蛋咖啡聽");
+//		sotreVO1.setStore_cont("混蛋咖啡聽是一群混蛋開的");
+//		byte [] store_pic1 = getPictureByteArray("C:\\Users\\Java\\Desktop\\photo\\picFrom\\851.jpg");
+//		sotreVO1.setStore_pic1(store_pic1);
+//		byte [] store_pic2 = getPictureByteArray("C:\\Users\\Java\\Desktop\\photo\\picFrom\\852.jpg");
+//		sotreVO1.setStore_pic2(store_pic2);
+//		byte [] store_pic3 = getPictureByteArray("C:\\Users\\Java\\Desktop\\photo\\picFrom\\853.jpg");
+//		sotreVO1.setStore_pic3(store_pic3);
+//		sotreVO1.setStore_free_ship(1000);
+//		sotreVO1.setStore_stat("審核不通過");
+//		sotreVO1.setStore_stat_cont("混蛋不准開");
+//		java.util.Date stat_cdate = new java.util.Date();
+//		java.sql.Date store_stat_cdate = new java.sql.Date(stat_cdate.getTime());
+//		sotreVO1.setStore_stat_cdate(store_stat_cdate);
+//		dao.insert(sotreVO1);
 
 		// 修改
-//		StoreVO storeVO2 = new StoreVO();
-//		storeVO2.setStore_name("混蛋");
-//		storeVO2.setStore_phone("025555555");
-//		storeVO2.setStore_add("測試修改地址111");
-//		storeVO2.setStore_no("S1000000014");
-//		dao.update(storeVO2);
+		StoreVO storeVO2 = new StoreVO();
+		storeVO2.setTax_id_no("84561202");
+		byte [] win_id_pic = getPictureByteArray("C:\\Users\\Java\\Desktop\\photo\\picFrom\\6.jpg");
+		storeVO2.setWin_id_pic(win_id_pic);
+		
+		storeVO2.setStore_phone("08545123");
+		
+		storeVO2.setStore_add("測試地址修改");
+		storeVO2.setStore_add_lat("520.123");
+		storeVO2.setStore_add_lon("453.1236");
+		storeVO2.setStore_name("混蛋");
+		storeVO2.setStore_cont("混蛋殺過人");
+		
+		byte [] store_pic1 = getPictureByteArray("C:\\Users\\Java\\Desktop\\photo\\picFrom\\851.jpg");
+		storeVO2.setStore_pic1(store_pic1);
+		byte [] store_pic2 = getPictureByteArray("C:\\Users\\Java\\Desktop\\photo\\picFrom\\852.jpg");
+		storeVO2.setStore_pic2(store_pic2);
+		byte [] store_pic3 = getPictureByteArray("C:\\Users\\Java\\Desktop\\photo\\picFrom\\853.jpg");
+		storeVO2.setStore_pic3(store_pic3);
+		
+		storeVO2.setStore_free_ship(100);
+		storeVO2.setStore_stat("待審核");
+		
+		storeVO2.setStore_cont("混蛋不准開");
+		storeVO2.setStore_phone("025555555");
+		
+		java.util.Date stat_cdate = new java.util.Date();
+		java.sql.Date store_stat_cdate = new java.sql.Date(stat_cdate.getTime());
+		storeVO2.setStore_stat_cdate(store_stat_cdate);
+		
+		storeVO2.setStore_no("S1000000051");
+		dao.update(storeVO2);
 
 		// 刪除
 //		dao.delete("S1000000011");

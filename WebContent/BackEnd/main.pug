@@ -1,0 +1,92 @@
+doctype html
+html
+  head
+    meta(charset='UTF-8')
+    title 後端首頁進入頁面
+    link(rel='stylesheet prefetch', href='https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/css/bootstrap.min.css')
+    // <link rel='stylesheet prefetch' href='https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css'>
+    | +
+    link(rel='stylesheet', href='bootstrap-3.3.7-dist/css/bootstrap.css')
+    link(rel='stylesheet', href='font-awesome-4.7.0/css/font-awesome.css')
+    link(rel='stylesheet', href='font-awesome-4.7.0/css/font-awesome.min.css')
+    link(rel='stylesheet', href='css/style.css')
+    link(rel='stylesheet', href='css/main.css')
+  body
+    .container_fluid.titlebar
+      a.form-inline.titlebarForm(href='main.html')
+        img.icon(src='images/BeanLifeLogo2.png', alt='')
+        h1 Bean-Life
+    // .left是左邊導覽列的部分
+    .container.card
+      .row
+        .col-xs-2.left
+          a.h3.title(href='#action', aria-expanded='false', aria-controls='action', data-toggle='collapse', style='text-decoration: none;')
+            .fa.fa-futbol-o
+            a.h3(href='act.html')  活動審核
+          a.h3.title(href='#check', aria-expanded='false', aria-controls='check', data-toggle='collapse', style='text-decoration: none;')
+            .fa.fa-check-circle
+            span.h3 檢舉管理
+            ul#check.collapse
+              a 評論檢舉
+              a 商品檢舉
+              a 討論區檢舉
+          a.h3.title(href='#mem', aria-expanded='false', aria-controls='mem', data-toggle='collapse', style='text-decoration: none;')
+            .fa.fa-address-card-o
+            span.h3 會員管理
+            ul#mem.collapse
+              a 會員資料管理
+              a 廠商店家授權
+              a 積分管理
+          a.h3.title(href='#admin', aria-expanded='false', aria-controls='admin', data-toggle='collapse', style='text-decoration: none;')
+            .fa.fa-user-o  
+            span.h3 管理員管理
+            ul#admin.collapse
+              a 管理帳戶授權
+              a 帳戶管理
+          a.h3.title(href='#gift', aria-expanded='false', aria-controls='gift', data-toggle='collapse', style='text-decoration: none;')
+            .fa.fa-gift  
+            span.h3 平台業務管理
+            ul#gift.collapse
+              a 廣告管理
+              a 兌換贈品管理
+              a(href='gift_data.html') 兌換贈品業務管理
+        .right.col-xs-10
+          .col-xs-12.right_top
+            img(src='images/bear.jpg', alt='')
+            h2 你好
+            a.fa.fa-bell.dropdown-toggle(href='#', data-toggle='dropdown')
+            ul.dropdown-menu
+              li
+                a 10項檢舉未處理
+              li
+                a(href='act.html') 10項活動未審核
+              li
+                a 10項廠商會員申請未審核
+              li
+                a 10項兌換贈品申請
+          .col-xs-12.right_middle
+            .col-xs-12
+              h2.check 待處理
+          .col-xs-12.right_bottom
+            .col-xs-3
+              .report
+                a.fa.fa-check-circle(href='')
+                h2 
+                  a(href='') 10項檢舉未處理
+            .col-xs-3
+              .report
+                a.fa.fa-futbol-o(href='act.html')
+                h2
+                  a(href='act.html') 10項活動未審核
+            .col-xs-3
+              .report
+                a.fa.fa-address-card-o(href='')
+                h2
+                  a(href='') 10項廠商會員申請未審核
+            .col-xs-3
+              .report
+                a.fa.fa-gift(href='')
+                h2
+                  a(href='') 10項兌換贈品申請
+    script(src='https://cdnjs.cloudflare.com/ajax/libs/jquery/3.1.1/jquery.min.js')
+    script(src='https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js')
