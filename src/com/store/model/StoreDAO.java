@@ -37,8 +37,8 @@ public class StoreDAO implements StoreDAO_interface{
 			+ "STORE_ADD_LON,STORE_NAME,STORE_CONT,STORE_PIC1,STORE_PIC2,STORE_PIC3,STORE_FREE_SHIP,"
 			+ "STORE_STAT,STORE_STAT_CONT,STORE_STAT_CDATE FROM store where STORE_NO = ?";
 	private static final String DELETE = "DELETE FROM store where STORE_NO = ?";
-	private static final String UPDATE = "UPDATE store set TAX_ID_NO=?, WIN_ID_PIC=?, STORE_PHONE=? ,STORE_ADD=?,STORE_ADD_LAT=?,STORE_ADD_LON=?,STORE_NAME=?,STORE_CONT=?,STORE_PIC1=?,STORE_PIC2=?,STORE_PIC3=?,STORE_FREE_SHIP=?,STORE_STAT=?,STORE_STAT_CONT=?,STORE_STAT_CDATE=?  where STORE_NO = ?";
-
+	private static final String UPDATE = "UPDATE store set TAX_ID_NO=?, WIN_ID_PIC=?, STORE_PHONE=? ,STORE_ADD=?,STORE_ADD_LAT=?,STORE_ADD_LON=?,STORE_NAME=?,STORE_CONT=?,STORE_PIC1=?,STORE_PIC2=?,STORE_PIC3=?,STORE_FREE_SHIP=?,STORE_STAT_CONT=?,STORE_STAT_CDATE=?  where STORE_NO = ?";
+	private static final String UPDATE_STAT ="UPDATE store set STORE_STAT=?,store_stat_cdate=? where STORE_NO = ?";
 
 	@Override
 	public void insert(StoreVO storeVO) {
@@ -163,6 +163,43 @@ public class StoreDAO implements StoreDAO_interface{
 			throw new RuntimeException("A database error occured. " + se.getMessage());
 			// Clean up JDBC resources
 		} finally {
+			if (pstmt != null) {
+				try {
+					pstmt.close();
+				} catch (SQLException se) {
+					se.printStackTrace(System.err);
+				}
+			}
+			if (con != null) {
+				try {
+					con.close();
+				} catch (Exception e) {
+					e.printStackTrace(System.err);
+				}
+			}
+		}
+
+	}
+	@Override
+	public void update_stat(StoreVO storeVO) {
+		Connection con = null;
+		PreparedStatement pstmt = null;
+		
+		try {
+			con = ds.getConnection();
+			pstmt = con.prepareStatement(UPDATE_STAT);
+			
+			pstmt.setString(1, storeVO.getStore_stat());
+			
+			pstmt.setDate(2, storeVO.getStore_stat_cdate());
+			pstmt.setString(3, storeVO.getStore_no());
+
+			pstmt.executeUpdate();
+			
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}finally {
 			if (pstmt != null) {
 				try {
 					pstmt.close();
@@ -362,5 +399,7 @@ public class StoreDAO implements StoreDAO_interface{
 
 		return baos.toByteArray();
 	}
+
+	
 
 }

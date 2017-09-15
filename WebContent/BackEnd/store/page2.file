@@ -8,7 +8,7 @@
     <%}%>
   
     <%if(pageIndex<pageIndexArray[pageNumber-1]){%>
-        <td><A href="<%=request.getRequestURI()%>?whichPage=<%=whichPage+1%>">下一夜</A>&nbsp;</td>
+        <td><A href="<%=request.getRequestURI()%>?whichPage=<%=whichPage+1%>">下一頁</A>&nbsp;</td>
         <td><A href="<%=request.getRequestURI()%>?whichPage=<%=pageNumber%>">至最後一頁</A>&nbsp;</td>
     <%}%>
   <%}%>  

@@ -63,6 +63,15 @@ public class StoreService {
 		
 		return dao.findByPrimaryKey(store_no);
 	}
+	public StoreVO update_stat(String store_stat,Date store_stat_cdate,String store_no){
+		StoreVO storevo =new StoreVO();
+		storevo.setStore_stat(store_stat);
+		storevo.setStore_stat_cdate(store_stat_cdate);
+		storevo.setStore_no(store_no);
+		dao.update_stat(storevo);
+		return dao.findByPrimaryKey(store_no);
+	}
+	
 	public void updatestore(StoreVO storevo){
 		dao.update(storevo);
 	}

@@ -10,112 +10,166 @@
 	pageContext.setAttribute("list", list);
 %>
 
-
-<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
-<meta http-equiv="Content-Type" content="text/html; charset=BIG5">
-<title>所有店家資料-listALLStore.jsp</title>
+<title>後端首頁0902</title>
+<link rel="stylesheet prefetch"
+	href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/css/bootstrap.min.css">
+<link rel="stylesheet" href="../font-awesome-4.7.0/css/font-awesome.css">
+<link rel="stylesheet"
+	href="../font-awesome-4.7.0/css/font-awesome.min.css">
+<link rel="stylesheet" href="../css/style.css">
+<link rel="stylesheet" href="../css/store.css">
+<script src="sorttable.js"></script>
 </head>
 <body>
-	<table border='1' cellpadding='5' cellspacing='0' width='800'>
-		<tr bgcolor='#CCCCFF' align='center' valign='middle' height='20'>
-			<td><h3>所有店家資料-listALLStore.jsp</h3> <a href="<%=request.getContextPath()%>/BackEnd/store/select_page.jsp">回首頁</a></td>
-		</tr>
-	</table>
-	<%-- 錯誤表列 --%>
-	<c:if test="${not empty errorMsgs}">
-		<font color='red'>請修正以下錯誤:
-			<ul>
-				<c:forEach var="message" items="${errorMsgs}">
-					<li>${message}</li>
-				</c:forEach>
-			</ul>
-		</font>
-	</c:if>
-	<table border='1' bordercolor='#CCCCFF' width='1500'>
-		<tr>
-			<th>廠商編號</th>
-			<th>會員帳號</th>
-			<th>統一編號</th>
-			<th>審核狀態</th>
-			<th>廠商住址</th>
-			<th>廠商名稱</th>
-			<th>廠商介紹</th>
-			<th>證件照</th>
-			<th>店家照1</th>
-			<th>店家照1</th>
-			<th>店家照1</th>
-		</tr>
-		<%@ include file="page1.file"%>
+	<div class="container_fluid titlebar">
+		<a class="form-inline titlebarForm" href="main.html"><img
+			class="icon" src="<%=request.getContextPath()%>/BackEnd/res/images/BeanLifeLogo2.png">
+			<h1>Bean-Life</h1></a>
+	</div>
+	<!-- .left是左邊導覽列的部分-->
+	<!-- .left選擔部分0910修正選單內容-->
+	<!-- 0910 玲當部份新增下拉選單-->
+	<div class="container card">
+		<div class="row">
+			<div class="col-xs-2 left">
+				<a class="h3 title act" href="#action" aria-expanded="false"
+					aria-controls="action" data-toggle="collapse"
+					style="text-decoration: none;">
+					<div class="fa fa-futbol-o"></div> <a class="h3" href="act.html">
+						活動審核</a>
+				</a><a class="h3 title" href="#check" aria-expanded="false"
+					aria-controls="check" data-toggle="collapse"
+					style="text-decoration: none;">
+					<div class="fa fa-check-circle"></div> <span class="h3">檢舉管理</span>
+					<ul class="collapse" id="check">
+						<a>評論檢舉</a>
+						<a>商品檢舉</a>
+						<a>討論區檢舉</a>
+					</ul>
+				</a><a class="h3 title" href="#mem" aria-expanded="false"
+					aria-controls="mem" data-toggle="collapse"
+					style="text-decoration: none;">
+					<div class="fa fa-address-card-o"></div> <span class="h3">會員管理</span>
+					<ul class="collapse" id="mem">
+						<a>會員資料管理</a>
+						<a>廠商店家授權</a>
+						<a>積分管理</a>
+					</ul>
+				</a><a class="h3 title" href="#admin" aria-expanded="false"
+					aria-controls="admin" data-toggle="collapse"
+					style="text-decoration: none;">
+					<div class="fa fa-user-o"></div> <span class="h3">管理員管理</span>
+					<ul class="collapse" id="admin">
+						<a>管理帳戶授權</a>
+						<a>帳戶管理</a>
+					</ul>
+				</a><a class="h3 title" href="#gift" aria-expanded="false"
+					aria-controls="gift" data-toggle="collapse"
+					style="text-decoration: none;">
+					<div class="fa fa-gift"></div> <span class="h3">平台業務管理</span>
+					<ul class="collapse" id="gift">
+						<a>廣告管理</a>
+						<a>兌換贈品管理</a>
+						<a>兌換贈品業務管理</a>
+					</ul>
+				</a>
+			</div>
+			<div class="right col-xs-10">
+				<div class="col-xs-12 right_top">
 
-		<% 
-		for(int i=pageIndex;(i<list.size()) && (i<pageIndex+rowsPerPage-1);i++){
-		%>
+					<h2>你好</h2>
+					<a class="fa fa-bell dropdown-toggle" href="#"
+						data-toggle="dropdown"></a>
+					<ul class="dropdown-menu">
+						<li><a>10項檢舉未處理</a></li>
+						<li><a>10項活動未審核</a></li>
+						<li><a>10項廠商會員申請未審核</a></li>
+						<li><a>10項兌換贈品申請</a></li>
+					</ul>
+				</div>
 
-		<tr align='center' valign='middle'>
-			<% 
-			byte[] data=list.get(i).getWin_id_pic();
-			StringBuilder sb = new StringBuilder();
-			sb.append("data:image/png;base64,");
-			sb.append(com.sun.org.apache.xerces.internal.impl.dv.util.Base64.encode(data));
-			String win_id_pic = sb.toString();
-			
-			byte[] data1=list.get(i).getStore_pic1();
-			StringBuilder sb1 = new StringBuilder();
-			sb1.append("data:image/png;base64,");
-			sb1.append(com.sun.org.apache.xerces.internal.impl.dv.util.Base64.encode(data1));
-			String store_pic1 = sb1.toString();
-			
-			byte[] data2=list.get(i).getStore_pic2();
-			StringBuilder sb2 = new StringBuilder();
-			sb2.append("data:image/png;base64,");
-			sb2.append(com.sun.org.apache.xerces.internal.impl.dv.util.Base64.encode(data2));
-			String store_pic2 = sb2.toString();
-			
-			byte[] data3=list.get(i).getStore_pic3();
-			StringBuilder sb3 = new StringBuilder();
-			sb3.append("data:image/png;base64,");
-			sb3.append(com.sun.org.apache.xerces.internal.impl.dv.util.Base64.encode(data3));
-			String store_pic3 = sb3.toString();
-			%>
-			<td><%=list.get(i).getStore_no()%></td>
-			<td><%=list.get(i).getMem_ac()%></td>
-			<td><%=list.get(i).getTax_id_no()%></td>
-			<td width='80'><%=list.get(i).getStore_stat()%></td>
-			<td width='300'><%=list.get(i).getStore_add()%></td>
-			<td width='80'><%=list.get(i).getStore_name()%></td>
-			<td width='500'><%=list.get(i).getStore_cont()%></td>
-			<td><img src="<%=win_id_pic %>" width=100></td>
-			<td><img src="<%=store_pic1 %>" width=100></td>
-			<td><img src="<%=store_pic2 %>" width=100></td>
-			<td><img src="<%=store_pic3 %>" width=100></td>
-			<td>
-				<FORM METHOD="post"
-					ACTION="<%=request.getContextPath()%>/store/store.do">
-					<input type="submit" value="修改"> <input type="hidden"
-						name="store_no" value="<%=list.get(i).getStore_no()%>"> <input
-						type="hidden" name="action" value="getOne_For_Update">
-				</FORM>
-			</td>
-			<td>
-				<FORM METHOD="post"
-					ACTION="<%=request.getContextPath()%>/store/store.do">
-					<input type="submit" value="刪除"> <input type="hidden"
-						name="store_no" value="<%=list.get(i).getStore_no()%>"> <input
-						type="hidden" name="action" value="delete">
-				</FORM>
-			</td>
-		</tr>
-	 <% 	} %>
+				<div class="col-xs-12 right_bottom">
+					<table class="store_tittle">
+						<tr>
+							<td><h3>所有店家資料-listALLStore.jsp</h3></td>
+						</tr>
+					</table>
+					<%-- 錯誤表列 --%>
+					<c:if test="${not empty errorMsgs}">
+						<font color='red'>請修正以下錯誤:
+							<ul>
+								<c:forEach var="message" items="${errorMsgs}">
+									<li>${message}</li>
+								</c:forEach>
+							</ul>
+						</font>
+					</c:if>
+					<table class="store_list table-bordered">
+						<tr>
+							<th>廠商編號</th>
+							<th>會員帳號</th>
+							<th>統一編號</th>
+							<th>廠商住址</th>
+							<th>廠商名稱</th>
+							<th>證件照</th>
+							<th>店家照1</th>
+							<th>店家照1</th>
+							<th>店家照1</th>
+							<th>審核狀態</th>
+							<th></th>
+							<th></th>
+						</tr>
+						<%@ include file="page1.file"%>
 
-	</table>
+						<c:forEach var="storeVO" items="${list}" begin="<%=pageIndex%>"
+							end="<%=pageIndex+rowsPerPage-1%>">
+							<tr align='center' valign='middle'>
+								<td>${storeVO.store_no}</td>
+								<td>${storeVO.mem_ac}</td>
+								<td>${storeVO.tax_id_no}</td>
+								<td>${storeVO.store_add}</td>
+								<td>${storeVO.store_name}</td>							
+								<td><img width="100px" src="<%=request.getContextPath()%>/Store/StoreImg.do?store_no=${storeVO.store_no}&index=0"></td>
+								<td><img width="100px" src="<%=request.getContextPath()%>/Store/StoreImg.do?store_no=${storeVO.store_no}&index=1" ></td>
+								<td><img width="100px" src="<%=request.getContextPath()%>/Store/StoreImg.do?store_no=${storeVO.store_no}&index=2" ></td>
+								<td><img width="100px" src="<%=request.getContextPath()%>/Store/StoreImg.do?store_no=${storeVO.store_no}&index=3" ></td>
+								<td>${storeVO.store_stat}</td>
+								<td>
+									<FORM METHOD="post"
+										ACTION="<%=request.getContextPath()%>/store/store.do">
+										<input type="submit" value="審核修改狀態"> <input
+											type="hidden" name="store_no" value="${storeVO.store_no}">
+										<input type="hidden" name="action" value="getOne_For_Update">
+									</FORM>
+								</td>
+								<td>
+									<FORM METHOD="post"
+										ACTION="<%=request.getContextPath()%>/store/store.do">
+										<input type="submit" value="刪除"> <input type="hidden"
+											name="store_no" value="${storeVO.store_no}"> <input
+											type="hidden" name="action" value="delete">
+									</FORM>
+								</td>
+							</tr>
+						</c:forEach>
 
 
-	<%@ include file="page2.file"%>
+
+					</table>
 
 
+					<%@ include file="page2.file"%>
+				</div>
 
-
+			</div>
+		</div>
+	</div>
+	<script
+		src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+	<script
+		src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+	<script src="../js/index.js"></script>
 </body>
 </html>

@@ -136,7 +136,7 @@ public class StoreServlet extends HttpServlet {
 				failureView.forward(req, res);
 			}
 		}
-		if ("update".equals(action)) { // 來自update_emp_input.jsp的請求
+		if ("update_stat".equals(action)) { // 來自update_emp_input.jsp的請求
 			
 			List<String> errorMsgs = new LinkedList<String>();
 			// Store this set in the request scope, in case we need to
@@ -150,17 +150,17 @@ public class StoreServlet extends HttpServlet {
 				 **********************/
 				
 				String store_no = req.getParameter("store_no").trim();
-				String store_name = req.getParameter("store_name").trim();
-				String tax_id_no =req.getParameter("tax_id_no").trim();
+//				String store_name = req.getParameter("store_name").trim();
+//				String tax_id_no =req.getParameter("tax_id_no").trim();
 				String store_stat = req.getParameter("store_stat").trim();
-				String store_phone = req.getParameter("store_phone").trim();
-				String store_add = req.getParameter("store_add").trim();
-				String store_cont = req.getParameter("store_cont").trim();
-				Integer store_free_ship = new Integer(req.getParameter("store_free_ship").trim());
-				String store_add_lat =req.getParameter("store_add_lat").trim();
-				String store_add_lon =req.getParameter("store_add_lon").trim();
+//				String store_phone = req.getParameter("store_phone").trim();
+//				String store_add = req.getParameter("store_add").trim();
+//				String store_cont = req.getParameter("store_cont").trim();
+//				Integer store_free_ship = new Integer(req.getParameter("store_free_ship").trim());
+//				String store_add_lat =req.getParameter("store_add_lat").trim();
+//				String store_add_lon =req.getParameter("store_add_lon").trim();
 				
-				
+//				
 				String store_stat_cont =req.getParameter("store_stat_cont");
 				java.sql.Date store_stat_cdate = null;
 				try {
@@ -174,67 +174,67 @@ public class StoreServlet extends HttpServlet {
 				
 				
 				StoreVO storeVO = new StoreVO();
-				storeVO.setStore_name(store_name);
+//				storeVO.setStore_name(store_name);
+//				
+//				storeVO.setStore_stat(store_stat);
+//				storeVO.setStore_phone(store_phone);
+//				storeVO.setStore_add(store_add);
+//				storeVO.setStore_cont(store_cont);
+//				storeVO.setStore_no(store_no);
+//				storeVO.setStore_free_ship(store_free_ship);
+//				storeVO.setTax_id_no(tax_id_no);
+//				storeVO.setStore_add_lat(store_add_lat);
+//				storeVO.setStore_add_lon(store_add_lon);
 				
-				storeVO.setStore_stat(store_stat);
-				storeVO.setStore_phone(store_phone);
-				storeVO.setStore_add(store_add);
-				storeVO.setStore_cont(store_cont);
-				storeVO.setStore_no(store_no);
-				storeVO.setStore_free_ship(store_free_ship);
-				storeVO.setTax_id_no(tax_id_no);
-				storeVO.setStore_add_lat(store_add_lat);
-				storeVO.setStore_add_lon(store_add_lon);
-				
-				InputStream win_id_pic = req.getPart("win_id_pic").getInputStream();
-				ByteArrayOutputStream id_pic = new ByteArrayOutputStream();
-				int idpic;
-				byte[] idimg = new byte[16384];
-				while ((idpic = win_id_pic.read(idimg, 0, idimg.length)) != -1) {
-					id_pic.write(idimg, 0, idpic);
-				}
-				byte [] idimg1 = id_pic.toByteArray();
-				
-				if (idimg1.length == 0){
-					errorMsgs.add("證照照片不可為空!");
-				}
+//				InputStream win_id_pic = req.getPart("win_id_pic").getInputStream();
+//				ByteArrayOutputStream id_pic = new ByteArrayOutputStream();
+//				int idpic;
+//				byte[] idimg = new byte[16384];
+//				while ((idpic = win_id_pic.read(idimg, 0, idimg.length)) != -1) {
+//					id_pic.write(idimg, 0, idpic);
+//				}
+//				byte [] idimg1 = id_pic.toByteArray();
+//				
+//				if (idimg1.length == 0){
+//					errorMsgs.add("證照照片不可為空!");
+//				}
 				
 				
 				
-				InputStream storepic1 = req.getPart("store_pic1").getInputStream();
-				ByteArrayOutputStream spic_1 = new ByteArrayOutputStream();
-				int spic1;
-				byte[] sphoto1 = new byte[16384];
-				while ((spic1 = storepic1.read(sphoto1, 0, sphoto1.length)) != -1) {
-					spic_1.write(sphoto1, 0, spic1);
-				}
-				byte [] sphoto1_1 = spic_1.toByteArray();
-				if (sphoto1_1.length == 0){
-					errorMsgs.add("店家照片1不可為空!");
-				}
+//				InputStream storepic1 = req.getPart("store_pic1").getInputStream();
+//				ByteArrayOutputStream spic_1 = new ByteArrayOutputStream();
+//				int spic1;
+//				byte[] sphoto1 = new byte[16384];
+//				while ((spic1 = storepic1.read(sphoto1, 0, sphoto1.length)) != -1) {
+//					spic_1.write(sphoto1, 0, spic1);
+//				}
+//				byte [] sphoto1_1 = spic_1.toByteArray();
+//				if (sphoto1_1.length == 0){
+//					errorMsgs.add("店家照片1不可為空!");
+//				}
 		
-				InputStream storepic2 = req.getPart("store_pic2").getInputStream();
-				ByteArrayOutputStream spic_2 = new ByteArrayOutputStream();
-				int spic2;
-				byte[] sphoto2 = new byte[16384];
-				while ((spic2 = storepic2.read(sphoto2, 0, sphoto2.length)) != -1) {
-					spic_2.write(sphoto2, 0, spic2);
-				}
-				byte [] sphoto2_1 = spic_2.toByteArray();
+//				InputStream storepic2 = req.getPart("store_pic2").getInputStream();
+//				ByteArrayOutputStream spic_2 = new ByteArrayOutputStream();
+//				int spic2;
+//				byte[] sphoto2 = new byte[16384];
+//				while ((spic2 = storepic2.read(sphoto2, 0, sphoto2.length)) != -1) {
+//					spic_2.write(sphoto2, 0, spic2);
+//				}
+//				byte [] sphoto2_1 = spic_2.toByteArray();
 				
 				
-				InputStream storepic3 = req.getPart("store_pic3").getInputStream();
-				ByteArrayOutputStream spic_3 = new ByteArrayOutputStream();
-				int spic3;
-				byte[] sphoto3 = new byte[16384];
-				while ((spic3 = storepic3.read(sphoto3, 0, sphoto3.length)) != -1) {
-					spic_3.write(sphoto3, 0, spic3);
-				}
-				byte [] sphoto3_1 = spic_3.toByteArray();
+//				InputStream storepic3 = req.getPart("store_pic3").getInputStream();
+//				ByteArrayOutputStream spic_3 = new ByteArrayOutputStream();
+//				int spic3;
+//				byte[] sphoto3 = new byte[16384];
+//				while ((spic3 = storepic3.read(sphoto3, 0, sphoto3.length)) != -1) {
+//					spic_3.write(sphoto3, 0, spic3);
+//				}
+//				byte [] sphoto3_1 = spic_3.toByteArray();
 
 
 				
-				storeVO.setStore_stat_cont(store_stat_cont);
+//				storeVO.setStore_stat_cont(store_stat_cont);
 				storeVO.setStore_stat_cdate(store_stat_cdate);
 				
 
@@ -248,7 +248,7 @@ public class StoreServlet extends HttpServlet {
 				
 				/*************************** 2.開始修改資料 *****************************************/
 				StoreService storeSvc = new StoreService();
-				storeVO = storeSvc.updatesotre(tax_id_no, idimg1, store_phone, store_add, store_add_lat, store_add_lon, store_name, store_cont, sphoto1_1, sphoto2_1, sphoto3_1, store_free_ship, store_stat, store_stat_cont, store_stat_cdate, store_no);
+				storeVO = storeSvc.update_stat(store_stat, store_stat_cdate, store_no);
 
 				/***************************
 				 * 3.修改完成,準備轉交(Send the Success view)
