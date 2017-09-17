@@ -5,9 +5,16 @@
 <%-- 此頁採用 JSTL 與 EL 取值 --%>
 
 <%
+
 	StoreService storeSvc = new StoreService();
-	List<StoreVO> list = storeSvc.getAll();
-	pageContext.setAttribute("list", list);
+	List<StoreVO> list;
+	if(((List<StoreVO>) request.getAttribute("storeVOlist"))==null){
+		
+		list = storeSvc.getAll();
+	} else{
+		list = (List<StoreVO>) request.getAttribute("storeVOlist");
+	}
+		pageContext.setAttribute("list", list);
 %>
 
 <html>
@@ -17,10 +24,10 @@
 	href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/css/bootstrap.min.css">
 <link rel="stylesheet" href="../font-awesome-4.7.0/css/font-awesome.css">
 <link rel="stylesheet"
-	href="../font-awesome-4.7.0/css/font-awesome.min.css">
-<link rel="stylesheet" href="../css/style.css">
-<link rel="stylesheet" href="../css/store.css">
-<script src="sorttable.js"></script>
+	href="<%=request.getContextPath()%>/BackEnd/res/font-awesome-4.7.0/css/font-awesome.min.css">
+<link rel="stylesheet" href="<%=request.getContextPath()%>/BackEnd/res/css/style.css">
+<link rel="stylesheet" href="<%=request.getContextPath()%>/BackEnd/res/css/store.css">
+
 </head>
 <body>
 	<div class="container_fluid titlebar">
@@ -94,6 +101,21 @@
 					<table class="store_tittle">
 						<tr>
 							<td><h3>所有店家資料-listALLStore.jsp</h3></td>
+							<td width="100"></td>
+							
+							<td>依審核狀態選取：</td>
+							<td></td>
+							<td><FORM METHOD="post"
+										ACTION="<%=request.getContextPath()%>/store/store.do">
+										<select size="1" name=store_stat>
+											<option value="待審中" >待審中</option>
+　											<option value="審核通過" >審核通過</option>
+　											<option value="審核不通過">審核不通過</option>
+										</select>
+											<input type="submit" value="送出"> 
+											<input	type="hidden" name="action" value="selstat">
+								</FORM>	
+							</td>
 						</tr>
 					</table>
 					<%-- 錯誤表列 --%>
@@ -106,7 +128,7 @@
 							</ul>
 						</font>
 					</c:if>
-					<table class="store_list table-bordered">
+					<table class="sortable table-bordered">
 						<tr>
 							<th>廠商編號</th>
 							<th>會員帳號</th>
@@ -115,8 +137,8 @@
 							<th>廠商名稱</th>
 							<th>證件照</th>
 							<th>店家照1</th>
-							<th>店家照1</th>
-							<th>店家照1</th>
+							<th>店家照2</th>
+							<th>店家照3</th>
 							<th>審核狀態</th>
 							<th></th>
 							<th></th>
@@ -129,18 +151,19 @@
 								<td>${storeVO.store_no}</td>
 								<td>${storeVO.mem_ac}</td>
 								<td>${storeVO.tax_id_no}</td>
-								<td>${storeVO.store_add}</td>
+								<td>${storeVO.store_add}</td>            
 								<td>${storeVO.store_name}</td>							
-								<td><img width="100px" src="<%=request.getContextPath()%>/Store/StoreImg.do?store_no=${storeVO.store_no}&index=0"></td>
-								<td><img width="100px" src="<%=request.getContextPath()%>/Store/StoreImg.do?store_no=${storeVO.store_no}&index=1" ></td>
-								<td><img width="100px" src="<%=request.getContextPath()%>/Store/StoreImg.do?store_no=${storeVO.store_no}&index=2" ></td>
-								<td><img width="100px" src="<%=request.getContextPath()%>/Store/StoreImg.do?store_no=${storeVO.store_no}&index=3" ></td>
+								<td><img width="100px" src="<%=request.getContextPath()%>/store/StoreImg.do?store_no=${storeVO.store_no}&index=0"></td>
+								<td><img width="100px" src="<%=request.getContextPath()%>/store/StoreImg.do?store_no=${storeVO.store_no}&index=1" ></td>
+								<td><img width="100px" src="<%=request.getContextPath()%>/store/StoreImg.do?store_no=${storeVO.store_no}&index=2" ></td>
+								<td><img width="100px" src="<%=request.getContextPath()%>/store/StoreImg.do?store_no=${storeVO.store_no}&index=3" ></td>
 								<td>${storeVO.store_stat}</td>
 								<td>
 									<FORM METHOD="post"
 										ACTION="<%=request.getContextPath()%>/store/store.do">
 										<input type="submit" value="審核修改狀態"> <input
 											type="hidden" name="store_no" value="${storeVO.store_no}">
+										<input type="hidden" name="store_stat_cont" value="${storeVO.store_stat_cont}">
 										<input type="hidden" name="action" value="getOne_For_Update">
 									</FORM>
 								</td>
@@ -170,6 +193,7 @@
 		src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
 	<script
 		src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
-	<script src="../js/index.js"></script>
+	<script src="<%=request.getContextPath()%>/BackEnd/res/js/index.js"></script>
+	<script src="<%=request.getContextPath()%>/BackEnd/res/js/sorttable.js"></script>
 </body>
 </html>

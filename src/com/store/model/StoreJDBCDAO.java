@@ -12,17 +12,107 @@ public class StoreJDBCDAO implements StoreDAO_interface {
 	String url = "jdbc:oracle:thin:@localhost:1521:XE";
 	String userid = "ba103g4";
 	String passwd = "123456";
-
+	
 	private static final String INSERT_STMT = "INSERT INTO store (STORE_NO,MEM_AC,TAX_ID_NO,WIN_ID_PIC,STORE_PHONE,STORE_ADD,STORE_ADD_LAT,"
 			+ "STORE_ADD_LON,STORE_NAME,STORE_CONT,STORE_PIC1,STORE_PIC2,STORE_PIC3,STORE_FREE_SHIP,"
-			+ "STORE_STAT,STORE_STAT_CONT,STORE_STAT_CDATE) VALUES ('S'||STORE_NO_SEQ.NEXTVAL, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+			+ "STORE_STAT,STORE_STAT_CONT,STORE_STAT_CDATE) VALUES ('S'||STORE_NO_SEQ.NEXTVAL, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, '待審中', null, sysdate)";
 	private static final String GET_ALL_STMT = "SELECT * FROM store order by STORE_NO";
 	private static final String GET_ONE_STMT = "SELECT STORE_NO,MEM_AC,TAX_ID_NO,WIN_ID_PIC,STORE_PHONE,STORE_ADD,STORE_ADD_LAT,"
 			+ "STORE_ADD_LON,STORE_NAME,STORE_CONT,STORE_PIC1,STORE_PIC2,STORE_PIC3,STORE_FREE_SHIP,"
 			+ "STORE_STAT,STORE_STAT_CONT,STORE_STAT_CDATE FROM store where STORE_NO = ?";
 	private static final String DELETE = "DELETE FROM store where STORE_NO = ?";
 	private static final String UPDATE = "UPDATE store set TAX_ID_NO=?, WIN_ID_PIC=?, STORE_PHONE=? ,STORE_ADD=?,STORE_ADD_LAT=?,STORE_ADD_LON=?,STORE_NAME=?,STORE_CONT=?,STORE_PIC1=?,STORE_PIC2=?,STORE_PIC3=?,STORE_FREE_SHIP=?,STORE_STAT_CONT=?,STORE_STAT_CDATE=?  where STORE_NO = ?";
-	private static final String UPDATE_STAT ="UPDATE store set STORE_STAT=?,store_stat_cdate=? where STORE_NO = ?";
+	private static final String UPDATE_STAT ="UPDATE store set STORE_STAT=?,store_stat_cdate=sysdate,STORE_STAT_CONT=? where STORE_NO = ?";
+	private static final String SELECT_STAT = "select * from store where store_stat=?";
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	@Override
+	public List<StoreVO> getAll_stat(String store_stat) {
+		List<StoreVO> list = new ArrayList<StoreVO>();
+		StoreVO storeVO = null;
+
+		Connection con = null;
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+
+		try {
+			Class.forName(driver);
+			con = DriverManager.getConnection(url, userid, passwd);
+			pstmt = con.prepareStatement(SELECT_STAT);
+			pstmt.setString(1, store_stat);
+			rs = pstmt.executeQuery();
+
+			while (rs.next()) {
+				storeVO = new StoreVO();
+				storeVO.setStore_no(rs.getString("store_no"));
+				storeVO.setMem_ac(rs.getString("mem_ac"));
+				storeVO.setTax_id_no(rs.getString("tax_id_no"));
+				storeVO.setWin_id_pic(rs.getBytes("win_id_pic"));
+				storeVO.setStore_phone(rs.getString("store_phone"));
+				storeVO.setStore_add(rs.getString("store_add"));
+				storeVO.setStore_add_lat(rs.getString("store_add_lat"));
+				storeVO.setStore_add_lon(rs.getString("store_add_lon"));
+				storeVO.setStore_name(rs.getString("store_name"));
+				storeVO.setStore_cont(rs.getString("store_cont"));
+				storeVO.setStore_pic1(rs.getBytes("store_pic1"));
+				storeVO.setStore_pic2(rs.getBytes("store_pic2"));
+				storeVO.setStore_pic3(rs.getBytes("store_pic3"));
+				storeVO.setStore_free_ship(rs.getInt("store_free_ship"));
+				storeVO.setStore_stat(rs.getString("store_stat"));
+				storeVO.setStore_stat_cont(rs.getString("store_stat_cont"));
+				storeVO.setStore_stat_cdate(rs.getDate("store_stat_cdate"));
+				list.add(storeVO); 
+				// Store the row in the list
+			}
+
+			// Handle any driver errors
+		} catch (ClassNotFoundException e) {
+			throw new RuntimeException("Couldn't load database driver. " + e.getMessage());
+			// Handle any SQL errors
+		} catch (SQLException se) {
+			throw new RuntimeException("A database error occured. " + se.getMessage());
+			// Clean up JDBC resources
+		} finally {
+			if (rs != null) {
+				try {
+					rs.close();
+				} catch (SQLException se) {
+					se.printStackTrace(System.err);
+				}
+			}
+			if (pstmt != null) {
+				try {
+					pstmt.close();
+				} catch (SQLException se) {
+					se.printStackTrace(System.err);
+				}
+			}
+			if (con != null) {
+				try {
+					con.close();
+				} catch (Exception e) {
+					e.printStackTrace(System.err);
+				}
+			}
+
+		}
+
+		return list;
+	}
+	
+	
+	
+	
+	
+	
 	@Override
 	public void insert(StoreVO storeVO) {
 		Connection con = null;
@@ -65,9 +155,7 @@ public class StoreJDBCDAO implements StoreDAO_interface {
 			
 			
 			pstmt.setInt(13, storeVO.getStore_free_ship());
-			pstmt.setString(14, storeVO.getStore_stat());
-			pstmt.setString(15, storeVO.getStore_stat_cont());
-			pstmt.setDate(16, storeVO.getStore_stat_cdate());
+		
 
 			pstmt.executeUpdate();
 
@@ -185,9 +273,10 @@ public class StoreJDBCDAO implements StoreDAO_interface {
 			pstmt = con.prepareStatement(UPDATE_STAT);
 
 			pstmt.setString(1, storeVO.getStore_stat());
-			pstmt.setDate(2, storeVO.getStore_stat_cdate());
+//			pstmt.setDate(2, storeVO.getStore_stat_cdate());
+			pstmt.setString(2, storeVO.getStore_stat_cont());
 			pstmt.setString(3, storeVO.getStore_no());
-
+			
 			pstmt.executeUpdate();
 
 			// Handle any driver errors
@@ -402,7 +491,7 @@ public class StoreJDBCDAO implements StoreDAO_interface {
 //		// 新增
 //		StoreVO sotreVO1 = new StoreVO();
 //		sotreVO1.setMem_ac("dantea");
-//		sotreVO1.setTax_id_no("86932444");
+//		sotreVO1.setTax_id_no("86912114");
 //		byte [] win_id_pic = getPictureByteArray("C:\\Users\\Java\\Desktop\\photo\\picFrom\\6.jpg");
 //		
 //		sotreVO1.setWin_id_pic(win_id_pic);
@@ -411,7 +500,7 @@ public class StoreJDBCDAO implements StoreDAO_interface {
 //		sotreVO1.setStore_add_lat("24.922551");
 //		sotreVO1.setStore_add_lon("121.148549");
 //		sotreVO1.setStore_name("混蛋咖啡聽");
-//		sotreVO1.setStore_cont("混蛋咖啡聽是一群混蛋開的");
+//		sotreVO1.setStore_cont("混蛋咖啡聽是一群混蛋開的11111");
 //		byte [] store_pic1 = getPictureByteArray("C:\\Users\\Java\\Desktop\\photo\\picFrom\\851.jpg");
 //		sotreVO1.setStore_pic1(store_pic1);
 //		byte [] store_pic2 = getPictureByteArray("C:\\Users\\Java\\Desktop\\photo\\picFrom\\852.jpg");
@@ -419,11 +508,7 @@ public class StoreJDBCDAO implements StoreDAO_interface {
 //		byte [] store_pic3 = getPictureByteArray("C:\\Users\\Java\\Desktop\\photo\\picFrom\\853.jpg");
 //		sotreVO1.setStore_pic3(store_pic3);
 //		sotreVO1.setStore_free_ship(1000);
-//		sotreVO1.setStore_stat("審核不通過");
-//		sotreVO1.setStore_stat_cont("混蛋不准開");
-//		java.util.Date stat_cdate = new java.util.Date();
-//		java.sql.Date store_stat_cdate = new java.sql.Date(stat_cdate.getTime());
-//		sotreVO1.setStore_stat_cdate(store_stat_cdate);
+//		
 //		dao.insert(sotreVO1);
 
 		// 前端修改
@@ -461,13 +546,17 @@ public class StoreJDBCDAO implements StoreDAO_interface {
 //		dao.update(storeVO2);
 		
 		//後端修改
-		StoreVO storeVO3 = new StoreVO();
-		storeVO3.setStore_stat("審核通過");
-		storeVO3.setStore_no("S1000000012");
-		java.util.Date stat_cdate = new java.util.Date();
-		java.sql.Date store_stat_cdate = new java.sql.Date(stat_cdate.getTime());
-		storeVO3.setStore_stat_cdate(store_stat_cdate);
-		dao.update_stat(storeVO3);
+//		StoreVO storeVO3 = new StoreVO();
+//		storeVO3.setStore_stat("審核不通過");
+//		storeVO3.setStore_no("S1000000004");
+//		storeVO3.setStore_stat_cont("就是不給你過12");
+//		dao.update_stat(storeVO3);
+		
+		
+		
+		
+		
+		
 
 		// 刪除
 //		dao.delete("S1000000011");
@@ -515,6 +604,32 @@ public class StoreJDBCDAO implements StoreDAO_interface {
 //			System.out.println(astore.getStore_stat_cdate());
 //			System.out.println();
 //		}
+		//後端狀態查詢 
+//		List<StoreVO> list1 = dao.getAll_stat("審核通過");
+//		for (StoreVO astore : list1) {
+//			System.out.println(astore.getStore_no() + ",");
+//			System.out.println(astore.getMem_ac() + ",");
+//			System.out.println(astore.getTax_id_no() + ",");
+//			System.out.println(astore.getWin_id_pic() + ",");
+//			System.out.println(astore.getStore_phone() + ",");
+//			System.out.println(astore.getStore_add() + ",");
+//			System.out.println(astore.getStore_add_lat() + ",");
+//			System.out.println(astore.getStore_add_lon());
+//			System.out.println(astore.getStore_name() + ",");
+//			System.out.println(astore.getStore_cont());
+//			System.out.println(astore.getStore_pic1() + ",");
+//			System.out.println(astore.getStore_pic2() + ",");
+//			System.out.println(astore.getStore_pic3() + ",");
+//			System.out.println(astore.getStore_free_ship() + ",");
+//			System.out.println(astore.getStore_stat() + ",");
+//			System.out.println(astore.getStore_stat_cont());
+//			System.out.println(astore.getStore_stat_cdate());
+//			System.out.println();
+//		
+//		}
+		
+		
+		
 	}
 	public static byte[] getPictureByteArray(String path) throws IOException {
 		File file = new File(path);
@@ -530,6 +645,15 @@ public class StoreJDBCDAO implements StoreDAO_interface {
 
 		return baos.toByteArray();
 	}
+
+
+
+
+
+
+	
+
+	
 
 	
 }

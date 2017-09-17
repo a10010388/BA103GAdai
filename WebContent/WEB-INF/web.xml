@@ -24,7 +24,16 @@
   </servlet>
   <servlet-mapping>
     <servlet-name>StoreImg</servlet-name>
-    <url-pattern>/Store/StoreImg.do</url-pattern>
+    <url-pattern>/store/StoreImg.do</url-pattern>
+  </servlet-mapping>
+  
+  <servlet>
+    <servlet-name>ToStore</servlet-name>
+    <servlet-class>com.store.controller.ToStore</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>ToStore</servlet-name>
+    <url-pattern>/store/ToStore.do</url-pattern>
   </servlet-mapping>
   
   

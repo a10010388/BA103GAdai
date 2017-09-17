@@ -13,8 +13,7 @@ public class StoreService {
 	public StoreVO addStore( String mem_ac, String tax_id_no,
 	  byte[] win_id_pic, String store_phone, String store_add, String store_add_lat,
 	  String store_add_lon, String store_name, String store_cont,  byte[] store_pic1,
-	  byte[] store_pic2, byte[] store_pic3, Integer store_free_ship, Date store_stat_cdate,
-	  String store_stat){
+	  byte[] store_pic2, byte[] store_pic3, Integer store_free_ship){
 		StoreVO storeVO = new StoreVO();
 		storeVO.setMem_ac(mem_ac);
 		storeVO.setTax_id_no(tax_id_no);
@@ -29,8 +28,7 @@ public class StoreService {
 		storeVO.setStore_pic2(store_pic2);
 		storeVO.setStore_pic3(store_pic3);
 		storeVO.setStore_free_ship(store_free_ship);
-		storeVO.setStore_stat(store_stat);
-		storeVO.setStore_stat_cdate(store_stat_cdate);
+		
 		dao.insert(storeVO);
 		return storeVO;
 		
@@ -63,11 +61,12 @@ public class StoreService {
 		
 		return dao.findByPrimaryKey(store_no);
 	}
-	public StoreVO update_stat(String store_stat,Date store_stat_cdate,String store_no){
+	public StoreVO update_stat(String store_stat,Date store_stat_cdate,String store_no,String store_stat_cont){
 		StoreVO storevo =new StoreVO();
 		storevo.setStore_stat(store_stat);
 		storevo.setStore_stat_cdate(store_stat_cdate);
 		storevo.setStore_no(store_no);
+		storevo.setStore_stat_cont(store_stat_cont);
 		dao.update_stat(storevo);
 		return dao.findByPrimaryKey(store_no);
 	}
@@ -86,6 +85,10 @@ public class StoreService {
 	public StoreVO getonestore(String store_no){
 		return dao.findByPrimaryKey(store_no);
 	}
+	public List<StoreVO> getstatstr(String store_stat){
+		return dao.getAll_stat(store_stat);
+	}
+	
 	
 	
 	

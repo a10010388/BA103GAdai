@@ -33,14 +33,13 @@ public class StoreServlet extends HttpServlet {
 	}
 
 	protected void doPost(HttpServletRequest req, HttpServletResponse res) throws ServletException, IOException {
-//		res.setContentType("image/gif");
 		req.setCharacterEncoding("UTF-8");
-		System.out.println(req.getContextPath());
+		
 		
 		System.out.println(req.getParameter("action"));
 		String action = req.getParameter("action");
 		
-		if ("getOne_For_Display".equals(action)) { // 來自select_page.jsp的請求
+		if ("getOne_For_Display".equals(action)) { // 來自listAllStore.jsp的請求
 
 			List<String> errorMsgs = new LinkedList<String>();
 			// Store this set in the request scope, in case we need to
@@ -51,30 +50,17 @@ public class StoreServlet extends HttpServlet {
 				/***************************
 				 * 1.接收請求參數 - 輸入格式的錯誤處理
 				 **********************/
-				String str = req.getParameter("store_no");
-				if (str == null || (str.trim()).length() == 0) {
+				String store_no = req.getParameter("store_no");
+				if (store_no == null || (store_no.trim()).length() == 0) {
 					errorMsgs.add("請輸入店家編號");
 				}
 				// Send the use back to the form, if there were errors
 				if (!errorMsgs.isEmpty()) {
-					RequestDispatcher failureView = req.getRequestDispatcher(req.getContextPath()+"/BackEnd/store/select_page.jsp");
+					RequestDispatcher failureView = req.getRequestDispatcher("/BackEnd/reg_store/listAllStore.jsp");
 					failureView.forward(req, res);
 					return;// 程式中斷
 				}
 
-				String store_no = null;
-				try {
-					store_no = new String(str);
-
-				} catch (Exception e) {
-					errorMsgs.add("員工編號格式不正確");
-				}
-				// Send the use back to the form, if there were errors
-				if (!errorMsgs.isEmpty()) {
-					RequestDispatcher failureView = req.getRequestDispatcher(req.getContextPath()+"/BackEnd/store/select_page.jsp");
-					failureView.forward(req, res);
-					return;// 程式中斷
-				}
 
 				/*************************** 2.開始查詢資料 *****************************************/
 				StoreService storeSvc = new StoreService();
@@ -84,7 +70,7 @@ public class StoreServlet extends HttpServlet {
 				}
 				// Send the use back to the form, if there were errors
 				if (!errorMsgs.isEmpty()) {
-					RequestDispatcher failureView = req.getRequestDispatcher("/BackEnd/store/select_page.jsp");
+					RequestDispatcher failureView = req.getRequestDispatcher("/BackEnd/reg_store/listAllStore.jsp");
 					failureView.forward(req, res);
 					return;// 程式中斷
 				}
@@ -93,7 +79,7 @@ public class StoreServlet extends HttpServlet {
 				 * 3.查詢完成,準備轉交(Send the Success view)
 				 *************/
 				req.setAttribute("storeVO", storeVO); // 資料庫取出的empVO物件,存入req
-				String url = "/BackEnd/store/listOneStore.jsp";
+				String url = "/BackEnd/reg_store/listOneStore.jsp";
 				RequestDispatcher successView = req.getRequestDispatcher(url); // 成功轉交
 																				// listOneEmp.jsp
 				successView.forward(req, res);
@@ -101,7 +87,7 @@ public class StoreServlet extends HttpServlet {
 				/*************************** 其他可能的錯誤處理 *************************************/
 			} catch (Exception e) {
 				errorMsgs.add("無法取得資料:" + e.getMessage());
-				RequestDispatcher failureView = req.getRequestDispatcher(req.getContextPath()+"/BackEnd/store/select_page.jsp");
+				RequestDispatcher failureView = req.getRequestDispatcher("/BackEnd/reg_store/listAllStore.jsp");
 				failureView.forward(req, res);
 			}
 		}
@@ -124,7 +110,7 @@ public class StoreServlet extends HttpServlet {
 				 * 3.查詢完成,準備轉交(Send the Success view)
 				 ************/
 				req.setAttribute("storeVO", storeVO); // 資料庫取出的empVO物件,存入req
-				String url = "/BackEnd/store/update_store_input.jsp";
+				String url = "/BackEnd/reg_store/update_store_input.jsp";
 				RequestDispatcher successView = req.getRequestDispatcher(url);// 成功轉交
 																				// update_emp_input.jsp
 				successView.forward(req, res);
@@ -132,7 +118,7 @@ public class StoreServlet extends HttpServlet {
 				/*************************** 其他可能的錯誤處理 **********************************/
 			} catch (Exception e) {
 				errorMsgs.add("無法取得要修改的資料:" + e.getMessage());
-				RequestDispatcher failureView = req.getRequestDispatcher("/BackEnd/store/update_store_input.jsp");
+				RequestDispatcher failureView = req.getRequestDispatcher("/BackEnd/reg_store/update_store_input.jsp");
 				failureView.forward(req, res);
 			}
 		}
@@ -150,18 +136,18 @@ public class StoreServlet extends HttpServlet {
 				 **********************/
 				
 				String store_no = req.getParameter("store_no").trim();
-//				String store_name = req.getParameter("store_name").trim();
-//				String tax_id_no =req.getParameter("tax_id_no").trim();
+				String store_name = req.getParameter("store_name").trim();
+				String tax_id_no =req.getParameter("tax_id_no").trim();
 				String store_stat = req.getParameter("store_stat").trim();
-//				String store_phone = req.getParameter("store_phone").trim();
-//				String store_add = req.getParameter("store_add").trim();
+				String store_phone = req.getParameter("store_phone").trim();
+				String store_add = req.getParameter("store_add").trim();
 //				String store_cont = req.getParameter("store_cont").trim();
 //				Integer store_free_ship = new Integer(req.getParameter("store_free_ship").trim());
 //				String store_add_lat =req.getParameter("store_add_lat").trim();
 //				String store_add_lon =req.getParameter("store_add_lon").trim();
-				
+				String store_stat_cont =req.getParameter("store_stat_cont").trim();
 //				
-				String store_stat_cont =req.getParameter("store_stat_cont");
+//				String store_stat_cont =req.getParameter("store_stat_cont");
 				java.sql.Date store_stat_cdate = null;
 				try {
 					store_stat_cdate = java.sql.Date.valueOf(req.getParameter("store_stat_cdate").trim());
@@ -172,20 +158,21 @@ public class StoreServlet extends HttpServlet {
 				
 								
 				
-				
+				System.out.println(store_no);
 				StoreVO storeVO = new StoreVO();
-//				storeVO.setStore_name(store_name);
+				storeVO.setStore_name(store_name);
+				storeVO.setStore_no(store_no);
 //				
-//				storeVO.setStore_stat(store_stat);
-//				storeVO.setStore_phone(store_phone);
-//				storeVO.setStore_add(store_add);
+				storeVO.setStore_stat(store_stat);
+				storeVO.setStore_phone(store_phone);
+				storeVO.setStore_add(store_add);
 //				storeVO.setStore_cont(store_cont);
 //				storeVO.setStore_no(store_no);
 //				storeVO.setStore_free_ship(store_free_ship);
-//				storeVO.setTax_id_no(tax_id_no);
+				storeVO.setTax_id_no(tax_id_no);
 //				storeVO.setStore_add_lat(store_add_lat);
 //				storeVO.setStore_add_lon(store_add_lon);
-				
+				storeVO.setStore_stat_cont(store_stat_cont);
 //				InputStream win_id_pic = req.getPart("win_id_pic").getInputStream();
 //				ByteArrayOutputStream id_pic = new ByteArrayOutputStream();
 //				int idpic;
@@ -234,151 +221,40 @@ public class StoreServlet extends HttpServlet {
 
 
 				
-//				storeVO.setStore_stat_cont(store_stat_cont);
+				storeVO.setStore_stat_cont(store_stat_cont);
 				storeVO.setStore_stat_cdate(store_stat_cdate);
 				
 
 				// Send the use back to the form, if there were errors
 				if (!errorMsgs.isEmpty()) {
 					req.setAttribute("storeVO", storeVO); // 含有輸入格式錯誤的empVO物件,也存入req
-					RequestDispatcher failureView = req.getRequestDispatcher("/BackEnd/store/update_store_input.jsp");
+					RequestDispatcher failureView = req.getRequestDispatcher("/BackEnd/reg_store/update_store_input.jsp");
 					failureView.forward(req, res);
 					return; // 程式中斷
 				}
-				
+				System.out.println("11111111111111");
 				/*************************** 2.開始修改資料 *****************************************/
 				StoreService storeSvc = new StoreService();
-				storeVO = storeSvc.update_stat(store_stat, store_stat_cdate, store_no);
-
+				storeVO = storeSvc.update_stat(store_stat, store_stat_cdate, store_no, store_stat_cont);
+				System.out.println(storeVO.getStore_stat());
 				/***************************
 				 * 3.修改完成,準備轉交(Send the Success view)
 				 *************/
-				
+				System.out.println("222222222222222222");
+
 				req.setAttribute("storeVO", storeVO); // 資料庫update成功後,正確的的empVO物件,存入req
-				String url = "/BackEnd/store/listOneStore.jsp";
+				String url = "/BackEnd/reg_store/listOneStore.jsp";
 				RequestDispatcher successView = req.getRequestDispatcher(url); // 修改成功後,轉交listOneEmp.jsp
 				successView.forward(req, res);
-				System.out.println("-------*34**---------");
+				
 				/*************************** 其他可能的錯誤處理 *************************************/
 			} catch (Exception e) {
 				errorMsgs.add("修改資料失敗:" + e.getMessage());
-				RequestDispatcher failureView = req.getRequestDispatcher("/BackEnd/store/update_store_input.jsp");
+				RequestDispatcher failureView = req.getRequestDispatcher("/BackEnd/reg_store/update_store_input.jsp");
 				failureView.forward(req, res);
 			}
 		}
-		if ("insert".equals(action)) { // 來自addEmp.jsp的請求
-			
-			List<String> errorMsgs = new LinkedList<String>();
-			// Store this set in the request scope, in case we need to
-			// send the ErrorPage view.
-			req.setAttribute("errorMsgs", errorMsgs);
-
-			try {
-				/***********************
-				 * 1.接收請求參數 - 輸入格式的錯誤處理
-				 *************************/
-				String store_name = req.getParameter("store_name").trim();
-				String tax_id_no = req.getParameter("tax_id_no").trim();
-				String store_add = req.getParameter("store_add").trim();
-				String store_phone = req.getParameter("store_phone").trim();
-				String store_cont = req.getParameter("store_cont").trim();
-				String mem_ac = req.getParameter("mem_ac").trim();
-				
-				InputStream win_id_pic = req.getPart("win_id_pic").getInputStream();
-				ByteArrayOutputStream id_pic = new ByteArrayOutputStream();
-				int idpic;
-				byte[] idimg = new byte[16384];
-
-				while ((idpic = win_id_pic.read(idimg, 0, idimg.length)) != -1) {
-					id_pic.write(idimg, 0, idpic);
-				}
-				byte [] idimg1 = id_pic.toByteArray();
-				
-				
-				String store_add_lat =req.getParameter("store_add_lat").trim();
-				String store_add_lon =req.getParameter("store_add_lon").trim();
-				
-				InputStream storepic1 = req.getPart("store_pic1").getInputStream();
-				ByteArrayOutputStream spic_1 = new ByteArrayOutputStream();
-				int spic1;
-				byte[] sphoto1 = new byte[16384];
-
-				while ((spic1 = storepic1.read(sphoto1, 0, sphoto1.length)) != -1) {
-					spic_1.write(sphoto1, 0, spic1);
-				}
-				byte [] sphoto1_1 = spic_1.toByteArray();
-				
-				InputStream storepic2 = req.getPart("store_pic2").getInputStream();
-				ByteArrayOutputStream spic_2 = new ByteArrayOutputStream();
-				int spic2;
-				byte[] sphoto2 = new byte[16384];
-				while ((spic2 = storepic2.read(sphoto2, 0, sphoto2.length)) != -1) {
-					spic_2.write(sphoto2, 0, spic2);
-				}
-				byte [] sphoto2_1 = spic_2.toByteArray();
-				
-				InputStream storepic3 = req.getPart("store_pic3").getInputStream();
-				ByteArrayOutputStream spic_3 = new ByteArrayOutputStream();
-				int spic3;
-				byte[] sphoto3 = new byte[16384];
-
-				while ((spic3 = storepic3.read(sphoto3, 0, sphoto3.length)) != -1) {
-					spic_3.write(sphoto3, 0, spic3);
-				}
-				byte [] sphoto3_1 = spic_3.toByteArray();
-				
-				String store_stat = req.getParameter("store_stat").trim();
-				Integer store_free_ship = new Integer(req.getParameter("store_free_ship").trim());
-				java.sql.Date STORE_STAT_CDATE = null;
-				try {
-					STORE_STAT_CDATE = java.sql.Date.valueOf(req.getParameter("store_stat_cdate").trim());
-				} catch (IllegalArgumentException e) {
-					STORE_STAT_CDATE=new java.sql.Date(System.currentTimeMillis());
-					errorMsgs.add("請輸入日期!");
-				}
-
-				StoreVO storeVO = new StoreVO();
-				storeVO.setStore_name(store_name);
-				storeVO.setTax_id_no(tax_id_no);
-				storeVO.setStore_add(store_add);
-				storeVO.setStore_phone(store_phone);
-				storeVO.setStore_cont(store_cont);
-				storeVO.setMem_ac(mem_ac);
-				storeVO.setWin_id_pic(idimg1);
-				storeVO.setStore_add_lat(store_add_lat);
-				storeVO.setStore_add_lon(store_add_lon);
-				storeVO.setStore_pic1(sphoto1_1);
-				storeVO.setStore_pic2(sphoto2_1);
-				storeVO.setStore_pic3(sphoto3_1);
-				storeVO.setStore_stat(store_stat);
-				storeVO.setStore_free_ship(store_free_ship);
-
-				// Send the use back to the form, if there were errors
-				if (!errorMsgs.isEmpty()) {
-					req.setAttribute("storeVO", storeVO); // 含有輸入格式錯誤的empVO物件,也存入req
-					RequestDispatcher failureView = req.getRequestDispatcher("/BackEnd/store/addStore.jsp");
-					failureView.forward(req, res);
-					return;
-				}
-
-				/*************************** 2.開始新增資料 ***************************************/
-				StoreService storeSvc = new StoreService();
-				storeVO = storeSvc.addStore(mem_ac, tax_id_no, idimg1, store_phone, store_add, store_add_lat, store_add_lon, store_name, store_cont, sphoto1_1, sphoto2_1, sphoto3_1, store_free_ship, STORE_STAT_CDATE, store_stat);
-
-				/***************************
-				 * 3.新增完成,準備轉交(Send the Success view)
-				 ***********/
-				String url = "/BackEnd/store/listAllStore.jsp";
-				RequestDispatcher successView = req.getRequestDispatcher(url); // 新增成功後轉交listAllEmp.jsp
-				successView.forward(req, res);
-
-				/*************************** 其他可能的錯誤處理 **********************************/
-			} catch (Exception e) {
-				errorMsgs.add(e.getMessage());
-				RequestDispatcher failureView = req.getRequestDispatcher("/BackEnd/store/addStore.jsp");
-				failureView.forward(req, res);
-			}
-		}
+		
 		if ("delete".equals(action)) { // 來自listAllEmp.jsp
 
 			List<String> errorMsgs = new LinkedList<String>();
@@ -395,7 +271,7 @@ public class StoreServlet extends HttpServlet {
 				StoreSvc.deletestore(store_no);
 				
 				/***************************3.刪除完成,準備轉交(Send the Success view)***********/								
-				String url = "/BackEnd/store/listAllStore.jsp";
+				String url = "/BackEnd/reg_store/listAllStore.jsp";
 				RequestDispatcher successView = req.getRequestDispatcher(url);// 刪除成功後,轉交回送出刪除的來源網頁
 				successView.forward(req, res);
 				
@@ -403,7 +279,60 @@ public class StoreServlet extends HttpServlet {
 			} catch (Exception e) {
 				errorMsgs.add("刪除資料失敗:"+e.getMessage());
 				RequestDispatcher failureView = req
-						.getRequestDispatcher("/BackEnd/store/listAllStore.jsp");
+						.getRequestDispatcher("/BackEnd/reg_store/listAllStore.jsp");
+				failureView.forward(req, res);
+			}
+		}
+		if ("selstat".equals(action)) { // 來自listAllStore.jsp的請求
+
+			List<String> errorMsgs = new LinkedList<String>();
+			// Store this set in the request scope, in case we need to
+			// send the ErrorPage view.
+			req.setAttribute("errorMsgs", errorMsgs);
+
+			try {
+				/***************************
+				 * 1.接收請求參數 - 輸入格式的錯誤處理
+				 **********************/
+				String store_stat = req.getParameter("store_stat");
+				System.out.println(store_stat);
+				if (store_stat == null || (store_stat.trim()).length() == 0) {
+					errorMsgs.add("請選擇審核狀態");
+				}
+				// Send the use back to the form, if there were errors
+				if (!errorMsgs.isEmpty()) {
+					RequestDispatcher failureView = req.getRequestDispatcher("/BackEnd/reg_store/listAllStore.jsp");
+					failureView.forward(req, res);
+					return;// 程式中斷
+				}
+
+
+				/*************************** 2.開始查詢資料 *****************************************/
+				StoreService storeSvc = new StoreService();
+				List<StoreVO> storeVOlist = storeSvc.getstatstr(store_stat);
+				if (storeVOlist == null) {
+					errorMsgs.add("查無資料");
+				}
+				// Send the use back to the form, if there were errors
+				if (!errorMsgs.isEmpty()) {
+					RequestDispatcher failureView = req.getRequestDispatcher("/BackEnd/reg_store/listAllStore.jsp");
+					failureView.forward(req, res);
+					return;// 程式中斷
+				}
+				
+				/***************************
+				 * 3.查詢完成,準備轉交(Send the Success view)
+				 *************/
+				req.setAttribute("storeVOlist", storeVOlist); // 資料庫取出的empVO物件,存入req
+				String url = "/BackEnd/reg_store/listAllStore.jsp";
+				RequestDispatcher successView = req.getRequestDispatcher(url); // 成功轉交
+																				// listOneEmp.jsp
+				successView.forward(req, res);
+
+				/*************************** 其他可能的錯誤處理 *************************************/
+			} catch (Exception e) {
+				errorMsgs.add("無法取得資料:" + e.getMessage());
+				RequestDispatcher failureView = req.getRequestDispatcher("/BackEnd/reg_store/listAllStore.jsp");
 				failureView.forward(req, res);
 			}
 		}
