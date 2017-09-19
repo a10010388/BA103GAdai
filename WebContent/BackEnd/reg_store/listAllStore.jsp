@@ -5,15 +5,18 @@
 <%-- 此頁採用 JSTL 與 EL 取值 --%>
 
 <%
-
+	
+// 	String store_stat1= (String) request.getAttribute("store_stat1");
+	String store_stat1= (String) request.getParameter("store_stat1");
 	StoreService storeSvc = new StoreService();
 	List<StoreVO> list;
-	if(((List<StoreVO>) request.getAttribute("storeVOlist"))==null){
+	if(store_stat1==null){
 		
 		list = storeSvc.getAll();
-	} else{
-		list = (List<StoreVO>) request.getAttribute("storeVOlist");
+	} else {
+		list=storeSvc.getstatstr(store_stat1);
 	}
+	
 		pageContext.setAttribute("list", list);
 %>
 
@@ -22,7 +25,7 @@
 <title>後端首頁0902</title>
 <link rel="stylesheet prefetch"
 	href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/css/bootstrap.min.css">
-<link rel="stylesheet" href="../font-awesome-4.7.0/css/font-awesome.css">
+<link rel="stylesheet" href="<%=request.getContextPath()%>/BackEnd/res/font-awesome-4.7.0/css/font-awesome.css">
 <link rel="stylesheet"
 	href="<%=request.getContextPath()%>/BackEnd/res/font-awesome-4.7.0/css/font-awesome.min.css">
 <link rel="stylesheet" href="<%=request.getContextPath()%>/BackEnd/res/css/style.css">
@@ -61,7 +64,7 @@
 					<div class="fa fa-address-card-o"></div> <span class="h3">會員管理</span>
 					<ul class="collapse" id="mem">
 						<a>會員資料管理</a>
-						<a>廠商店家授權</a>
+						<a href="<%=request.getContextPath()%>/BackEnd/reg_store/listAllStore.jsp">廠商店家授權</a>
 						<a>積分管理</a>
 					</ul>
 				</a><a class="h3 title" href="#admin" aria-expanded="false"
@@ -100,22 +103,24 @@
 				<div class="col-xs-12 right_bottom">
 					<table class="store_tittle">
 						<tr>
-							<td><h3>所有店家資料-listALLStore.jsp</h3></td>
+							<td><h3>店家資料-listALLStore.jsp</h3></td>
 							<td width="100"></td>
-							
 							<td>依審核狀態選取：</td>
 							<td></td>
 							<td><FORM METHOD="post"
 										ACTION="<%=request.getContextPath()%>/store/store.do">
-										<select size="1" name=store_stat>
-											<option value="待審中" >待審中</option>
-　											<option value="審核通過" >審核通過</option>
-　											<option value="審核不通過">審核不通過</option>
+										<select size="1" name=store_stat1>
+											<option value="%%">請選擇</option>
+											<option value="待審中" ${(param.store_stat1=='待審中')? 'selected':''}>待審中</option>
+　											<option value="審核通過" ${(param.store_stat1=='審核通過')? 'selected':''}>審核通過</option>
+　											<option value="審核不通過" ${(param.store_stat1=='審核不通過')? 'selected':''}>審核不通過</option>
 										</select>
 											<input type="submit" value="送出"> 
 											<input	type="hidden" name="action" value="selstat">
+											<input	type="hidden" name="store_stat1" value="selstat">
 								</FORM>	
 							</td>
+							<td>目前查詢狀態：${(param.store_stat1==null||param.store_stat1=='%%')? '查詢全部':param.store_stat1}</td>
 						</tr>
 					</table>
 					<%-- 錯誤表列 --%>
@@ -133,7 +138,6 @@
 							<th>廠商編號</th>
 							<th>會員帳號</th>
 							<th>統一編號</th>
-							<th>廠商住址</th>
 							<th>廠商名稱</th>
 							<th>證件照</th>
 							<th>店家照1</th>
@@ -141,40 +145,34 @@
 							<th>店家照3</th>
 							<th>審核狀態</th>
 							<th></th>
-							<th></th>
+							<th>審核日期</th>
 						</tr>
 						<%@ include file="page1.file"%>
 
 						<c:forEach var="storeVO" items="${list}" begin="<%=pageIndex%>"
 							end="<%=pageIndex+rowsPerPage-1%>">
-							<tr align='center' valign='middle'>
+							<tr align='center' valign='middle' >
 								<td>${storeVO.store_no}</td>
 								<td>${storeVO.mem_ac}</td>
 								<td>${storeVO.tax_id_no}</td>
-								<td>${storeVO.store_add}</td>            
 								<td>${storeVO.store_name}</td>							
 								<td><img width="100px" src="<%=request.getContextPath()%>/store/StoreImg.do?store_no=${storeVO.store_no}&index=0"></td>
 								<td><img width="100px" src="<%=request.getContextPath()%>/store/StoreImg.do?store_no=${storeVO.store_no}&index=1" ></td>
 								<td><img width="100px" src="<%=request.getContextPath()%>/store/StoreImg.do?store_no=${storeVO.store_no}&index=2" ></td>
 								<td><img width="100px" src="<%=request.getContextPath()%>/store/StoreImg.do?store_no=${storeVO.store_no}&index=3" ></td>
-								<td>${storeVO.store_stat}</td>
+								<td ${(storeVO.store_no==param.store_no) ? 'bgcolor=#CCCCFF':''}>${storeVO.store_stat}</td>
 								<td>
 									<FORM METHOD="post"
 										ACTION="<%=request.getContextPath()%>/store/store.do">
-										<input type="submit" value="審核修改狀態"> <input
-											type="hidden" name="store_no" value="${storeVO.store_no}">
+										<input type="submit" value="審核修改狀態" class="btn btn-info"> 
+										<input type="hidden" name="store_no" value="${storeVO.store_no}">
 										<input type="hidden" name="store_stat_cont" value="${storeVO.store_stat_cont}">
+										<input type="hidden" name="whichPage"	value="<%=whichPage%>">  
 										<input type="hidden" name="action" value="getOne_For_Update">
+										<input	type="hidden" name="store_stat1" value="${param.store_stat1}">
 									</FORM>
 								</td>
-								<td>
-									<FORM METHOD="post"
-										ACTION="<%=request.getContextPath()%>/store/store.do">
-										<input type="submit" value="刪除"> <input type="hidden"
-											name="store_no" value="${storeVO.store_no}"> <input
-											type="hidden" name="action" value="delete">
-									</FORM>
-								</td>
+								<td>${storeVO.store_stat_cdate}</td>
 							</tr>
 						</c:forEach>
 

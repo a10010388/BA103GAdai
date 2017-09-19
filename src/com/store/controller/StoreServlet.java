@@ -18,6 +18,7 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 import javax.servlet.http.Part;
 
 import com.store.model.StoreService;
@@ -101,10 +102,17 @@ public class StoreServlet extends HttpServlet {
 			try {
 				/*************************** 1.接收請求參數 ****************************************/
 				String store_no = new String(req.getParameter("store_no"));
-
+				String whichPage = req.getParameter("whichPage"); // 送出修改的來源網頁的第幾頁(只用於:istAllEmp.jsp)
+				req.setAttribute("whichPage", whichPage);   // 送出修改的來源網頁的第幾頁, 存入req(只用於:istAllEmp.jsp)
+				
+				
+//				String store_stat1 = req.getParameter("store_stat1"); 
+//				req.setAttribute("store_stat1", store_stat1);
+				
 				/*************************** 2.開始查詢資料 ****************************************/
 				StoreService storeSvc = new StoreService();
 				StoreVO storeVO = storeSvc.getonestore(store_no);
+				
 
 				/***************************
 				 * 3.查詢完成,準備轉交(Send the Success view)
@@ -135,6 +143,10 @@ public class StoreServlet extends HttpServlet {
 				 * 1.接收請求參數 - 輸入格式的錯誤處理
 				 **********************/
 				
+				String store_stat1 =req.getParameter("store_stat1");
+				System.out.println(store_stat1);
+//				req.setAttribute("store_stat1", store_stat1);
+				
 				String store_no = req.getParameter("store_no").trim();
 				String store_name = req.getParameter("store_name").trim();
 				String tax_id_no =req.getParameter("tax_id_no").trim();
@@ -146,6 +158,9 @@ public class StoreServlet extends HttpServlet {
 //				String store_add_lat =req.getParameter("store_add_lat").trim();
 //				String store_add_lon =req.getParameter("store_add_lon").trim();
 				String store_stat_cont =req.getParameter("store_stat_cont").trim();
+				
+				
+				
 //				
 //				String store_stat_cont =req.getParameter("store_stat_cont");
 				java.sql.Date store_stat_cdate = null;
@@ -155,10 +170,10 @@ public class StoreServlet extends HttpServlet {
 					store_stat_cdate=new java.sql.Date(System.currentTimeMillis());
 					errorMsgs.add("請輸入日期!");
 				}
-				
+				String whichPage = req.getParameter("whichPage"); // 送出修改的來源網頁的第幾頁(只用於:istAllEmp.jsp)
+				req.setAttribute("whichPage", whichPage);   // 送出修改的來源網頁的第幾頁, 存入req(只用於:istAllEmp.jsp)
 								
 				
-				System.out.println(store_no);
 				StoreVO storeVO = new StoreVO();
 				storeVO.setStore_name(store_name);
 				storeVO.setStore_no(store_no);
@@ -232,18 +247,15 @@ public class StoreServlet extends HttpServlet {
 					failureView.forward(req, res);
 					return; // 程式中斷
 				}
-				System.out.println("11111111111111");
 				/*************************** 2.開始修改資料 *****************************************/
 				StoreService storeSvc = new StoreService();
 				storeVO = storeSvc.update_stat(store_stat, store_stat_cdate, store_no, store_stat_cont);
-				System.out.println(storeVO.getStore_stat());
 				/***************************
 				 * 3.修改完成,準備轉交(Send the Success view)
 				 *************/
-				System.out.println("222222222222222222");
-
+				
 				req.setAttribute("storeVO", storeVO); // 資料庫update成功後,正確的的empVO物件,存入req
-				String url = "/BackEnd/reg_store/listOneStore.jsp";
+				String url = "/BackEnd/reg_store/listAllStore.jsp";
 				RequestDispatcher successView = req.getRequestDispatcher(url); // 修改成功後,轉交listOneEmp.jsp
 				successView.forward(req, res);
 				
@@ -294,11 +306,14 @@ public class StoreServlet extends HttpServlet {
 				/***************************
 				 * 1.接收請求參數 - 輸入格式的錯誤處理
 				 **********************/
-				String store_stat = req.getParameter("store_stat");
-				System.out.println(store_stat);
-				if (store_stat == null || (store_stat.trim()).length() == 0) {
-					errorMsgs.add("請選擇審核狀態");
-				}
+				String store_stat1 = req.getParameter("store_stat1");
+				System.out.println(store_stat1);
+				
+//				HttpSession abc=req.getSession();
+//				req.setAttribute("store_stat1", store_stat1);//
+				
+				
+				
 				// Send the use back to the form, if there were errors
 				if (!errorMsgs.isEmpty()) {
 					RequestDispatcher failureView = req.getRequestDispatcher("/BackEnd/reg_store/listAllStore.jsp");
@@ -309,7 +324,7 @@ public class StoreServlet extends HttpServlet {
 
 				/*************************** 2.開始查詢資料 *****************************************/
 				StoreService storeSvc = new StoreService();
-				List<StoreVO> storeVOlist = storeSvc.getstatstr(store_stat);
+				List<StoreVO> storeVOlist = storeSvc.getstatstr(store_stat1);
 				if (storeVOlist == null) {
 					errorMsgs.add("查無資料");
 				}
@@ -323,6 +338,7 @@ public class StoreServlet extends HttpServlet {
 				/***************************
 				 * 3.查詢完成,準備轉交(Send the Success view)
 				 *************/
+//				HttpSession test=req.getSession();
 				req.setAttribute("storeVOlist", storeVOlist); // 資料庫取出的empVO物件,存入req
 				String url = "/BackEnd/reg_store/listAllStore.jsp";
 				RequestDispatcher successView = req.getRequestDispatcher(url); // 成功轉交

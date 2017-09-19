@@ -2,6 +2,7 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ page import="com.store.model.*"%>
 <%
+	//String store_stat1= (String) request.getAttribute("store_stat1");
 	StoreVO storeVO = (StoreVO) request.getAttribute("storeVO"); //EmpServlet.java (Concroller), 存入req的empVO物件 (包括幫忙取出的empVO, 也包括輸入資料錯誤時的empVO物件)
 	
 %>
@@ -96,7 +97,7 @@
 		</tr>
 	</table>
 
-	<h3>資料修改:</h3>
+	<h3>狀態修改:</h3>
 	<%-- 錯誤表列 --%>
 	<c:if test="${not empty errorMsgs}">
 		<font color='red'>請修正以下錯誤:
@@ -131,7 +132,6 @@
 			<tr>
 				<td>審核狀態:</td>
 				<td><select size="1" name=store_stat>
-<%-- 						<option value="<%=storeVO.getStore_stat()%>"><%=storeVO.getStore_stat()%> </option> --%>
 						<option value="待審中" <%=(storeVO.getStore_stat().equals("待審中"))? "SELECTED" : ""%>>待審中</option>
 　						<option value="審核通過" <%=(storeVO.getStore_stat().equals("審核通過"))? "SELECTED" : ""%>>審核通過</option>
 　						<option value="審核不通過" <%=(storeVO.getStore_stat().equals("審核不通過"))? "SELECTED" : ""%>>審核不通過</option>
@@ -198,6 +198,8 @@
 			type="hidden" name="store_pic2" value="<%=storeVO.getStore_pic2()%>">
 		<input
 			type="hidden" name="store_pic3" value="<%=storeVO.getStore_pic3()%>">
+		<input type="hidden" name="whichPage" value="<%=request.getAttribute("whichPage")%>">
+		<input	type="hidden" name="store_stat1" value="${param.store_stat1}">
 		<input type="submit" value="送出修改">
 	
 	</FORM>

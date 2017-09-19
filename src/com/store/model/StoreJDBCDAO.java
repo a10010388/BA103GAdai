@@ -483,6 +483,9 @@ public class StoreJDBCDAO implements StoreDAO_interface {
 
 		return list;
 	}
+	
+	
+	
 
 	public static void main(String[] args) throws IOException {
 
@@ -645,6 +648,13 @@ public class StoreJDBCDAO implements StoreDAO_interface {
 
 		return baos.toByteArray();
 	}
+
+
+
+
+
+
+	
 
 
 
