@@ -38,7 +38,7 @@ public class StoreDAO implements StoreDAO_interface{
 			+ "STORE_ADD_LON,STORE_NAME,STORE_CONT,STORE_PIC1,STORE_PIC2,STORE_PIC3,STORE_FREE_SHIP,"
 			+ "STORE_STAT,STORE_STAT_CONT,STORE_STAT_CDATE FROM store where STORE_NO = ?";
 	private static final String DELETE = "DELETE FROM store where STORE_NO = ?";
-	private static final String UPDATE = "UPDATE store set TAX_ID_NO=?, WIN_ID_PIC=?, STORE_PHONE=? ,STORE_ADD=?,STORE_ADD_LAT=?,STORE_ADD_LON=?,STORE_NAME=?,STORE_CONT=?,STORE_PIC1=?,STORE_PIC2=?,STORE_PIC3=?,STORE_FREE_SHIP=?,STORE_STAT_CONT=?,STORE_STAT_CDATE=?  where STORE_NO = ?";
+	private static final String UPDATE = "UPDATE store set TAX_ID_NO=?, WIN_ID_PIC=?, STORE_PHONE=? ,STORE_ADD=?,STORE_ADD_LAT=?,STORE_ADD_LON=?,STORE_NAME=?,STORE_CONT=?,STORE_PIC1=?,STORE_PIC2=?,STORE_PIC3=?,STORE_FREE_SHIP=?,STORE_STAT='待審中',STORE_STAT_CDATE=sysdate  where STORE_NO = ? and STORE_STAT like '%審核不通過%'";
 	private static final String UPDATE_STAT ="UPDATE store set STORE_STAT=?,store_stat_cdate=sysdate,STORE_STAT_CONT=? where STORE_NO = ?";
 	private static final String SELECT_STAT = "select * from store where store_stat like ?";
 
@@ -151,10 +151,7 @@ public class StoreDAO implements StoreDAO_interface{
 			pstmt.setBlob(11, blobSTORE_PIC3);
 			
 			pstmt.setInt(12, storeVO.getStore_free_ship());
-			pstmt.setString(13, storeVO.getStore_stat());
-			pstmt.setString(14, storeVO.getStore_cont());
-			pstmt.setDate(15, storeVO.getStore_stat_cdate());
-			pstmt.setString(16, storeVO.getStore_no());
+			pstmt.setString(13, storeVO.getStore_no());
 			pstmt.executeUpdate();
 
 			// Handle any driver errors

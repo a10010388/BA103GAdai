@@ -21,9 +21,9 @@ public class StoreJDBCDAO implements StoreDAO_interface {
 			+ "STORE_ADD_LON,STORE_NAME,STORE_CONT,STORE_PIC1,STORE_PIC2,STORE_PIC3,STORE_FREE_SHIP,"
 			+ "STORE_STAT,STORE_STAT_CONT,STORE_STAT_CDATE FROM store where STORE_NO = ?";
 	private static final String DELETE = "DELETE FROM store where STORE_NO = ?";
-	private static final String UPDATE = "UPDATE store set TAX_ID_NO=?, WIN_ID_PIC=?, STORE_PHONE=? ,STORE_ADD=?,STORE_ADD_LAT=?,STORE_ADD_LON=?,STORE_NAME=?,STORE_CONT=?,STORE_PIC1=?,STORE_PIC2=?,STORE_PIC3=?,STORE_FREE_SHIP=?,STORE_STAT_CONT=?,STORE_STAT_CDATE=?  where STORE_NO = ?";
+	private static final String UPDATE = "UPDATE store set TAX_ID_NO=?, WIN_ID_PIC=?, STORE_PHONE=? ,STORE_ADD=?,STORE_ADD_LAT=?,STORE_ADD_LON=?,STORE_NAME=?,STORE_CONT=?,STORE_PIC1=?,STORE_PIC2=?,STORE_PIC3=?,STORE_FREE_SHIP=?,STORE_STAT='待審中',STORE_STAT_CDATE=sysdate  where STORE_NO = ? and STORE_STAT like '%審核不通過%'";
 	private static final String UPDATE_STAT ="UPDATE store set STORE_STAT=?,store_stat_cdate=sysdate,STORE_STAT_CONT=? where STORE_NO = ?";
-	private static final String SELECT_STAT = "select * from store where store_stat=?";
+	private static final String SELECT_STAT = "select * from store where store_stat like ?";
 	
 	
 	
@@ -228,9 +228,7 @@ public class StoreJDBCDAO implements StoreDAO_interface {
 			pstmt.setBlob(11, blobSTORE_PIC3);
 			
 			pstmt.setInt(12, storeVO.getStore_free_ship());
-			pstmt.setString(13, storeVO.getStore_cont());
-			pstmt.setDate(14, storeVO.getStore_stat_cdate());
-			pstmt.setString(15, storeVO.getStore_no());
+			pstmt.setString(13, storeVO.getStore_no());
 
 			pstmt.executeUpdate();
 
@@ -516,17 +514,17 @@ public class StoreJDBCDAO implements StoreDAO_interface {
 
 		// 前端修改
 //		StoreVO storeVO2 = new StoreVO();
-//		storeVO2.setTax_id_no("84561202");
+//		storeVO2.setTax_id_no("84561278");
 //		byte [] win_id_pic = getPictureByteArray("C:\\Users\\Java\\Desktop\\photo\\picFrom\\6.jpg");
 //		storeVO2.setWin_id_pic(win_id_pic);
 //		
-//		storeVO2.setStore_phone("08545123");
+//		storeVO2.setStore_phone("08545156");
 //		
-//		storeVO2.setStore_add("測試地址修改");
-//		storeVO2.setStore_add_lat("520.123");
-//		storeVO2.setStore_add_lon("453.1236");
-//		storeVO2.setStore_name("混蛋");
-//		storeVO2.setStore_cont("混蛋殺過人");
+//		storeVO2.setStore_add("測試地址修改22222");
+//		storeVO2.setStore_add_lat("000.123");
+//		storeVO2.setStore_add_lon("123.1236");
+//		storeVO2.setStore_name("混蛋555");
+//		storeVO2.setStore_cont("混蛋殺過人5555");
 //		
 //		byte [] store_pic1 = getPictureByteArray("C:\\Users\\Java\\Desktop\\photo\\picFrom\\851.jpg");
 //		storeVO2.setStore_pic1(store_pic1);
@@ -537,15 +535,7 @@ public class StoreJDBCDAO implements StoreDAO_interface {
 //		
 //		storeVO2.setStore_free_ship(100);
 //		
-//		
-//		storeVO2.setStore_cont("混蛋不准開");
-//		storeVO2.setStore_phone("025555555");
-//		
-//		java.util.Date stat_cdate = new java.util.Date();
-//		java.sql.Date store_stat_cdate = new java.sql.Date(stat_cdate.getTime());
-//		storeVO2.setStore_stat_cdate(store_stat_cdate);
-//		
-//		storeVO2.setStore_no("S1000000012");
+//		storeVO2.setStore_no("S1000000052");
 //		dao.update(storeVO2);
 		
 		//後端修改
