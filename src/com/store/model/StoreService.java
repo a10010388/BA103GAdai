@@ -2,6 +2,9 @@ package com.store.model;
 
 import java.sql.Date;
 import java.util.List;
+import java.util.Set;
+
+import com.prod.model.ProdVO;
 
 public class StoreService {
 	
@@ -88,7 +91,9 @@ public class StoreService {
 	public List<StoreVO> getstatstr(String store_stat){
 		return dao.getAll_stat(store_stat);
 	}
-	
+	public Set<ProdVO> getProdsByStore(String store_no){
+		return dao.getProdsByStore_no(store_no);
+	}
 	
 	
 	

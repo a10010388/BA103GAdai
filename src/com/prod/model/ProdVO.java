@@ -3,203 +3,203 @@ package com.prod.model;
 import java.io.Serializable;
 import java.sql.Date;
 
-public class ProdVO implements Serializable{
-	private String PROD_NO;
-	private String STORE_NO;
-	private String PROD_NAME;
-	private String BEAN_TYPE;
-	private String BEAN_GRADE;
-	private String BEAN_CONTRY;
-	private String BEAN_REGION;
-	private String BEAN_FARM;
-	private String BEAN_FARMER;
-	private Integer BEAN_EL;
-	private String PROC;
-	private String ROAST;
-	private Integer BEAN_ATTR_ACID;
-	private Integer BEAN_ATTR_AROMA;
-	private Integer BEAN_ATTR_BODY;
-	private Integer BEAN_ATTR_AFTER;
-	private Integer BEAN_ATTR_BAL;
-	private String BEAN_AROMA;
-	private Integer PROD_PRICE;
-	private Integer PROD_WT;
-	private Integer SEND_FEE;
-	private Integer PROD_SUP;
-	private String PROD_CONT;
-	private byte[] PROD_PIC1;
-	private byte[] PROD_PIC2;
-	private byte[] PROD_PIC3;
-	private String PROD_STAT;
-	private Date ED_TIME;
-	public String getPROD_NO() {
-		return PROD_NO;
+public class ProdVO implements Serializable {
+	private String prod_no;
+	private String store_no;
+	private String prod_name;
+	private String bean_type;
+	private String bean_grade;
+	private String bean_contry;
+	private String bean_region;
+	private String bean_farm;
+	private String bean_farmer;
+	private Integer bean_el;
+	private String proc;
+	private String roast;
+	private Integer bean_attr_acid;
+	private Integer bean_attr_aroma;
+	private Integer bean_attr_body;
+	private Integer bean_attr_after;
+	private Integer bean_attr_bal;
+	private String bean_aroma;
+	private Integer prod_price;
+	private Double prod_wt;
+	private Integer send_fee;
+	private Integer prod_sup;
+	private String prod_cont;
+	private byte[] prod_pic1;
+	private byte[] prod_pic2;
+	private byte[] prod_pic3;
+	private String prod_stat;
+	private Date ed_time;
+		
+	public String getProd_no() {
+		return prod_no;
 	}
-	public void setPROD_NO(String pROD_NO) {
-		PROD_NO = pROD_NO;
+	public void setProd_no(String prod_no) {
+		this.prod_no = prod_no;
 	}
-	public String getSTORE_NO() {
-		return STORE_NO;
+	public String getStore_no() {
+		return store_no;
 	}
-	public void setSTORE_NO(String sTORE_NO) {
-		STORE_NO = sTORE_NO;
+	public void setStore_no(String store_no) {
+		this.store_no = store_no;
 	}
-	public String getPROD_NAME() {
-		return PROD_NAME;
+	public String getProd_name() {
+		return prod_name;
 	}
-	public void setPROD_NAME(String pROD_NAME) {
-		PROD_NAME = pROD_NAME;
+	public void setProd_name(String prod_name) {
+		this.prod_name = prod_name;
 	}
-	public String getBEAN_TYPE() {
-		return BEAN_TYPE;
+	public String getBean_type() {
+		return bean_type;
 	}
-	public void setBEAN_TYPE(String bEAN_TYPE) {
-		BEAN_TYPE = bEAN_TYPE;
+	public void setBean_type(String bean_type) {
+		this.bean_type = bean_type;
 	}
-	public String getBEAN_GRADE() {
-		return BEAN_GRADE;
+	public String getBean_grade() {
+		return bean_grade;
 	}
-	public void setBEAN_GRADE(String bEAN_GRADE) {
-		BEAN_GRADE = bEAN_GRADE;
+	public void setBean_grade(String bean_grade) {
+		this.bean_grade = bean_grade;
 	}
-	public String getBEAN_CONTRY() {
-		return BEAN_CONTRY;
+	public String getBean_contry() {
+		return bean_contry;
 	}
-	public void setBEAN_CONTRY(String bEAN_CONTRY) {
-		BEAN_CONTRY = bEAN_CONTRY;
+	public void setBean_contry(String bean_contry) {
+		this.bean_contry = bean_contry;
 	}
-	public String getBEAN_REGION() {
-		return BEAN_REGION;
+	public String getBean_region() {
+		return bean_region;
 	}
-	public void setBEAN_REGION(String bEAN_REGION) {
-		BEAN_REGION = bEAN_REGION;
+	public void setBean_region(String bean_region) {
+		this.bean_region = bean_region;
 	}
-	public String getBEAN_FARM() {
-		return BEAN_FARM;
+	public String getBean_farm() {
+		return bean_farm;
 	}
-	public void setBEAN_FARM(String bEAN_FARM) {
-		BEAN_FARM = bEAN_FARM;
+	public void setBean_farm(String bean_farm) {
+		this.bean_farm = bean_farm;
 	}
-	public String getBEAN_FARMER() {
-		return BEAN_FARMER;
+	public String getBean_farmer() {
+		return bean_farmer;
 	}
-	public void setBEAN_FARMER(String bEAN_FARMER) {
-		BEAN_FARMER = bEAN_FARMER;
+	public void setBean_farmer(String bean_farmer) {
+		this.bean_farmer = bean_farmer;
 	}
-	public Integer getBEAN_EL() {
-		return BEAN_EL;
+	public Integer getBean_el() {
+		return bean_el;
 	}
-	public void setBEAN_EL(Integer bEAN_EL) {
-		BEAN_EL = bEAN_EL;
+	public void setBean_el(Integer bean_el) {
+		this.bean_el = bean_el;
 	}
-	public String getPROC() {
-		return PROC;
+	public String getProc() {
+		return proc;
 	}
-	public void setPROC(String pROC) {
-		PROC = pROC;
+	public void setProc(String proc) {
+		this.proc = proc;
 	}
-	public String getROAST() {
-		return ROAST;
+	public String getRoast() {
+		return roast;
 	}
-	public void setROAST(String rOAST) {
-		ROAST = rOAST;
+	public void setRoast(String roast) {
+		this.roast = roast;
 	}
-	public Integer getBEAN_ATTR_ACID() {
-		return BEAN_ATTR_ACID;
+	public Integer getBean_attr_acid() {
+		return bean_attr_acid;
 	}
-	public void setBEAN_ATTR_ACID(Integer bEAN_ATTR_ACID) {
-		BEAN_ATTR_ACID = bEAN_ATTR_ACID;
+	public void setBean_attr_acid(Integer bean_attr_acid) {
+		this.bean_attr_acid = bean_attr_acid;
 	}
-	public Integer getBEAN_ATTR_AROMA() {
-		return BEAN_ATTR_AROMA;
+	public Integer getBean_attr_aroma() {
+		return bean_attr_aroma;
 	}
-	public void setBEAN_ATTR_AROMA(Integer bEAN_ATTR_AROMA) {
-		BEAN_ATTR_AROMA = bEAN_ATTR_AROMA;
+	public void setBean_attr_aroma(Integer bean_attr_aroma) {
+		this.bean_attr_aroma = bean_attr_aroma;
 	}
-	public Integer getBEAN_ATTR_BODY() {
-		return BEAN_ATTR_BODY;
+	public Integer getBean_attr_body() {
+		return bean_attr_body;
 	}
-	public void setBEAN_ATTR_BODY(Integer bEAN_ATTR_BODY) {
-		BEAN_ATTR_BODY = bEAN_ATTR_BODY;
+	public void setBean_attr_body(Integer bean_attr_body) {
+		this.bean_attr_body = bean_attr_body;
 	}
-	public Integer getBEAN_ATTR_AFTER() {
-		return BEAN_ATTR_AFTER;
+	public Integer getBean_attr_after() {
+		return bean_attr_after;
 	}
-	public void setBEAN_ATTR_AFTER(Integer bEAN_ATTR_AFTER) {
-		BEAN_ATTR_AFTER = bEAN_ATTR_AFTER;
+	public void setBean_attr_after(Integer bean_attr_after) {
+		this.bean_attr_after = bean_attr_after;
 	}
-	public Integer getBEAN_ATTR_BAL() {
-		return BEAN_ATTR_BAL;
+	public Integer getBean_attr_bal() {
+		return bean_attr_bal;
 	}
-	public void setBEAN_ATTR_BAL(Integer bEAN_ATTR_BAL) {
-		BEAN_ATTR_BAL = bEAN_ATTR_BAL;
+	public void setBean_attr_bal(Integer bean_attr_bal) {
+		this.bean_attr_bal = bean_attr_bal;
 	}
-	public String getBEAN_AROMA() {
-		return BEAN_AROMA;
+	public String getBean_aroma() {
+		return bean_aroma;
 	}
-	public void setBEAN_AROMA(String bEAN_AROMA) {
-		BEAN_AROMA = bEAN_AROMA;
+	public void setBean_aroma(String bean_aroma) {
+		this.bean_aroma = bean_aroma;
 	}
-	public Integer getPROD_PRICE() {
-		return PROD_PRICE;
+	public Integer getProd_price() {
+		return prod_price;
 	}
-	public void setPROD_PRICE(Integer pROD_PRICE) {
-		PROD_PRICE = pROD_PRICE;
+	public void setProd_price(Integer prod_price) {
+		this.prod_price = prod_price;
 	}
-	public Integer getPROD_WT() {
-		return PROD_WT;
+	public Double getProd_wt() {
+		return prod_wt;
 	}
-	public void setPROD_WT(Integer pROD_WT) {
-		PROD_WT = pROD_WT;
+	public void setProd_wt(Double prod_wt) {
+		this.prod_wt = prod_wt;
 	}
-	public Integer getSEND_FEE() {
-		return SEND_FEE;
+	public Integer getSend_fee() {
+		return send_fee;
 	}
-	public void setSEND_FEE(Integer sEND_FEE) {
-		SEND_FEE = sEND_FEE;
+	public void setSend_fee(Integer send_fee) {
+		this.send_fee = send_fee;
 	}
-	public Integer getPROD_SUP() {
-		return PROD_SUP;
+	public Integer getProd_sup() {
+		return prod_sup;
 	}
-	public void setPROD_SUP(Integer pROD_SUP) {
-		PROD_SUP = pROD_SUP;
+	public void setProd_sup(Integer prod_sup) {
+		this.prod_sup = prod_sup;
 	}
-	public String getPROD_CONT() {
-		return PROD_CONT;
+	public String getProd_cont() {
+		return prod_cont;
 	}
-	public void setPROD_CONT(String pROD_CONT) {
-		PROD_CONT = pROD_CONT;
+	public void setProd_cont(String prod_cont) {
+		this.prod_cont = prod_cont;
 	}
-	public byte[] getPROD_PIC1() {
-		return PROD_PIC1;
+	public byte[] getProd_pic1() {
+		return prod_pic1;
 	}
-	public void setPROD_PIC1(byte[] pROD_PIC1) {
-		PROD_PIC1 = pROD_PIC1;
+	public void setProd_pic1(byte[] prod_pic1) {
+		this.prod_pic1 = prod_pic1;
 	}
-	public byte[] getPROD_PIC2() {
-		return PROD_PIC2;
+	public byte[] getProd_pic2() {
+		return prod_pic2;
 	}
-	public void setPROD_PIC2(byte[] pROD_PIC2) {
-		PROD_PIC2 = pROD_PIC2;
+	public void setProd_pic2(byte[] prod_pic2) {
+		this.prod_pic2 = prod_pic2;
 	}
-	public byte[] getPROD_PIC3() {
-		return PROD_PIC3;
+	public byte[] getProd_pic3() {
+		return prod_pic3;
 	}
-	public void setPROD_PIC3(byte[] pROD_PIC3) {
-		PROD_PIC3 = pROD_PIC3;
+	public void setProd_pic3(byte[] prod_pic3) {
+		this.prod_pic3 = prod_pic3;
 	}
-	public String getPROD_STAT() {
-		return PROD_STAT;
+	public String getProd_stat() {
+		return prod_stat;
 	}
-	public void setPROD_STAT(String pROD_STAT) {
-		PROD_STAT = pROD_STAT;
+	public void setProd_stat(String prod_stat) {
+		this.prod_stat = prod_stat;
 	}
-	public Date getED_TIME() {
-		return ED_TIME;
+	public Date getEd_time() {
+		return ed_time;
 	}
-	public void setED_TIME(Date eD_TIME) {
-		ED_TIME = eD_TIME;
+	public void setEd_time(Date ed_time) {
+		this.ed_time = ed_time;
 	}
-	
 
 }

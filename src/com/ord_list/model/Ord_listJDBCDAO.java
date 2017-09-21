@@ -7,7 +7,7 @@ import java.util.List;
 public class Ord_listJDBCDAO implements Ord_list_interface {
 	String driver = "oracle.jdbc.driver.OracleDriver";
 	String url = "jdbc:oracle:thin:@localhost:1521:XE";
-	String userid = "test";
+	String userid = "ba103g4";
 	String passwd = "123456";
 
 	private static final String INSERT_STMT = "INSERT INTO Ord_list (ORD_NO,PROD_NO,AMONT) VALUES ('O1000000005', 'P1000000009', ?)";
@@ -25,7 +25,7 @@ public class Ord_listJDBCDAO implements Ord_list_interface {
 			Class.forName(driver);
 			con = DriverManager.getConnection(url, userid, passwd);
 			pstmt = con.prepareStatement(INSERT_STMT);
-			pstmt.setInt(1, ord_listvo.getAMONT());
+			pstmt.setInt(1, ord_listvo.getAmont());
 			pstmt.executeUpdate();
 		} catch (ClassNotFoundException e) {
 			throw new RuntimeException("Couldn't load database driver. " + e.getMessage());
@@ -62,9 +62,9 @@ public class Ord_listJDBCDAO implements Ord_list_interface {
 			con = DriverManager.getConnection(url, userid, passwd);
 			pstmt = con.prepareStatement(UPDATE);
 
-			pstmt.setInt(1, ord_listvo.getAMONT());
+			pstmt.setInt(1, ord_listvo.getAmont());
 			pstmt.setString(2, ord_listvo.getOrd_no());
-			pstmt.setString(3, ord_listvo.getPROD_NO());
+			pstmt.setString(3, ord_listvo.getProd_no());
 			pstmt.executeUpdate();
 		} catch (ClassNotFoundException e) {
 			throw new RuntimeException("Couldn't load database driver. " + e.getMessage());
@@ -144,9 +144,9 @@ public class Ord_listJDBCDAO implements Ord_list_interface {
 			rs = pstmt.executeQuery();
 			while (rs.next()) {
 				ord_listvo = new Ord_listVO();
-				ord_listvo.setORD_NO(rs.getString("ORD_NO"));
-				ord_listvo.setPROD_NO(rs.getString("PROD_NO"));
-				ord_listvo.setAMONT(rs.getInt("AMONT"));
+				ord_listvo.setOrd_no(rs.getString("ORD_NO"));
+				ord_listvo.setProd_no(rs.getString("PROD_NO"));
+				ord_listvo.setAmont(rs.getInt("AMONT"));
 			}
 
 		} catch (ClassNotFoundException e) {
@@ -177,9 +177,9 @@ public class Ord_listJDBCDAO implements Ord_list_interface {
 
 			while (rs.next()) {
 				ord_listVO = new Ord_listVO();
-				ord_listVO.setORD_NO(rs.getString("ORD_NO"));
-				ord_listVO.setPROD_NO(rs.getString("PROD_NO"));
-				ord_listVO.setAMONT(rs.getInt("AMONT"));
+				ord_listVO.setOrd_no(rs.getString("ORD_NO"));
+				ord_listVO.setProd_no(rs.getString("PROD_NO"));
+				ord_listVO.setAmont(rs.getInt("AMONT"));
 				list.add(ord_listVO);
 			}
 
@@ -220,31 +220,31 @@ public class Ord_listJDBCDAO implements Ord_list_interface {
 	public static void main(String[] args) {
 		Ord_listJDBCDAO dao = new Ord_listJDBCDAO();
 		// 新增
-		// Ord_listVO ord_listVO1 = new Ord_listVO();
-		// ord_listVO1.setAMONT(3);
-		// dao.insert(ord_listVO1);
+//		 Ord_listVO ord_listVO1 = new Ord_listVO();
+//		 ord_listVO1.setAmont(3);
+//		 dao.insert(ord_listVO1);
 		// 修改
-		// Ord_listVO ord_listVO2 = new Ord_listVO();
-		// ord_listVO2.setAMONT(8);
-		// ord_listVO2.setORD_NO("O1000000005");
-		// ord_listVO2.setPROD_NO("P1000000006");
-		// dao.update(ord_listVO2);
+//		 Ord_listVO ord_listVO2 = new Ord_listVO();
+//		 ord_listVO2.setAmont(8);
+//		 ord_listVO2.setOrd_no("O1000000005");
+//		 ord_listVO2.setProd_no("P1000000006");
+//		 dao.update(ord_listVO2);
 		// 刪除
-		// dao.delete("O1000000005");
+//		 dao.delete("O1000000005");
 		// 查詢
-//		Ord_listVO ord_listVO3 = dao.findByPrimaryKey("O1000000005");
-//		System.out.println(ord_listVO3.getORD_NO());
-//		System.out.println(ord_listVO3.getPROD_NO());
-//		System.out.println(ord_listVO3.getAMONT());
+//		Ord_listVO ord_listVO3 = dao.findByPrimaryKey("O1000000002");
+//		System.out.println(ord_listVO3.getOrd_no());
+//		System.out.println(ord_listVO3.getProd_no());
+//		System.out.println(ord_listVO3.getAmont());
 //		System.out.println("---------------------");
 		// 查詢
-		List<Ord_listVO> list = dao.getAll();
-		for (Ord_listVO aord_list : list) {
-			System.out.println(aord_list.getOrd_no());
-			System.out.println(aord_list.getPROD_NO());
-			System.out.println(aord_list.getAMONT());
-			System.out.println("---------------------");
-		}
+//		List<Ord_listVO> list = dao.getAll();
+//		for (Ord_listVO aord_list : list) {
+//			System.out.println(aord_list.getOrd_no());
+//			System.out.println(aord_list.getProd_no());
+//			System.out.println(aord_list.getAmont());
+//			System.out.println("---------------------");
+//		}
 
 	}
 

@@ -14,7 +14,7 @@ import javax.sql.DataSource;
 import java.sql.*;
 
 
-public class ProdDAO implements ProdDAO_interface {
+public class ProdJNDIDAO implements ProdDAO_interface {
 	
 	private static DataSource ds = null;
 	static { 	
@@ -93,6 +93,7 @@ public class ProdDAO implements ProdDAO_interface {
 	
 	private static final String GET_IMG_BY_PK_STMT = "SELECT PROD_PIC1,PROD_PIC2,PROD_PIC3 FROM PROD WHERE PROD_NO = ?"; 
 	private static final String GET_QUERY_RESULT = "SELECT * FROM PROD WHERE BEAN_CONTRY LIKE ? AND PROC LIKE ? AND ROAST LIKE ? AND PROD_NAME LIKE ?";
+	
 	private static final String GET_ONE_NO_IMG_STMT = "SELECT "
 			+ "STORE_NO," 
 			+ "PROD_NAME," 

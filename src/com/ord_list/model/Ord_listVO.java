@@ -9,20 +9,20 @@ public class Ord_listVO {
 	public String getOrd_no() {
 		return ord_no;
 	}
-	public void setORD_NO(String oRD_NO) {
-		ord_no = oRD_NO;
+	public void setOrd_no(String ord_no) {
+		this.ord_no = ord_no;
 	}
-	public String getPROD_NO() {
+	public String getProd_no() {
 		return prod_no;
 	}
-	public void setPROD_NO(String pROD_NO) {
-		prod_no = pROD_NO;
+	public void setProd_no(String prod_no) {
+		this.prod_no = prod_no;
 	}
-	public Integer getAMONT() {
+	public Integer getAmont() {
 		return amont;
 	}
-	public void setAMONT(Integer aMONT) {
-		amont = aMONT;
+	public void setAmont(Integer amont) {
+		this.amont = amont;
 	}
 	
 

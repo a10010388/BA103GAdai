@@ -72,11 +72,11 @@ public class ToStore extends HttpServlet {
 				failureView.forward(req, res);
 			}
 		}
-		if ("insert".equals(action)) { // 來自addEmp.jsp的請求
+		
+		if ("insert".equals(action)) { // 來自UpToStore.jsp
 
 			List<String> errorMsgs = new LinkedList<String>();
-			// Store this set in the request scope, in case we need to
-			// send the ErrorPage view.
+			
 			req.setAttribute("errorMsgs", errorMsgs);
 
 			try {
@@ -134,6 +134,7 @@ public class ToStore extends HttpServlet {
 				}
 				byte[] sphoto3_1 = spic_3.toByteArray();
 
+				// 驗證
 				if (mem_ac == null || (mem_ac.trim()).length() == 0) {
 					errorMsgs.add("請登入會員");
 				}
@@ -145,15 +146,19 @@ public class ToStore extends HttpServlet {
 				if (store_phone == null || (store_phone.trim()).length() == 0) {
 					errorMsgs.add("請輸入電話");
 				}
-				try {
-					Integer.valueOf(store_phone);
-				} catch (NumberFormatException err) {
-					errorMsgs.add("電話請輸入數字 ");
+
+				if (tax_id_no.trim().length() != 8) {
+					errorMsgs.add("統一編號要8碼");
 				}
-				
-				
-				
-				
+				try {
+					Integer.valueOf(tax_id_no);
+				} catch (NumberFormatException err) {
+					errorMsgs.add("統一編號要數字 ");
+				}
+
+				if (chknum(tax_id_no) == false) {
+					errorMsgs.add("統一編號錯誤");
+				}
 
 				if (store_add == null || (store_add.trim()).length() == 0) {
 					errorMsgs.add("請輸入地址");
@@ -162,6 +167,7 @@ public class ToStore extends HttpServlet {
 				if (idimg1.length == 0) {
 					errorMsgs.add("證件照不可為空");
 				}
+
 				if (sphoto1_1.length == 0) {
 					errorMsgs.add("店家照1不可為空");
 				}
@@ -173,11 +179,7 @@ public class ToStore extends HttpServlet {
 					return;// 程式中斷
 				}
 
-				// java.util.Date stat_cdate = new java.util.Date();
-				// java.sql.Date store_stat_cdate = new
-				// java.sql.Date(stat_cdate.getTime());
-				//
-				// String store_stat = "待審中";
+				
 
 				StoreVO storeVO = new StoreVO();
 				storeVO.setStore_name(store_name);
@@ -192,8 +194,7 @@ public class ToStore extends HttpServlet {
 				storeVO.setStore_pic1(sphoto1_1);
 				storeVO.setStore_pic2(sphoto2_1);
 				storeVO.setStore_pic3(sphoto3_1);
-				// storeVO.setStore_stat(store_stat);
-				// storeVO.setStore_stat_cdate(store_stat_cdate);
+				
 				storeVO.setStore_free_ship(store_free_ship);
 				// Send the use back to the form, if there were errors
 				if (!errorMsgs.isEmpty()) {
@@ -207,12 +208,12 @@ public class ToStore extends HttpServlet {
 				StoreService storeSvc = new StoreService();
 				storeVO = storeSvc.addStore(mem_ac, tax_id_no, idimg1, store_phone, store_add, store_add_lat,
 						store_add_lon, store_name, store_cont, sphoto1_1, sphoto2_1, sphoto3_1, store_free_ship);
-
+				
 				/***************************
 				 * 3.新增完成,準備轉交(Send the Success view)
 				 ***********/
-				String url = "/BackEnd/reg_store/listAllStore.jsp";
-				RequestDispatcher successView = req.getRequestDispatcher(url); // 新增成功後轉交listAllEmp.jsp
+				String url = "/FrontEnd/reg_store/Finreg.jsp";
+				RequestDispatcher successView = req.getRequestDispatcher(url); // 新增成功後轉交Finreg.jsp
 				successView.forward(req, res);
 
 				/*************************** 其他可能的錯誤處理 **********************************/
@@ -233,16 +234,15 @@ public class ToStore extends HttpServlet {
 				/*************************** 1.接收請求參數 ****************************************/
 				String store_no = new String(req.getParameter("store_no"));
 				String whichPage = req.getParameter("whichPage"); // 送出修改的來源網頁的第幾頁(只用於:istAllEmp.jsp)
-				req.setAttribute("whichPage", whichPage);   // 送出修改的來源網頁的第幾頁, 存入req(只用於:istAllEmp.jsp)
-				
-				
-//				String store_stat1 = req.getParameter("store_stat1"); 
-//				req.setAttribute("store_stat1", store_stat1);
-				
+				req.setAttribute("whichPage", whichPage); // 送出修改的來源網頁的第幾頁,
+															// 存入req(只用於:istAllEmp.jsp)
+
+				// String store_stat1 = req.getParameter("store_stat1");
+				// req.setAttribute("store_stat1", store_stat1);
+
 				/*************************** 2.開始查詢資料 ****************************************/
 				StoreService storeSvc = new StoreService();
 				StoreVO storeVO = storeSvc.getonestore(store_no);
-				
 
 				/***************************
 				 * 3.查詢完成,準備轉交(Send the Success view)
@@ -260,8 +260,7 @@ public class ToStore extends HttpServlet {
 				failureView.forward(req, res);
 			}
 		}
-		
-		
+
 		if ("update_data".equals(action)) { // 來自store_index.jsp
 
 			List<String> errorMsgs = new LinkedList<String>();
@@ -403,6 +402,33 @@ public class ToStore extends HttpServlet {
 			}
 		}
 	}
-	
-	
+
+	// 驗證統編
+	int car[] = { 1, 2, 1, 2, 1, 2, 4, 1 };
+
+	boolean chknum(String tax_id_no) {
+		int SUM = 0;
+
+		String[] cnum = tax_id_no.split("");
+
+		for (int i = 0; i < 8; i++) {
+			SUM += toOneDigi(Integer.parseInt(cnum[i]) * car[i]);
+		}
+		if (SUM % 10 == 0) {
+			return true;
+		} else if (Integer.parseInt(cnum[6]) == 7 && (SUM + 1) % 10 == 0) {
+			return true;
+		} else {
+			return false;
+		}
+	}
+
+	int toOneDigi(Integer x) {
+		if (x > 9) {
+			String num = x.toString();
+			x = Integer.valueOf(num.substring(0, 1)) + Integer.valueOf(num.substring(1, 2));
+		}
+		return x;
+	}
+
 }

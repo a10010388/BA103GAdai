@@ -1,0 +1,40 @@
+
+*{
+	background-color: #C2DCCE;
+}
+.verticnav{
+	list-style: none;
+	font-size: 25px;
+	
+}
+.table_order,.table_product{
+	
+	border: 3px solid #444444;  border-collapse: collapse;
+	height: 300px;
+	width: 400px;
+}
+.table_shop{
+	border: 3px solid #444444;  
+	
+	height: 100px;
+	width: 600px;
+}
+.BACKtable_shop{
+	border: 3px solid #444444;  
+	height: 100px;
+	width: 1000px;
+}
+caption{
+	text-align:center;
+}
+.product_photo{
+	width: 100px
+}
+.shop_photo{
+	width: 200px
+}
+
+img{
+	width: 150px
+}
+

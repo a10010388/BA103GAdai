@@ -4,104 +4,104 @@ import java.io.Serializable;
 import java.sql.Date;
 
 public class OrdVO implements Serializable{
-	private String ORD_NO;
-	private String MEM_AC;
-	private Integer SEND_FEE;
-	private Integer TOTAL_PAY;
-	private String ORD_NAME;
-	private String ORD_PHONE;
-	private String ORD_ADD;
-	private String PAY_INFO;
-	private String ORD_STAT;
-	private Date ORD_DATE;
-	private Date PAY_DATE;
-	private Date PAY_CHK_DATE;
-	private Date SEND_DATE;
-	private String SEND_ID;
+	private String ord_no;
+	private String mem_ac;
+	private Integer send_fee;
+	private Integer total_pay;
+	private String ord_name;
+	private String ord_phone;
+	private String ord_add;
+	private String pay_info;
+	private String ord_stat;
+	private Date ord_date;
+	private Date pay_date;
+	private Date pay_chk_date;
+	private Date send_date;
+	private String send_id;
 	
-	public String getORD_NO() {
-		return ORD_NO;
+	public String getOrd_no() {
+		return ord_no;
 	}
-	public void setORD_NO(String oRD_NO) {
-		ORD_NO = oRD_NO;
+	public void setOrd_no(String ord_no) {
+		this.ord_no = ord_no;
 	}
-	public String getMEM_AC() {
-		return MEM_AC;
+	public String getMem_ac() {
+		return mem_ac;
 	}
-	public void setMEM_AC(String mEM_AC) {
-		MEM_AC = mEM_AC;
+	public void setMem_ac(String mem_ac) {
+		this.mem_ac = mem_ac;
 	}
-	public Integer getSEND_FEE() {
-		return SEND_FEE;
+	public Integer getSend_fee() {
+		return send_fee;
 	}
-	public void setSEND_FEE(Integer sEND_FEE) {
-		SEND_FEE = sEND_FEE;
+	public void setSend_fee(Integer send_fee) {
+		this.send_fee = send_fee;
 	}
-	public Integer getTOTAL_PAY() {
-		return TOTAL_PAY;
+	public Integer getTotal_pay() {
+		return total_pay;
 	}
-	public void setTOTAL_PAY(Integer tOTAL_PAY) {
-		TOTAL_PAY = tOTAL_PAY;
+	public void setTotal_pay(Integer total_pay) {
+		this.total_pay = total_pay;
 	}
-	public String getORD_NAME() {
-		return ORD_NAME;
+	public String getOrd_name() {
+		return ord_name;
 	}
-	public void setORD_NAME(String oRD_NAME) {
-		ORD_NAME = oRD_NAME;
+	public void setOrd_name(String ord_name) {
+		this.ord_name = ord_name;
 	}
-	public String getORD_PHONE() {
-		return ORD_PHONE;
+	public String getOrd_phone() {
+		return ord_phone;
 	}
-	public void setORD_PHONE(String oRD_PHONE) {
-		ORD_PHONE = oRD_PHONE;
+	public void setOrd_phone(String ord_phone) {
+		this.ord_phone = ord_phone;
 	}
-	public String getORD_ADD() {
-		return ORD_ADD;
+	public String getOrd_add() {
+		return ord_add;
 	}
-	public void setORD_ADD(String oRD_ADD) {
-		ORD_ADD = oRD_ADD;
+	public void setOrd_add(String ord_add) {
+		this.ord_add = ord_add;
 	}
-	public String getPAY_INFO() {
-		return PAY_INFO;
+	public String getPay_info() {
+		return pay_info;
 	}
-	public void setPAY_INFO(String pAY_INFO) {
-		PAY_INFO = pAY_INFO;
+	public void setPay_info(String pay_info) {
+		this.pay_info = pay_info;
 	}
-	public String getORD_STAT() {
-		return ORD_STAT;
+	public String getOrd_stat() {
+		return ord_stat;
 	}
-	public void setORD_STAT(String oRD_STAT) {
-		ORD_STAT = oRD_STAT;
+	public void setOrd_stat(String ord_stat) {
+		this.ord_stat = ord_stat;
 	}
-	public Date getORD_DATE() {
-		return ORD_DATE;
+	public Date getOrd_date() {
+		return ord_date;
 	}
-	public void setORD_DATE(Date oRD_DATE) {
-		ORD_DATE = oRD_DATE;
+	public void setOrd_date(Date ord_date) {
+		this.ord_date = ord_date;
 	}
-	public Date getPAY_DATE() {
-		return PAY_DATE;
+	public Date getPay_date() {
+		return pay_date;
 	}
-	public void setPAY_DATE(Date pAY_DATE) {
-		PAY_DATE = pAY_DATE;
+	public void setPay_date(Date pay_date) {
+		this.pay_date = pay_date;
 	}
-	public Date getPAY_CHK_DATE() {
-		return PAY_CHK_DATE;
+	public Date getPay_chk_date() {
+		return pay_chk_date;
 	}
-	public void setPAY_CHK_DATE(Date pAY_CHK_DATE) {
-		PAY_CHK_DATE = pAY_CHK_DATE;
+	public void setPay_chk_date(Date pay_chk_date) {
+		this.pay_chk_date = pay_chk_date;
 	}
-	public Date getSEND_DATE() {
-		return SEND_DATE;
+	public Date getSend_date() {
+		return send_date;
 	}
-	public void setSEND_DATE(Date sEND_DATE) {
-		SEND_DATE = sEND_DATE;
+	public void setSend_date(Date send_date) {
+		this.send_date = send_date;
 	}
-	public String getSEND_ID() {
-		return SEND_ID;
+	public String getSend_id() {
+		return send_id;
 	}
-	public void setSEND_ID(String sEND_ID) {
-		SEND_ID = sEND_ID;
+	public void setSend_id(String send_id) {
+		this.send_id = send_id;
 	}
 	
 	

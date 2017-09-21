@@ -38,7 +38,7 @@ public class Ord_listDAO implements Ord_list_interface{
 		try {
 			con = ds.getConnection();	
 			pstmt = con.prepareStatement(INSERT_STMT);
-			pstmt.setInt(1, ord_listvo.getAMONT());
+			pstmt.setInt(1, ord_listvo.getAmont());
 			pstmt.executeUpdate();
 		}  catch (SQLException se) {
 			throw new RuntimeException("A database error occured. " + se.getMessage());
@@ -70,9 +70,9 @@ public class Ord_listDAO implements Ord_list_interface{
 		try {
 			con = ds.getConnection();
 			pstmt = con.prepareStatement(UPDATE);
-			pstmt.setInt(1, ord_listvo.getAMONT());
+			pstmt.setInt(1, ord_listvo.getAmont());
 			pstmt.setString(2, ord_listvo.getOrd_no());
-			pstmt.setString(3, ord_listvo.getPROD_NO());
+			pstmt.setString(3, ord_listvo.getProd_no());
 			pstmt.executeUpdate();
 		} catch (SQLException se) {
 			throw new RuntimeException("A database error occured. " + se.getMessage());
@@ -144,9 +144,9 @@ public class Ord_listDAO implements Ord_list_interface{
 			rs = pstmt.executeQuery();
 			while (rs.next()) {
 				ord_listvo = new Ord_listVO();
-				ord_listvo.setORD_NO(rs.getString("ORD_NO"));
-				ord_listvo.setPROD_NO(rs.getString("PROD_NO"));
-				ord_listvo.setAMONT(rs.getInt("AMONT"));
+				ord_listvo.setOrd_no(rs.getString("ORD_NO"));
+				ord_listvo.setProd_no(rs.getString("PROD_NO"));
+				ord_listvo.setAmont(rs.getInt("AMONT"));
 			}
 			
 		} catch (SQLException se) {
@@ -196,9 +196,9 @@ public class Ord_listDAO implements Ord_list_interface{
 
 			while (rs.next()) {
 				ord_listVO = new Ord_listVO();
-				ord_listVO.setORD_NO(rs.getString("ORD_NO"));
-				ord_listVO.setPROD_NO(rs.getString("PROD_NO"));
-				ord_listVO.setAMONT(rs.getInt("AMONT"));
+				ord_listVO.setOrd_no(rs.getString("ORD_NO"));
+				ord_listVO.setProd_no(rs.getString("PROD_NO"));
+				ord_listVO.setAmont(rs.getInt("AMONT"));
 				list.add(ord_listVO);
 			}
 			

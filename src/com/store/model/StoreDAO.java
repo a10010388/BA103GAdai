@@ -11,13 +11,17 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 import javax.naming.Context;
 import javax.naming.InitialContext;
 import javax.naming.NamingException;
 import javax.sql.DataSource;
+
+import com.prod.model.ProdVO;
 
 public class StoreDAO implements StoreDAO_interface{
 	
@@ -41,7 +45,7 @@ public class StoreDAO implements StoreDAO_interface{
 	private static final String UPDATE = "UPDATE store set TAX_ID_NO=?, WIN_ID_PIC=?, STORE_PHONE=? ,STORE_ADD=?,STORE_ADD_LAT=?,STORE_ADD_LON=?,STORE_NAME=?,STORE_CONT=?,STORE_PIC1=?,STORE_PIC2=?,STORE_PIC3=?,STORE_FREE_SHIP=?,STORE_STAT='待審中',STORE_STAT_CDATE=sysdate  where STORE_NO = ? and STORE_STAT like '%審核不通過%'";
 	private static final String UPDATE_STAT ="UPDATE store set STORE_STAT=?,store_stat_cdate=sysdate,STORE_STAT_CONT=? where STORE_NO = ?";
 	private static final String SELECT_STAT = "select * from store where store_stat like ?";
-
+	private static final String GET_PROD_BY_STORE = "SELECT * FROM PROD WHERE STORE_NO = ? order by PROD_NO";
 	@Override
 	public void insert(StoreVO storeVO) {
 		Connection con = null;
@@ -448,6 +452,77 @@ public class StoreDAO implements StoreDAO_interface{
 		return list;
 	}
 
-	
+	@Override
+	public Set<ProdVO> getProdsByStore_no(String store_no) {
+		Set<ProdVO> set = new LinkedHashSet<ProdVO>();
+		ProdVO prodVO = null;
+		Connection con = null;
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;		
+		
+		try {
+			con = ds.getConnection();
+			pstmt = con.prepareStatement(GET_PROD_BY_STORE);
+			pstmt.setString(1, store_no);
+			rs = pstmt.executeQuery();
+			
+			while (rs.next()){
+				prodVO = new ProdVO();
+				prodVO.setProd_no(rs.getString("prod_no"));
+				prodVO.setStore_no(rs.getString("store_no"));
+				prodVO.setProd_name(rs.getString("prod_name"));
+				prodVO.setBean_type(rs.getString("bean_type"));
+				prodVO.setBean_grade(rs.getString("bean_grade"));
+				prodVO.setBean_contry(rs.getString("bean_contry"));
+				prodVO.setBean_region(rs.getString("bean_region"));
+				prodVO.setBean_farm(rs.getString("bean_farm"));
+				prodVO.setBean_farmer(rs.getString("bean_farmer"));
+				prodVO.setBean_el(rs.getInt("bean_el"));
+				prodVO.setProc(rs.getString("proc"));
+				prodVO.setRoast(rs.getString("roast"));
+				prodVO.setBean_attr_acid(rs.getInt("bean_attr_acid"));
+				prodVO.setBean_attr_aroma(rs.getInt("bean_attr_aroma"));
+				prodVO.setBean_attr_body(rs.getInt("bean_attr_body"));
+				prodVO.setBean_attr_after(rs.getInt("bean_attr_after"));
+				prodVO.setBean_attr_bal(rs.getInt("bean_attr_bal"));
+				prodVO.setBean_aroma(rs.getString("Bean_aroma"));
+				prodVO.setProd_price(rs.getInt("prod_price"));
+				prodVO.setProd_wt(rs.getDouble("prod_wt"));
+				prodVO.setSend_fee(rs.getInt("send_fee"));
+				prodVO.setProd_sup(rs.getInt("prod_sup"));
+				prodVO.setProd_cont(rs.getString("prod_cont"));
+				prodVO.setProd_stat(rs.getString("prod_stat"));
+				prodVO.setEd_time(rs.getDate("ed_time"));
+				set.add(prodVO);
+			}
+			
+		} catch (SQLException se) {
+			throw new RuntimeException("A database error occured. "
+					+ se.getMessage());
+		} finally {
+			if (rs != null) {
+				try {
+					rs.close();
+				} catch (SQLException se) {
+					se.printStackTrace(System.err);
+				}
+			}
+			if (pstmt != null) {
+				try {
+					pstmt.close();
+				} catch (SQLException se) {
+					se.printStackTrace(System.err);
+				}
+			}
+			if (con != null) {
+				try {
+					con.close();
+				} catch (Exception e) {
+					e.printStackTrace(System.err);
+				}
+			}
+		}
+		return set;
+	}
 
 }

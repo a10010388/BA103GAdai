@@ -17,7 +17,6 @@
     <servlet-name>StoreServlet</servlet-name>
     <url-pattern>/store/store.do</url-pattern>
   </servlet-mapping>
-  
   <servlet>
     <servlet-name>StoreImg</servlet-name>
     <servlet-class>com.store.controller.StoreImg</servlet-class>
@@ -36,6 +35,23 @@
     <url-pattern>/store/ToStore.do</url-pattern>
   </servlet-mapping>
   
+  <servlet>
+    <servlet-name>ProdImg</servlet-name>
+    <servlet-class>com.prod.controller.ProdImg</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>ProdImg</servlet-name>
+    <url-pattern>/prod/prodImg.do</url-pattern>
+  </servlet-mapping>
+  
+<!--   <servlet> -->
+<!--     <servlet-name>Prod_manag</servlet-name> -->
+<!--     <servlet-class>com.prod.controller.Prod_manag</servlet-class> -->
+<!--   </servlet> -->
+<!--   <servlet-mapping> -->
+<!--     <servlet-name>Prod_manag</servlet-name> -->
+<!--     <url-pattern>/prod/Prod_manag.do</url-pattern> -->
+<!--   </servlet-mapping> -->
   
   <resource-ref>
     <description>DB Connection</description>

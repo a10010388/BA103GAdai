@@ -1,16 +1,19 @@
 package com.ord.model;
 
 import java.util.List;
+import java.util.Set;
+
+import com.ord_list.model.Ord_listVO;
 
 
 
 public interface OrdDAO_interface {
 	 public void insert(OrdVO ordVO);
      public void update(OrdVO ordVO);
-     public void delete(String ORD_NO);
-     public OrdVO findByPrimaryKey(String ORD_NO);
+     public void delete(String ord_no);
+     
+     
      public List<OrdVO> getAll();
-     //萬用複合查詢(傳入參數型態Map)(回傳 List)
-//   public List<EmpVO> getAll(Map<String, String[]> map); 
-
+     public OrdVO findByPrimaryKey(String ord_no);
+     public Set<Ord_listVO> getOrd_listByOrd(String ord_no);
 }

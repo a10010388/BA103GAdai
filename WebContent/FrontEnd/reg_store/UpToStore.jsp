@@ -60,7 +60,7 @@
 			</tr>
 			<tr>
 				<td>統一編號:</td>
-				<td><input type="TEXT" name="tax_id_no" size="45"
+				<td><input type="TEXT" name="tax_id_no" size="45" 
 					value="00000000" /></td>
 			</tr>
 			<tr>
@@ -110,13 +110,11 @@
 				<td><output id="mylist4"></output></td>
 			</tr>
 		</table>
-		<br> <input type="hidden" name="action" value="insert"> <input
-			type="hidden" name="mem_ac" value="<%=mem_ac%>"> <input
-			type="hidden" name="store_add_lat" id="lat" size="45" value="" /> <input
-			type="hidden" name="store_add_lon" id="lng" size="45" value="" /> <input
-			<input
-			type="hidden" name="taxid" id="taxid" size="45" value="" />
-			type="submit" value="送出新增">
+		<br> <input type="hidden" name="action" value="insert"> 
+		<input	type="hidden" name="mem_ac" value="<%=mem_ac%>"> 
+		<input	type="hidden" name="store_add_lat" id="lat" size="45" value="" />
+		<input	type="hidden" name="store_add_lon" id="lng" size="45" value="" /> 
+		<input	type="submit" value="送出新增" />
 	</FORM>
 </body>
 <script>
@@ -296,54 +294,6 @@
 	}
 	document.getElementById('stpic3').addEventListener('change',
 			handleFileSelect4, false);
-
-	//驗證統一編號
-	var cx = new Array;
-cx[0] = 1;
-cx[1] = 2;
-cx[2] = 1;
-cx[3] = 2;
-cx[4] = 1;
-cx[5] = 2;
-cx[6] = 4;
-cx[7] = 1;
-function chknum(){
-  var NO = document.F.NUM.value;
-  var SUM = 0;
-  if (NO.length != 8) {
-    alert("統編錯誤，要有 8 個數字");
-    return;
-  }
-  var cnum = NO.split("");
-  for (i=0; i&lt;=7; i++) {
-    if (NO.charCodeAt() &lt; 48 || NO.charCodeAt() &gt; 57) {
-      alert("統編錯誤，要有 8 個 0-9 數字組合");
-      return;
-    }
-    SUM += cc(cnum[i] * cx[i]);
-  }
-  if (SUM % 10 == 0){
-	  $("#taxid").val("true");
-	  }
-  else if {
-	  (cnum[6] == 7 && (SUM + 1) % 10 == 0) $("#taxid").val("true");
-  }
-  else {
-	  $("#taxid").val("false");
-  }
-  
-  
-}
-
-function cc(n){
-  if (n &gt; 9) {
-    var s = n + "";
-    n1 = s.substring(0,1) * 1;
-    n2 = s.substring(1,2) * 1;
-    n = n1 + n2;
-  }
-  return n;
-}
 
 
 </script>

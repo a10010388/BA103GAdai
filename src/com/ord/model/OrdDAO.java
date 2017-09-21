@@ -1,19 +1,24 @@
 package com.ord.model;
 
 import java.sql.Connection;
+import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.LinkedHashSet;
 import java.util.List;
+import java.util.Set;
 
 import javax.naming.Context;
 import javax.naming.InitialContext;
 import javax.naming.NamingException;
 import javax.sql.DataSource;
 
-public class OrdDAO implements OrdDAO_interface{
-	
+import com.ord_list.model.Ord_listVO;
+
+public class OrdDAO implements OrdDAO_interface {
+
 	private static DataSource ds = null;
 	static {
 		try {
@@ -30,31 +35,31 @@ public class OrdDAO implements OrdDAO_interface{
 			+ "PAY_INFO,ORD_STAT,ORD_DATE,PAY_DATE,PAY_CHK_DATE,SEND_DATE,SEND_ID FROM ord where ORD_NO = ?";
 	private static final String DELETE = "DELETE FROM ord where ORD_NO = ?";
 	private static final String UPDATE = "UPDATE ord set ORD_NAME=?, ORD_PHONE=?, ORD_ADD=? where ORD_NO = ?";
-	
+	private static final String GET_ALL_ORDER_LIST = "select * from ord_list where ORD_NO=?";
+
 	@Override
 	public void insert(OrdVO ordVO) {
 		Connection con = null;
 		PreparedStatement pstmt = null;
-		
-		
+
 		try {
 			con = ds.getConnection();
 			pstmt = con.prepareStatement(INSERT_STMT);
-			pstmt.setString(1, ordVO.getMEM_AC());
-			pstmt.setInt(2, ordVO.getSEND_FEE());
-			pstmt.setInt(3, ordVO.getTOTAL_PAY());
-			pstmt.setString(4, ordVO.getORD_NAME());
-			pstmt.setString(5, ordVO.getORD_PHONE());
-			pstmt.setString(6, ordVO.getORD_ADD());
-			pstmt.setString(7, ordVO.getPAY_INFO());
-			pstmt.setString(8, ordVO.getORD_STAT());
-			pstmt.setDate(9, ordVO.getORD_DATE());
-			pstmt.setDate(10, ordVO.getPAY_DATE());
-			pstmt.setDate(11, ordVO.getPAY_CHK_DATE());
-			pstmt.setDate(12, ordVO.getSEND_DATE());
-			pstmt.setString(13, ordVO.getSEND_ID());
+			pstmt.setString(1, ordVO.getMem_ac());
+			pstmt.setInt(2, ordVO.getSend_fee());
+			pstmt.setInt(3, ordVO.getTotal_pay());
+			pstmt.setString(4, ordVO.getOrd_name());
+			pstmt.setString(5, ordVO.getOrd_phone());
+			pstmt.setString(6, ordVO.getOrd_add());
+			pstmt.setString(7, ordVO.getPay_info());
+			pstmt.setString(8, ordVO.getOrd_stat());
+			pstmt.setDate(9, ordVO.getOrd_date());
+			pstmt.setDate(10, ordVO.getPay_date());
+			pstmt.setDate(11, ordVO.getPay_chk_date());
+			pstmt.setDate(12, ordVO.getSend_date());
+			pstmt.setString(13, ordVO.getSend_id());
 			pstmt.executeUpdate();
-			
+
 		} catch (SQLException se) {
 			throw new RuntimeException("A database error occured. " + se.getMessage());
 			// Clean up JDBC resources
@@ -74,23 +79,23 @@ public class OrdDAO implements OrdDAO_interface{
 				}
 			}
 		}
-		
+
 	}
 
 	@Override
 	public void update(OrdVO ordVO) {
 		Connection con = null;
 		PreparedStatement pstmt = null;
-		
+
 		try {
 			con = ds.getConnection();
 			pstmt = con.prepareStatement(UPDATE);
-			pstmt.setString(1, ordVO.getORD_NAME());
-			pstmt.setString(2, ordVO.getORD_PHONE());
-			pstmt.setString(3, ordVO.getORD_ADD());
-			pstmt.setString(4, ordVO.getORD_NO());
+			pstmt.setString(1, ordVO.getOrd_name());
+			pstmt.setString(2, ordVO.getOrd_phone());
+			pstmt.setString(3, ordVO.getOrd_add());
+			pstmt.setString(4, ordVO.getOrd_no());
 			pstmt.executeUpdate();
-			
+
 		} catch (SQLException se) {
 			throw new RuntimeException("A database error occured. " + se.getMessage());
 			// Clean up JDBC resources
@@ -110,20 +115,18 @@ public class OrdDAO implements OrdDAO_interface{
 				}
 			}
 		}
-		
-		
+
 	}
 
 	@Override
-	public void delete(String ORD_NO) {
+	public void delete(String Ord_no) {
 		Connection con = null;
 		PreparedStatement pstmt = null;
-		
-		
+
 		try {
 			con = ds.getConnection();
 			pstmt = con.prepareStatement(DELETE);
-			pstmt.setString(1, ORD_NO);
+			pstmt.setString(1, Ord_no);
 			pstmt.executeUpdate();
 		} catch (SQLException se) {
 			throw new RuntimeException("A database error occured. " + se.getMessage());
@@ -144,39 +147,38 @@ public class OrdDAO implements OrdDAO_interface{
 				}
 			}
 		}
-		
+
 	}
 
 	@Override
-	public OrdVO findByPrimaryKey(String ORD_NO) {
+	public OrdVO findByPrimaryKey(String Ord_no) {
 		OrdVO ordVO = null;
 		Connection con = null;
 		PreparedStatement pstmt = null;
 		ResultSet rs = null;
-		
-		
+
 		try {
-			con =ds.getConnection();
+			con = ds.getConnection();
 			pstmt = con.prepareStatement(GET_ONE_STMT);
-			pstmt.setString(1, ORD_NO);
-			rs=pstmt.executeQuery();
-			while (rs.next()){
-				ordVO = new  OrdVO();
-				ordVO.setORD_NO(rs.getString("ORD_NO"));
-				ordVO.setMEM_AC(rs.getString("MEM_AC"));
-				ordVO.setSEND_FEE(rs.getInt("SEND_FEE"));
-				ordVO.setTOTAL_PAY(rs.getInt("TOTAL_PAY"));
-				ordVO.setORD_NAME(rs.getString("ORD_NAME"));
-				ordVO.setORD_PHONE(rs.getString("ORD_PHONE"));
-				ordVO.setORD_ADD(rs.getString("ORD_ADD"));
-				ordVO.setPAY_INFO(rs.getString("PAY_INFO"));
-				ordVO.setORD_STAT(rs.getString("ORD_STAT"));
-				ordVO.setORD_DATE(rs.getDate("ORD_DATE"));
-				ordVO.setPAY_DATE(rs.getDate("PAY_DATE"));
-				ordVO.setPAY_CHK_DATE(rs.getDate("PAY_CHK_DATE"));
-				ordVO.setSEND_DATE(rs.getDate("SEND_DATE"));
-				ordVO.setSEND_ID(rs.getString("SEND_ID"));
-				
+			pstmt.setString(1, Ord_no);
+			rs = pstmt.executeQuery();
+			while (rs.next()) {
+				ordVO = new OrdVO();
+				ordVO.setOrd_no(rs.getString("ORD_NO"));
+				ordVO.setMem_ac(rs.getString("MEM_AC"));
+				ordVO.setSend_fee(rs.getInt("SEND_FEE"));
+				ordVO.setTotal_pay(rs.getInt("TOTAL_PAY"));
+				ordVO.setOrd_name(rs.getString("ORD_NAME"));
+				ordVO.setOrd_phone(rs.getString("ORD_PHONE"));
+				ordVO.setOrd_add(rs.getString("ORD_ADD"));
+				ordVO.setPay_info(rs.getString("PAY_INFO"));
+				ordVO.setOrd_stat(rs.getString("ORD_STAT"));
+				ordVO.setOrd_date(rs.getDate("ORD_DATE"));
+				ordVO.setPay_date(rs.getDate("PAY_DATE"));
+				ordVO.setPay_chk_date(rs.getDate("PAY_CHK_DATE"));
+				ordVO.setSend_date(rs.getDate("SEND_DATE"));
+				ordVO.setSend_id(rs.getString("SEND_ID"));
+
 			}
 		} catch (SQLException se) {
 			throw new RuntimeException("A database error occured. " + se.getMessage());
@@ -211,31 +213,31 @@ public class OrdDAO implements OrdDAO_interface{
 	public List<OrdVO> getAll() {
 		List<OrdVO> list = new ArrayList<OrdVO>();
 		OrdVO ordVO = null;
-		
+
 		Connection con = null;
 		PreparedStatement pstmt = null;
 		ResultSet rs = null;
-		
+
 		try {
-			con =ds.getConnection();
+			con = ds.getConnection();
 			pstmt = con.prepareStatement(GET_ALL_STMT);
 			rs = pstmt.executeQuery();
-			while (rs.next()){
-				ordVO = new  OrdVO();
-				ordVO.setORD_NO(rs.getString("ORD_NO"));
-				ordVO.setMEM_AC(rs.getString("MEM_AC"));
-				ordVO.setSEND_FEE(rs.getInt("SEND_FEE"));
-				ordVO.setTOTAL_PAY(rs.getInt("TOTAL_PAY"));
-				ordVO.setORD_NAME(rs.getString("ORD_NAME"));
-				ordVO.setORD_PHONE(rs.getString("ORD_PHONE"));
-				ordVO.setORD_ADD(rs.getString("ORD_ADD"));
-				ordVO.setPAY_INFO(rs.getString("PAY_INFO"));
-				ordVO.setORD_STAT(rs.getString("ORD_STAT"));
-				ordVO.setORD_DATE(rs.getDate("ORD_DATE"));
-				ordVO.setPAY_DATE(rs.getDate("PAY_DATE"));
-				ordVO.setPAY_CHK_DATE(rs.getDate("PAY_CHK_DATE"));
-				ordVO.setSEND_DATE(rs.getDate("SEND_DATE"));
-				ordVO.setSEND_ID(rs.getString("SEND_ID"));
+			while (rs.next()) {
+				ordVO = new OrdVO();
+				ordVO.setOrd_no(rs.getString("ORD_NO"));
+				ordVO.setMem_ac(rs.getString("MEM_AC"));
+				ordVO.setSend_fee(rs.getInt("SEND_FEE"));
+				ordVO.setTotal_pay(rs.getInt("TOTAL_PAY"));
+				ordVO.setOrd_name(rs.getString("ORD_NAME"));
+				ordVO.setOrd_phone(rs.getString("ORD_PHONE"));
+				ordVO.setOrd_add(rs.getString("ORD_ADD"));
+				ordVO.setPay_info(rs.getString("PAY_INFO"));
+				ordVO.setOrd_stat(rs.getString("ORD_STAT"));
+				ordVO.setOrd_date(rs.getDate("ORD_DATE"));
+				ordVO.setPay_date(rs.getDate("PAY_DATE"));
+				ordVO.setPay_chk_date(rs.getDate("PAY_CHK_DATE"));
+				ordVO.setSend_date(rs.getDate("SEND_DATE"));
+				ordVO.setSend_id(rs.getString("SEND_ID"));
 				list.add(ordVO);
 			}
 		} catch (SQLException se) {
@@ -267,4 +269,54 @@ public class OrdDAO implements OrdDAO_interface{
 		return list;
 	}
 
+	@Override
+	public Set<Ord_listVO> getOrd_listByOrd(String ord_no) {
+		Set<Ord_listVO> set = new LinkedHashSet<Ord_listVO>();
+		Ord_listVO Ord_listVO = null;
+
+		Connection con = null;
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+
+		try {
+			con = ds.getConnection();
+			pstmt = con.prepareStatement(GET_ALL_ORDER_LIST);
+			pstmt.setString(1, ord_no);
+			rs = pstmt.executeQuery();
+			while (rs.next()) {
+				Ord_listVO = new Ord_listVO();
+				Ord_listVO.setOrd_no(rs.getString("ORD_NO"));
+				Ord_listVO.setProd_no(rs.getString("PROD_NO"));
+				Ord_listVO.setAmont(rs.getInt("AMONT"));
+				set.add(Ord_listVO);
+			}
+		} catch (SQLException se) {
+			throw new RuntimeException("A database error occured. " + se.getMessage());
+			// Clean up JDBC resources
+		} finally {
+			if (rs != null) {
+				try {
+					rs.close();
+				} catch (SQLException se) {
+					se.printStackTrace(System.err);
+				}
+			}
+			if (pstmt != null) {
+				try {
+					pstmt.close();
+				} catch (SQLException se) {
+					se.printStackTrace(System.err);
+				}
+			}
+			if (con != null) {
+				try {
+					con.close();
+				} catch (Exception e) {
+					e.printStackTrace(System.err);
+				}
+			}
+
+		}
+		return set;
+	}
 }

@@ -4,8 +4,7 @@
 <%@ page import="com.store.model.*"%>
 <%-- 此頁採用 JSTL 與 EL 取值 --%>
 <%
-pageContext.setAttribute("mem_ac", "doctor32");
-String mem_ac = (String) pageContext.getAttribute("mem_ac");
+String mem_ac = (String) request.getParameter("mem_ac");
 %>
 
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
@@ -19,14 +18,23 @@ String mem_ac = (String) pageContext.getAttribute("mem_ac");
 	href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/css/bootstrap.min.css">
 </head>
 <body>
-	你好<%=mem_ac%>
-	<FORM METHOD="post"
-		ACTION="<%=request.getContextPath()%>/store/ToStore.do">
-		<input type="submit" value="申請店家"> 
-		<input type="hidden" name="mem_ac" value="doctor32">
-		<input type="hidden" name="action" value="Application">
-	</FORM>
-1111111111111111
+
+<div class="container ">
+	<div class="row">
+		<div class="table-responsive">
+			<table class="table">
+    		  <tr class="success" align="center">
+       			<td>
+       				<form action=""></form>
+       				你好<%=mem_ac%>  您已申請成為店家，請靜待管理員審核。<br><a href="<%=request.getContextPath()%>/FrontEnd/update_store/store_index.jsp">回首頁</a>
+       			</td>
+     		 </tr>
+  			</table>
+		</div>
+	</div>
+</div>
+
+
 </body>
 
 <script	src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>

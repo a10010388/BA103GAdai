@@ -133,7 +133,7 @@
 							</ul>
 						</font>
 					</c:if>
-					<table class="sortable table-bordered">
+					<table class="sortable table-bordered table-responsive">
 						<tr>
 							<th>廠商編號</th>
 							<th>會員帳號</th>
