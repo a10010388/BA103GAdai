@@ -1,0 +1,380 @@
+
+.bg-white{
+	background-color: white;
+}
+.bg-gray{
+	background-color: #ddd;
+}
+.bg-g{
+	background-color: #80BD01;
+}
+.bg-light-g{
+	background-color: #C2DCCE;
+}
+.bg-light-brn{
+	background-color: #C8B6A1;
+}
+.bg-brn{
+	background-color: #7A3D0B;
+	/*background-color:#BF7A41;*/
+}
+.bg-dark-brn{
+	background-color: #6F5C60;
+}
+button.bor-info{
+	border-color:#31708f;
+}
+button.bor-like{
+	border-color:#F57A7A;
+}
+.tx-like{
+	color:#F57A7A;
+}
+.tx-gray{
+	color:#aaa;
+}
+.tx-white{
+	color:white;
+}
+.tx-g{
+	color: #80BD01;
+}
+.tx-light-g{
+	color: #C2DCCE;
+}
+.tx-light-brn{
+	color: #C8B6A1;
+}
+.tx-brn{
+	color: #7A3D0B;
+}
+.tx-dark-brn{
+	color: #6F5C60;
+}
+div .bold{
+    font-weight: bold;
+}
+.inline-b{
+	display: inline-block;
+}
+.rd10{
+	border-radius: 10px;
+}
+
+.border0{
+	border-width: 0px;
+}
+.border1{
+	border-width: 1px;
+	border-color: #6F5C60;
+}
+.mgt0{
+	margin-top: 0px;
+}
+.mgt10{
+	margin-top: 10px;
+}
+.mgt20{
+	margin-top: 20px;
+}
+.mgt50{
+	margin-top: 50px;
+}
+.mgt60{
+	margin-top: 60px;
+}
+.mgt120{
+	margin-top: 120px;
+}
+.mgb40{
+	margin-bottom: 40px;
+}
+.mgb0{
+	margin-bottom: 0px;
+}
+.mgb30{
+	margin-bottom: 30px;
+}
+.mgl20{
+	margin-left: 20px;
+}
+.mgl40{
+	margin-left: 40px;
+}
+.mgr20{
+	margin-right: 20px;
+}
+.padr0{
+	padding-right: 0px;
+}
+.padt0{
+	padding-top: 0px;
+}
+.padt5{
+	padding-top: 5px;
+}
+.padt8{
+	padding-top: 8px;
+}
+.padt10{
+	padding-top: 10px;
+}
+.padt20{
+	padding-top: 20px;
+}
+.navbar-nav>li>a.padt20{
+	padding-top: 20px;
+}
+.padb2{
+	padding-bottom: 2px;
+}
+.navbar-nav>li>a.padb17{
+	padding-bottom: 17px;
+}
+.padl30{
+	padding-left: 30px;
+}
+.h200{
+	height: 200px;
+}
+.h300{
+	height: 300px;
+}
+.h450{
+	height: 450px;
+}
+.w30{
+	width:30px;
+}
+.w45{
+	width: 45px;
+}
+.w50{
+	width: 50px;
+}
+.w100{
+	width: 100px;
+}
+.w300{
+	width: 300px;
+}
+.w800{
+	width: 800px;
+}
+.w33p{
+	width: 33.3333333333333%;
+}
+.w50p{
+	width: 50%;
+}
+.zidx5{
+	z-index: 5;
+}
+.zidx1{
+	z-index: 1;
+}
+
+.zidx0{
+	z-index: 0;
+}
+.pointer{
+	cursor: pointer;
+}
+
+
+
+
+
+/*全域設定*/
+body{
+	font-family: 微軟正黑體;
+	/*color: #7A3D0B ;*/
+	color: #6F5C60;
+}
+body a,
+body a:hover,
+body a:link,
+body a:visited{
+	/*color: #7A3D0B ;*/
+	color: #6F5C60;
+	cursor: pointer;
+	text-decoration:none;
+	outline: none;
+}
+
+.btn:focus,
+.btn:active:focus,
+.btn.active:focus,
+.btn.focus,
+.btn:active.focus,
+.btn.active.focus {
+    outline: none;
+}
+
+
+/*區塊設定*/
+.cus-nav{
+	background-color: #7A3D0B;
+}
+.mgt-depn-nav{
+	margin-top: 57px;
+}
+.func-h{
+	/*min-height: 40px;*/
+}
+.cus-ham{
+	margin-left: 15px;
+}
+.cus-badge{
+	position: absolute;
+	top: 5px;
+	right: 0px;
+	background-color: red;
+}
+.cus-tab-block{
+	margin-top: 30px;
+	margin-bottom: 50px;
+}
+.cus-tab-content{
+	margin-top: 20px;
+}
+
+.footer{
+	padding-top: 10px;
+	padding-bottom: 5px;
+	background-color: #7A3D0B;
+}
+.cus-prod-row{
+	padding-top: 10px;
+	padding-bottom: 10px;
+	border-bottom-style: solid;
+	border-color: rgba(200, 182, 161, 0.54);
+}
+.cus-art-row{
+	padding-top: 10px;
+	padding-bottom: 10px;
+	border-bottom-style: solid;
+	border-color: rgba(200, 182, 161, 0.54);
+}
+.cus-qa-row{
+	border-bottom-style: solid;
+	border-color: rgba(200, 182, 161, 0.54);
+}
+.cus-act-row{
+	padding-top: 10px;
+	padding-bottom: 10px;
+	border-bottom-style: solid;
+	border-color: rgba(200, 182, 161, 0.54);
+}
+
+/*navbar active*/
+.navbar-default .navbar-nav>.active>a, .navbar-default .navbar-nav>.active>a:focus, .navbar-default .navbar-nav>.active>a:hover{
+	/*color: #6F5C60;*/
+    /*color: #7A3D0B;*/
+    color: white;
+    /*background-color: #C2DCCE;*/
+    background-color: #888;
+}
+body .navbar-default .navbar-nav>li>a:hover{
+	/*color: #6F5C60;*/
+	color: black;
+	background-color: #C2DCCE;
+	/*background-color: #888;*/
+}
+
+/*跳窗圖框控制*/
+.modal .carousel-control{
+	opacity: 0;
+}
+.modal .carousel-control:hover{
+	opacity: 0.3;
+}
+/*廣告圖框控制*/
+#ad-cas .carousel-control{
+	opacity: 0;
+}
+#ad-cas .carousel-control:hover{
+	opacity: 0.3;
+}
+
+
+/*功能設定*/
+/*img垂直水平置中*/
+.vam-div150{
+	line-height:150px;
+	text-align:center;
+}
+.vam-img{
+	vertical-align: middle;
+	display:inline-block;
+
+}
+.mg-auto{
+	margin: auto;
+	vertical-align : middle;
+}
+/*ham選單擠壓區塊*/
+@media (min-width: 768px){
+    .h-block-depn-nav {
+        height: 0px;
+    }
+}
+@media (max-width: 767px){
+    .h-block-depn-nav {
+        height: 58px;
+    }
+}
+
+.fix-h{
+	height:92vh;
+	overflow-y: auto;
+	overflow-x: hidden;
+}
+.round-img {
+    border-radius: 50%;
+}
+
+
+
+/*ham border*/
+.navbar-default .navbar-toggle .icon-bar {
+    background-color: white;
+}
+.navbar-default .navbar-toggle {
+    border-color: white;
+}
+.navbar-default .navbar-toggle:hover {
+    background-color: #C8B6A1;
+}
+
+/*nav btn*/
+.navbar-default .navbar-nav>li>a{
+	color:white;
+	font-size: 17px;
+	/*font-weight: bold;*/
+}
+.navbar-default .navbar-nav>li>a:hover{
+	color:white;
+}
+.navbar-default .navbar-nav>li>a:focus{
+	color:white;
+}
+
+/*nav icon*/
+.navbar-default .navbar-brand {
+    color: white;
+}
+.navbar-default .navbar-brand:hover{
+    color: white;
+}
+.navbar-default .navbar-brand:focus{
+    color: white;
+}
+
+/*footer*/
+div.footer{
+	color: white;
+}
+div.footer a{
+	color: white;
+}

@@ -5,13 +5,13 @@
 <%@ page import="com.prod.model.*"%>
 <%-- 此頁採用 JSTL 與 EL 取值 --%>
 <%
-	pageContext.setAttribute("STORE_NO", "S1000000002");
-	String STORE_NO = (String) pageContext.getAttribute("STORE_NO");
+	pageContext.setAttribute("store_no", "S1000000002");
+	String store_no = (String) pageContext.getAttribute("store_no");
 	StoreService storeSvc = new StoreService();
 	Set<ProdVO> set;
-	set = storeSvc.getProdsByStore(STORE_NO);
+	set = storeSvc.getProdsByStore(store_no);
 	pageContext.setAttribute("set", set);
-	StoreVO storeVO=storeSvc.getonestore(STORE_NO);
+	StoreVO storeVO=storeSvc.getonestore(store_no);
 	pageContext.setAttribute("storeVO", storeVO); 
 %>
 
@@ -35,8 +35,9 @@
 <body>
 	<div class="head1 ">
 		<div class="verticnav col-sm-4">
-			<ul class="verticnav ">
-				<li>店家認證狀態：</li>
+			<ul class="verticnav">
+				<li>&nbsp;&nbsp;&nbsp;${storeVO.store_name}</li>
+				<li>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;認證狀態：</li>
 				<li>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;${storeVO.store_stat}</li>
 				<li><img src="LOGO.svg" class="shop_photo"></li>
 				<li><a href="#">修改店家資料</a></li>
@@ -49,10 +50,13 @@
 	</div>
 	
 	<div class="shop">
-		<div class="product col-sm-4">
-			<table class="sortable table-bordered table-responsive pro_all">
-				<caption>
-					<big>我的商品</big>
+		<div class="product col-sm-8">
+			<table class="table-bordered table-responsive pro_all">
+				<caption >
+					<font size="20">我的商品</font>
+					<ul class="verticnav">
+						<li><small><a href="<%=request.getContextPath()%>/FrontEnd/prod/addprod.jsp">新增商品</a></small></li>
+					</ul>	
 				</caption>
 				<tr>
 					<th>商品名稱</th>
@@ -60,6 +64,7 @@
 					<th>豆種</th>
 					<th>價格</th>
 					<th>烘培度</th>
+					<th>狀態</th>
 					<th></th>
 					
 				</tr>
@@ -72,11 +77,13 @@
 						<td>${ProdVO.bean_type}</td>
 						<td>${ProdVO.prod_price}</td>
 						<td>${ProdVO.roast}</td>
+						<td>${ProdVO.prod_stat}</td>
 						<td><FORM METHOD="post"
 										ACTION="<%=request.getContextPath()%>/prod/Prod_manag.do">
 										<input type="submit" value="修改商品資料" class="btn btn-info"> 
 										<input type="hidden" name="prod_no" value="${ProdVO.prod_no}">
-										<input type="hidden" name="whichPage"	value="<%=whichPage%>">  
+										<input type="hidden" name="prod_no" value="${ProdVO.prod_no}">
+										<input type="hidden" name="store_no"	value="<%=store_no%>">  
 										<input type="hidden" name="action" value="getOne_For_Update">
 							</FORM>
 						</td>

@@ -8,11 +8,11 @@
 	pageContext.setAttribute("store_no", "S1000000002");
 	String store_no = (String) pageContext.getAttribute("store_no");
 	StoreService storeSvc = new StoreService();
+	Set<ProdVO> set;
+	set = storeSvc.getProdsByStore(store_no);
+	pageContext.setAttribute("set", set);
 	StoreVO storeVO=storeSvc.getonestore(store_no);
 	pageContext.setAttribute("storeVO", storeVO); 
-	
-	String prod_no = request.getParameter("prod_no");
-	ProdService proSvc = new ProdService();
 	ProdVO prodvo = (ProdVO) request.getAttribute("prodvo");
 %>
 
@@ -36,7 +36,7 @@
 <body>
 	<div class="head1 ">
 		<div class="verticnav col-sm-4">
-			<ul class="verticnav ">
+			<ul class="verticnav">
 				<li>&nbsp;&nbsp;&nbsp;${storeVO.store_name}</li>
 				<li>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;認證狀態：</li>
 				<li>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;${storeVO.store_stat}</li>
@@ -44,93 +44,73 @@
 				<li><a href="#">修改店家資料</a></li>
 				<li><a href="#">商品管理</a></li>
 				<li><a href="#">訂單管理</a></li>
-
 			</ul>
-
 		</div>
 	</div>
-	<div>
-	<%-- 錯誤表列 --%>
-	<c:if test="${not empty errorMsgs}">
-		<font color='red'>請修正以下錯誤:
-			<ul>
-				<c:forEach var="message" items="${errorMsgs}">
-					<li>${message}</li>
-				</c:forEach>
-			</ul>
-		</font>
-	</c:if>
-	</div>
+	
 	<div class="shop">
-		<div class="product col-sm-4">
-			<table class=" table-bordered table-responsive pro_one">
-				<FORM METHOD="post"
-					ACTION="<%=request.getContextPath()%>/prod/Prod_manag.do" name="form1" enctype="multipart/form-data">
+		<div class="product col-sm-8">
+			<FORM METHOD="POST" ACTION="<%=request.getContextPath()%>/prod/Prod_manag.do" name="form1"	enctype="multipart/form-data">
+				<table class="addpro">
+					<caption ><font size="20">上架商品</font></caption>
 				<tr>
-					<td>商品名稱*</td>
+					<td width="30px">商品名稱*</td>
 					<td><input type="text" name="prod_name"
-						value="${prodvo.prod_name}" size="35"></td>
+						value="${(prodvo==null) ? "巴拉巴拉咖啡豆" : ""}" size="35"></td>
 					<td></td>
 				</tr>
 				<tr>
 					<td>豆種</td>
 					<td><input type="text" name="bean_type"
-						value="${prodvo.bean_type}" size="35"></td>
+						value="${(prodvo==null) ? "拉哩哩豆" : ""}" size="35"></td>
 					<td></td>
 				</tr>
 				<tr>
 					<td>生豆等級</td>
-					<td><input type="radio" name="bean_grade" value="G1"
-						${prodvo.bean_grade.equals("G1") ? "checked" : ""}>G1 <input
-						type="radio" name="bean_grade" value="G2"
-						${prodvo.bean_grade.equals("G2") ? "checked" : ""}>G2 <input
-						type="radio" name="bean_grade" value="G3"
-						${prodvo.bean_grade.equals("G3") ? "checked" : ""}>G3 <input
-						type="radio" name="bean_grade" value="G4"
-						${prodvo.bean_grade.equals("G4") ? "checked" : ""}>G4 <input
-						type="radio" name="bean_grade" value="G5"
-						${prodvo.bean_grade.equals("G5") ? "checked" : ""}>G5</td>
+					<td><input type="radio" name="bean_grade" value="G1" ${(prodvo==null) ? "checked" : ""}>G1 
+						<input type="radio" name="bean_grade" value="G2">G2 
+						<input type="radio" name="bean_grade" value="G3">G3 
+						<input type="radio" name="bean_grade" value="G4">G4 
+						<input type="radio" name="bean_grade" value="G5">G5</td>
 					<td></td>
 				</tr>
 				<tr>
 					<td>生產國*</td>
 					<td><input type="text" name="bean_contry"
-						value="${prodvo.bean_contry}"></td>
+						value="${(prodvo==null) ? "小人國" : ""}"></td>
 					<td></td>
 				</tr>
 				<tr>
 					<td>地區</td>
 					<td><input type="text" name="bean_region"
-						value="${prodvo.bean_region}"></td>
+						value="${(prodvo==null) ? "亞東" : ""}"></td>
 					<td></td>
 				</tr>
 				<tr>
 					<td>農場</td>
 					<td><input type="text" name="bean_farm"
-						value="${prodvo.bean_farm}"></td>
+						value="${(prodvo==null) ? "新埔" : ""}"></td>
 					<td></td>
 				</tr>
 				<tr>
 					<td>生產者</td>
 					<td><input type="text" name="bean_farmer"
-						value="${prodvo.bean_farmer}"></td>
+						value="${(prodvo==null) ? "嚕啦啦" : ""}"></td>
 					<td></td>
 				</tr>
 				<tr>
 					<td>海拔</td>
 					<td><input type="text" name="bean_el"
-						value="${prodvo.bean_el}"></td>
+						value="${(prodvo==null) ? 1500 : ""}"></td>
 					<td></td>
 				</tr>
 				<tr>
 					<td>處理法*</td>
 					<td><select size="1" name="proc">
-							<option value="日曬" ${prodvo.proc.equals("日曬") ? "SELECTED" : ""}>日曬</option>
-							<option value="半水洗"
-								${prodvo.proc.equals("半水洗") ? "SELECTED" : ""}>半水洗</option>
-							<option value="水洗" ${prodvo.proc.equals("水洗") ? "SELECTED" : ""}>水洗</option>
-							<option value="蜜處理"
-								${prodvo.proc.equals("蜜處理") ? "SELECTED" : ""}>蜜處理</option>
+							<option value="日曬" ${(prodvo==null) ? "SELECTED" : ""}>日曬</option>
+							<option value="半水洗">半水洗</option>
+							<option value="水洗">水洗</option>
+							<option value="蜜處理">蜜處理</option>
 					</select></td>
 					<td></td>
 				</tr>
@@ -279,27 +259,26 @@
 					<td><input type="radio" name="prod_stat" value="下架" ${prodvo.prod_stat.equals("下架") ? "checked" : ""}>下架 
 						<input type="radio" name="prod_stat" value="上架" ${prodvo.prod_stat.equals("上架") ? "checked" : ""}>上架 
 					</td>
+					<td></td>
 				</tr>
-				<tr>
-				<td>
-					
-						<input type="submit" value="修改商品資料" class="btn btn-info">
-						<input type="hidden" name="prod_no" value="${prodvo.prod_no}">
-						<input type="hidden" name="store_no" value="${storeVO.store_no}">
-						<input type="hidden" name="action" value="update_prod">
-					</FORM>
-				</td>
-				</tr>
-			</table>
-
+		</table>
+		<br> <input type="hidden" name="action" value="insert"> 
+			 <input type="submit" value="送出新增" class="btn btn-info">
+			 <input type="hidden" name="prod_no" value="${prodvo.prod_no}">
+			 <input type="hidden" name="store_no" value="${storeVO.store_no}">
+			</FORM>
+				
+			
+			
+				
 		</div>
 	</div>
 
-	<script
+<script
 		src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
 	<script
 		src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
-	
+<script src="<%=request.getContextPath()%>/BackEnd/res/js/sorttable.js"></script>
 </body>
 </html>
 

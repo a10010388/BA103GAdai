@@ -7,23 +7,14 @@
 	font-size: 25px;
 	
 }
-.table_order,.table_product{
-	
-	border: 3px solid #444444;  border-collapse: collapse;
-	height: 300px;
-	width: 400px;
-}
-.table_shop{
+
+.table-bordered{
 	border: 3px solid #444444;  
 	
 	height: 100px;
 	width: 600px;
 }
-.BACKtable_shop{
-	border: 3px solid #444444;  
-	height: 100px;
-	width: 1000px;
-}
+
 caption{
 	text-align:center;
 }
@@ -36,5 +27,8 @@ caption{
 
 img{
 	width: 150px
+}
+$("tr td:first-child"){
+	width:100px;
 }
 
