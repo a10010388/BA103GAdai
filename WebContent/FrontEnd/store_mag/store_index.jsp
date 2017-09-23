@@ -45,7 +45,7 @@
 						<li>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;${storeVO.store_stat}</li>
 						<li><img src="LOGO.svg" class="shop_photo"></li>
 						<li><a href="#">修改店家資料</a></li>
-						<li><a href="<%=request.getContextPath()%>/FrontEnd/store_mag/listAllpro_bystore.jsp">商品管理</a></li>
+						<li><a href="<%=request.getContextPath()%>/FrontEnd/prod/listAllpro_bystore.jsp">商品管理</a></li>
 						<li><a href="#">訂單管理</a></li>
 					</ul>
 				</div>
@@ -83,7 +83,7 @@
 				<div class="col-xs-12 col-sm-4">
 					<table class="table-bordered table-responsive prod_table">
 						<caption>
-					<big>我的商品</big><a href="<%=request.getContextPath()%>/FrontEnd/store_mag/listAllpro_bystore.jsp"><small>更多</small></a>
+					<big>我的商品</big><a href="<%=request.getContextPath()%>/FrontEnd/prod/listAllpro_bystore.jsp"><small>更多</small></a>
 						</caption>
 					<tr>
 						<th>商品名稱</th>

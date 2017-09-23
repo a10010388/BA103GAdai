@@ -8,12 +8,7 @@
 	
 }
 
-.table-bordered{
-	border: 3px solid #444444;  
-	
-	height: 100px;
-	width: 600px;
-}
+
 
 caption{
 	text-align:center;
@@ -25,10 +20,6 @@ caption{
 	width: 200px
 }
 
-img{
-	width: 150px
-}
-$("tr td:first-child"){
-	width:100px;
-}
+
+
 

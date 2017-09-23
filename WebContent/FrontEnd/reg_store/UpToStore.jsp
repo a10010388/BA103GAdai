@@ -79,7 +79,7 @@
 			<tr>
 				<td>店家介紹:</td>
 				<td><textarea rows="4" cols="50" name="store_cont"
-						value="輸入店家介紹"></textarea></td>
+						value=""></textarea></td>
 			</tr>
 
 

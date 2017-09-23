@@ -118,7 +118,7 @@
 				</tr>
 				<tr>
 					<td>海拔</td>
-					<td><input type="text" name="bean_el"
+					<td><input type="number" name="bean_el"
 						value="${prodvo.bean_el}"></td>
 					<td></td>
 				</tr>
@@ -255,7 +255,7 @@
 				</tr>
 				<tr>
 					<td>商品描述*</td>
-					<td><textarea rows="4" cols="50" name="prod_cont" value="${prodvo.prod_cont}">${prodvo.prod_cont}</textarea>
+					<td><textarea rows="4" cols="50" name="prod_cont" >${prodvo.prod_cont}</textarea>
 					</td>
 					<td></td>
 				</tr>
@@ -299,7 +299,11 @@
 		src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
 	<script
 		src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
-	
+	<script>
+	$(".pro_one img:first-child").css(
+	    {"width":"70px"}
+	)
+	</script>
 </body>
 </html>
 

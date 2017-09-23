@@ -27,8 +27,8 @@
 	src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
 <script
 	src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
-<link rel=stylesheet type="text/css"
-	href="<%=request.getContextPath()%>/FrontEnd/res/css/store_list.css">
+<link rel=stylesheet type="text/css" href="<%=request.getContextPath()%>/FrontEnd/res/css/store_list.css">
+
 <title>Insert title here</title>
 
 </head>
@@ -99,6 +99,11 @@
 	<script
 		src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 <script src="<%=request.getContextPath()%>/BackEnd/res/js/sorttable.js"></script>
+<script>
+$(".pro_all img:first-child").css(
+	    {"width":"70px"}
+	)
+</script>
 </body>
 </html>
 
