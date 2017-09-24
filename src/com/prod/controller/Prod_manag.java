@@ -58,7 +58,7 @@ public class Prod_manag extends HttpServlet {
 				 * 3.查詢完成,準備轉交(Send the Success view)
 				 ************/
 				req.setAttribute("prodvo", prodvo); // 資料庫取出的empVO物件,存入req
-				String url = "/FrontEnd/prod/get_oneprod.jsp";
+				String url = "/FrontEnd/prod/getprod_forupdate.jsp";
 				RequestDispatcher successView = req.getRequestDispatcher(url);// 成功轉交
 												// update_emp_input.jsp
 				successView.forward(req, res);
@@ -115,88 +115,113 @@ public class Prod_manag extends HttpServlet {
 
 				
 				
-				ProdVO prodVO = new ProdVO();
-				prodVO.setProd_no(prod_no);
-				prodVO.setStore_no(store_no);
 				
-				prodVO.setProd_name(prod_name);
-				prodVO.setBean_type(bean_type);
-				prodVO.setBean_grade(bean_grade);
-				prodVO.setBean_contry(bean_contry);
-				
-				prodVO.setBean_region(bean_region);
-				prodVO.setBean_farm(bean_farm);
-				
-				prodVO.setBean_el(bean_el);
-				prodVO.setProc(proc);
-				prodVO.setRoast(roast);
-				
-				prodVO.setBean_attr_acid(bean_attr_acid);
-				prodVO.setBean_attr_aroma(bean_attr_aroma);
-				prodVO.setBean_attr_body(bean_attr_body);
-				prodVO.setBean_attr_after(bean_attr_after);
-				prodVO.setBean_attr_bal(bean_attr_bal);
-				
-				prodVO.setBean_aroma(bean_aroma);
-				prodVO.setProd_price(prod_price);
-				prodVO.setProd_wt(prod_wt);
-				
-				prodVO.setSend_fee(send_fee);
-				prodVO.setProd_sup(prod_sup);
-				prodVO.setProd_cont(prod_cont);
-				prodVO.setProd_stat(prod_stat);
 				
 				
 
-				 InputStream prod_pic1 = req.getPart("prod_pic1").getInputStream();
-				 ByteArrayOutputStream pro_1 = new ByteArrayOutputStream();
-				 int p1;
-				 byte[] pho1 = new byte[16384];
-				 while ((p1 = prod_pic1.read(pho1, 0, pho1.length))
-				 != -1) {
-				 pro_1.write(pho1, 0, p1);
+				 InputStream is = req.getPart("prod_pic1").getInputStream();
+				 byte [] prod_pic1 =null;
+				 if(!req.getPart("prod_pic1").getContentType().contains("image")){
+					 prod_pic1 = (byte[]) req.getSession().getAttribute("prod_pic1");
+					 if(prod_pic1==null){
+						 errorMsgs.add("請上傳圖片1");
+					 }
+				 }else{
+					 ByteArrayOutputStream pro_1 = new ByteArrayOutputStream();
+					 int p1;
+					 byte[] pho1 = new byte[16384];
+					 while ((p1 = is.read(pho1)) != -1) {
+					 pro_1.write(pho1, 0, p1);
+					 }
+					  prod_pic1 = pro_1.toByteArray();
+					  req.getSession().setAttribute("prod_pic1", prod_pic1);
 				 }
-				 byte [] pro_pho1 = pro_1.toByteArray();
 				 
-				 if (pro_pho1.length == 0){
-				 errorMsgs.add("商品照片1不可為空!");
+				 
+				 InputStream is2 = req.getPart("prod_pic2").getInputStream();
+				 byte [] prod_pic2 =null;
+				 if(!req.getPart("prod_pic2").getContentType().contains("image")){
+					 prod_pic2 = (byte[]) req.getSession().getAttribute("prod_pic2");
+					 if(prod_pic2==null){
+						 errorMsgs.add("請上傳圖片2");
+					 }
+				 }else{
+					 ByteArrayOutputStream pro_2 = new ByteArrayOutputStream();
+					 int p2;
+					 byte[] pho2 = new byte[16384];
+					 while ((p2 = is2.read(pho2)) != -1) {
+					 pro_2.write(pho2, 0, p2);
+					 }
+					  prod_pic2 = pro_2.toByteArray();
+					  req.getSession().setAttribute("prod_pic2", prod_pic2);
+				 }
+				 
+				 InputStream is3 = req.getPart("prod_pic3").getInputStream();
+				 byte [] prod_pic3 =null;
+				 if(!req.getPart("prod_pic3").getContentType().contains("image")){
+					 prod_pic3 = (byte[]) req.getSession().getAttribute("prod_pic3");
+					 if(prod_pic3==null){
+						 errorMsgs.add("請上傳圖片3");
+					 }
+				 }else{
+					 ByteArrayOutputStream pro_3 = new ByteArrayOutputStream();
+					 int p3;
+					 byte[] pho3 = new byte[16384];
+					 while ((p3 = is3.read(pho3)) != -1) {
+					 pro_3.write(pho3, 0, p3);
+					 }
+					  prod_pic3 = pro_3.toByteArray();
+					  req.getSession().setAttribute("prod_pic3", prod_pic3);
 				 }
 				 
 				 
 				 
-				 InputStream prod_pic2 = req.getPart("prod_pic2").getInputStream();
-				 ByteArrayOutputStream pro_2 = new ByteArrayOutputStream();
-				 int p2;
-				 byte[] pho2 = new byte[16384];
-				 while ((p2 = prod_pic2.read(pho2, 0, pho2.length))
-				 != -1) {
-				 pro_2.write(pho2, 0, p2);
-				 }
-				 byte [] pro_pho2 = pro_2.toByteArray();
+				 	ProdVO prodVO = new ProdVO();
+					prodVO.setProd_no(prod_no);
+					prodVO.setStore_no(store_no);
+					
+					prodVO.setProd_name(prod_name);
+					prodVO.setBean_type(bean_type);
+					prodVO.setBean_grade(bean_grade);
+					prodVO.setBean_contry(bean_contry);
+					
+					prodVO.setBean_region(bean_region);
+					prodVO.setBean_farm(bean_farm);
+					
+					prodVO.setBean_el(bean_el);
+					prodVO.setProc(proc);
+					prodVO.setRoast(roast);
+					
+					prodVO.setBean_attr_acid(bean_attr_acid);
+					prodVO.setBean_attr_aroma(bean_attr_aroma);
+					prodVO.setBean_attr_body(bean_attr_body);
+					prodVO.setBean_attr_after(bean_attr_after);
+					prodVO.setBean_attr_bal(bean_attr_bal);
+					
+					prodVO.setBean_aroma(bean_aroma);
+					prodVO.setProd_price(prod_price);
+					prodVO.setProd_wt(prod_wt);
+					
+					prodVO.setSend_fee(send_fee);
+					prodVO.setProd_sup(prod_sup);
+					prodVO.setProd_cont(prod_cont);
+					prodVO.setProd_stat(prod_stat);
+					prodVO.setProd_pic1(prod_pic1);
+					prodVO.setProd_pic2(prod_pic2);
+					prodVO.setProd_pic3(prod_pic3);
 				 
-				 InputStream prod_pic3 = req.getPart("prod_pic2").getInputStream();
-				 ByteArrayOutputStream pro_3 = new ByteArrayOutputStream();
-				 int p3;
-				 byte[] pho3 = new byte[16384];
-				 while ((p3 = prod_pic3.read(pho3, 0, pho3.length))
-				 != -1) {
-				 pro_3.write(pho3, 0, p3);
-				 }
-				 byte [] pro_pho3 = pro_3.toByteArray();
-
-
 				// Send the use back to the form, if there were errors
 				if (!errorMsgs.isEmpty()) {
 					req.setAttribute("prodVO", prodVO); // 含有輸入格式錯誤的empVO物件,也存入req
 					RequestDispatcher failureView = req
-							.getRequestDispatcher("/FrontEnd/prod/get_oneprod.jsp");
+							.getRequestDispatcher("/FrontEnd/prod/getprod_forupdate.jsp");
 					failureView.forward(req, res);
 					return; // 程式中斷
 				}
 				/*************************** 2.開始修改資料 *****************************************/
 				System.out.println(1111111);
 				ProdService prodSvc = new ProdService();
-				prodVO = prodSvc.updateProdbysto(prod_no,store_no,prod_name, bean_type, bean_grade, bean_contry, bean_region, bean_farm, bean_farmer, bean_el, proc, roast, bean_attr_acid, bean_attr_aroma, bean_attr_body, bean_attr_after, bean_attr_bal, bean_aroma, prod_price, prod_wt, send_fee, prod_sup, prod_cont, pro_pho1, pro_pho2, pro_pho3, prod_stat);
+				prodVO = prodSvc.updateProdbysto(prod_no,store_no,prod_name, bean_type, bean_grade, bean_contry, bean_region, bean_farm, bean_farmer, bean_el, proc, roast, bean_attr_acid, bean_attr_aroma, bean_attr_body, bean_attr_after, bean_attr_bal, bean_aroma, prod_price, prod_wt, send_fee, prod_sup, prod_cont, prod_pic1, prod_pic2, prod_pic3, prod_stat);
 				/***************************
 				 * 
 				 * 3.修改完成,準備轉交(Send the Success view)
@@ -210,7 +235,7 @@ public class Prod_manag extends HttpServlet {
 				/*************************** 其他可能的錯誤處理 *************************************/
 			} catch (Exception e) {
 				errorMsgs.add("修改資料失敗:" + e.getMessage());
-				RequestDispatcher failureView = req.getRequestDispatcher("/FrontEnd/prod/get_oneprod.jsp");
+				RequestDispatcher failureView = req.getRequestDispatcher("/FrontEnd/prod/getprod_forupdate.jsp");
 				failureView.forward(req, res);
 			}
 		}
@@ -320,7 +345,7 @@ public class Prod_manag extends HttpServlet {
 
 				// Send the use back to the form, if there were errors
 				if (!errorMsgs.isEmpty()) {
-					RequestDispatcher failureView = req.getRequestDispatcher("/FrontEnd/reg_store/UpToStore.jsp");
+					RequestDispatcher failureView = req.getRequestDispatcher("/FrontEnd/prod/addprod.jsp");
 					failureView.forward(req, res);
 					return;// 程式中斷
 				}
@@ -358,26 +383,84 @@ public class Prod_manag extends HttpServlet {
 				prodVO.setProd_pic1(proimg1_3);
 				// Send the use back to the form, if there were errors
 				if (!errorMsgs.isEmpty()) {
-					req.setAttribute("storeVO", prodVO); // 含有輸入格式錯誤的empVO物件,也存入req
-					RequestDispatcher failureView = req.getRequestDispatcher("/FrontEnd/reg_store/UpToStore.jsp");
+					req.setAttribute("prodVO", prodVO); // 含有輸入格式錯誤的empVO物件,也存入req
+					RequestDispatcher failureView = req.getRequestDispatcher("/FrontEnd/prod/addprod.jsp");
 					failureView.forward(req, res);
 					return;
 				}
 
 				/*************************** 2.開始新增資料 ***************************************/
 				ProdService prodSvc = new ProdService();
-				prodVO = prodSvc.addProd(store_no, prod_name, bean_type, bean_grade, bean_contry, bean_region, bean_farm, bean_farmer, bean_el, proc, roast, bean_attr_acid, bean_attr_aroma, bean_attr_body, bean_attr_after, bean_attr_bal, bean_aroma, prod_price, prod_wt, send_fee, prod_sup, prod_cont, prod_pic1, prod_pic2, prod_pic3, prod_stat, ed_time)
+				prodVO = prodSvc.addProd(store_no, prod_name, bean_type, bean_grade, bean_contry, bean_region, bean_farm, bean_farmer, bean_el, proc, roast, bean_attr_acid, bean_attr_aroma, bean_attr_body, bean_attr_after, bean_attr_bal, bean_aroma, prod_price, prod_wt, send_fee, prod_sup, prod_cont, proimg1_1, proimg1_2, proimg1_3, prod_stat);
 				/***************************
 				 * 3.新增完成,準備轉交(Send the Success view)
 				 ***********/
-				String url = "/FrontEnd/reg_store/Finreg.jsp";
+				String url = "/FrontEnd/prod/listAllpro_bystore.jsp";
 				RequestDispatcher successView = req.getRequestDispatcher(url); // 新增成功後轉交Finreg.jsp
 				successView.forward(req, res);
 
 				/*************************** 其他可能的錯誤處理 **********************************/
 			} catch (Exception e) {
 				errorMsgs.add(e.getMessage());
-				RequestDispatcher failureView = req.getRequestDispatcher("/FrontEnd/reg_store/UpToStore.jsp");
+				RequestDispatcher failureView = req.getRequestDispatcher("/FrontEnd/prod/addprod.jsp");
+				failureView.forward(req, res);
+			}
+		}
+		if ("getprod_display".equals(action)) { // 來自listAllStore.jsp的請求
+
+			List<String> errorMsgs = new LinkedList<String>();
+			req.setAttribute("errorMsgs", errorMsgs);
+			List<String> openModal = new LinkedList<String>();
+			openModal.add("aaaa");
+			req.setAttribute("openModal", openModal);
+
+			try {
+				/***************************
+				 * 1.接收請求參數 - 輸入格式的錯誤處理
+				 **********************/
+				String prod_no = req.getParameter("prod_no");
+				System.out.println(prod_no);
+//				String url =req.getParameter("url");
+				String whichPage = req.getParameter("whichPage");
+				System.out.println(34848);
+				req.setAttribute("whichPage", whichPage);
+				
+//				req.setAttribute(arg0, arg1);
+				
+				// Send the use back to the form, if there were errors
+				if (!errorMsgs.isEmpty()) {
+					RequestDispatcher failureView = req.getRequestDispatcher("/BackEnd/reg_store/listAllStore.jsp");
+					failureView.forward(req, res);
+					return;// 程式中斷
+				}
+
+				
+				/*************************** 2.開始查詢資料 *****************************************/
+				ProdService proSvc = new ProdService();
+				ProdVO prodVO = proSvc.getOneProd(prod_no);
+				System.out.println(prodVO.getBean_type());
+				
+				// Send the use back to the form, if there were errors
+				if (!errorMsgs.isEmpty()) {
+					RequestDispatcher failureView = req.getRequestDispatcher("/FrontEnd/prod/listAllpro_bystore.jsp");
+					failureView.forward(req, res);
+					return;// 程式中斷
+				}
+				
+				/***************************
+				 * 3.查詢完成,準備轉交(Send the Success view)
+				 *************/
+				
+				req.setAttribute("prodVO", prodVO); // 資料庫取出的empVO物件,存入req
+				String url = "/FrontEnd/prod/listAllpro_bystore.jsp";
+				RequestDispatcher successView = req.getRequestDispatcher(url); // 成功轉交
+															// listOneEmp.jsp
+				successView.forward(req, res);
+				
+				/*************************** 其他可能的錯誤處理 *************************************/
+			} catch (Exception e) {
+				errorMsgs.add("無法取得資料:" + e.getMessage());
+				RequestDispatcher failureView = req.getRequestDispatcher("/FrontEnd/prod/listAllpro_bystore.jsp");
 				failureView.forward(req, res);
 			}
 		}

@@ -11,6 +11,8 @@ import javax.naming.InitialContext;
 import javax.naming.NamingException;
 import javax.sql.DataSource;
 
+import com.ord_list.model.Ord_listVO;
+
 import java.sql.*;
 
 
@@ -123,6 +125,8 @@ public class ProdDAO implements ProdDAO_interface {
 	
 	//快速更改資料庫圖片(測試用)
 	private static final String UPDATE_IMG1 = "UPDATE PROD SET PROD_PIC1 =? WHERE PROD_NO =?";
+	//查詢訂單細目
+	private static final String GET_ORD_LISTBYPROD_NO = "SELECT * from ORD_LIST where PROD_NO=?";
 	
 	@Override
 	public void insert(ProdVO prodVO) {
@@ -747,5 +751,58 @@ public class ProdDAO implements ProdDAO_interface {
 			}
 		}
 		return prodVO;
+	}
+
+	@Override
+	public Set<Ord_listVO> getOrd_listByProd(String prod_no) {
+		Set<Ord_listVO> set = new LinkedHashSet<Ord_listVO>();
+		Ord_listVO ord_listVO = null;
+
+		Connection con = null;
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+
+		try {
+			con = ds.getConnection();
+			pstmt = con.prepareStatement(GET_ORD_LISTBYPROD_NO);
+			pstmt.setString(1, prod_no);
+			rs = pstmt.executeQuery();
+
+			while (rs.next()) {
+				ord_listVO = new Ord_listVO();
+				ord_listVO.setOrd_no(rs.getString("ORD_NO"));
+				ord_listVO.setProd_no(rs.getString("PROD_NO"));
+				ord_listVO.setAmont(rs.getInt("AMONT"));
+				set.add(ord_listVO);
+
+			}
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}finally {
+			if (rs != null) {
+				try {
+					rs.close();
+				} catch (SQLException se) {
+					se.printStackTrace(System.err);
+				}
+			}
+			if (pstmt != null) {
+				try {
+					pstmt.close();
+				} catch (SQLException se) {
+					se.printStackTrace(System.err);
+				}
+			}
+			if (con != null) {
+				try {
+					con.close();
+				} catch (Exception e) {
+					e.printStackTrace(System.err);
+				}
+			}
+		}
+
+		return set;
 	}
 }

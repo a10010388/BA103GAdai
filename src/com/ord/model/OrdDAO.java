@@ -30,11 +30,12 @@ public class OrdDAO implements OrdDAO_interface {
 	}
 	private static final String INSERT_STMT = "INSERT INTO ord (ORD_NO,MEM_AC,SEND_FEE,TOTAL_PAY,ORD_NAME,ORD_PHONE,ORD_ADD,"
 			+ "PAY_INFO,ORD_STAT,ORD_DATE,PAY_DATE,PAY_CHK_DATE,SEND_DATE,SEND_ID) VALUES ('O'||ORD_NO_SEQ.NEXTVAL, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
-	private static final String GET_ALL_STMT = "SELECT * FROM ord order by ORD_NO";
+	private static final String GET_ALL_STMT = "SELECT * FROM ord order by ORD_DATE desc";
 	private static final String GET_ONE_STMT = "SELECT ORD_NO,MEM_AC,SEND_FEE,TOTAL_PAY,ORD_NAME,ORD_PHONE,ORD_ADD,"
 			+ "PAY_INFO,ORD_STAT,ORD_DATE,PAY_DATE,PAY_CHK_DATE,SEND_DATE,SEND_ID FROM ord where ORD_NO = ?";
 	private static final String DELETE = "DELETE FROM ord where ORD_NO = ?";
-	private static final String UPDATE = "UPDATE ord set ORD_NAME=?, ORD_PHONE=?, ORD_ADD=? where ORD_NO = ?";
+	//賣家改狀態
+	private static final String UPDATE_STAT = "UPDATE ord set ORD_STAT=?, PAY_CHK_DATE=?, SEND_DATE=? ,SEND_ID=? where ORD_NO = ?";
 	private static final String GET_ALL_ORDER_LIST = "select * from ord_list where ORD_NO=?";
 
 	@Override
@@ -89,11 +90,12 @@ public class OrdDAO implements OrdDAO_interface {
 
 		try {
 			con = ds.getConnection();
-			pstmt = con.prepareStatement(UPDATE);
-			pstmt.setString(1, ordVO.getOrd_name());
-			pstmt.setString(2, ordVO.getOrd_phone());
-			pstmt.setString(3, ordVO.getOrd_add());
-			pstmt.setString(4, ordVO.getOrd_no());
+			pstmt = con.prepareStatement(UPDATE_STAT);
+			pstmt.setString(1, ordVO.getOrd_stat());
+			pstmt.setDate(2, ordVO.getPay_chk_date());
+			pstmt.setDate(3, ordVO.getSend_date());
+			pstmt.setString(4, ordVO.getSend_id());
+			pstmt.setString(5, ordVO.getOrd_no ());
 			pstmt.executeUpdate();
 
 		} catch (SQLException se) {
@@ -210,8 +212,8 @@ public class OrdDAO implements OrdDAO_interface {
 	}
 
 	@Override
-	public List<OrdVO> getAll() {
-		List<OrdVO> list = new ArrayList<OrdVO>();
+	public Set<OrdVO> getAll() {
+		Set<OrdVO> set = new LinkedHashSet<OrdVO>();
 		OrdVO ordVO = null;
 
 		Connection con = null;
@@ -238,7 +240,7 @@ public class OrdDAO implements OrdDAO_interface {
 				ordVO.setPay_chk_date(rs.getDate("PAY_CHK_DATE"));
 				ordVO.setSend_date(rs.getDate("SEND_DATE"));
 				ordVO.setSend_id(rs.getString("SEND_ID"));
-				list.add(ordVO);
+				set.add(ordVO);
 			}
 		} catch (SQLException se) {
 			throw new RuntimeException("A database error occured. " + se.getMessage());
@@ -266,7 +268,7 @@ public class OrdDAO implements OrdDAO_interface {
 				}
 			}
 		}
-		return list;
+		return set;
 	}
 
 	@Override

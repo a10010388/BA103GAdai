@@ -9,7 +9,7 @@
 	String store_no = (String) pageContext.getAttribute("store_no");
 	StoreService storeSvc = new StoreService();
 	Set<ProdVO> set;
-	set = storeSvc.getProdsByStore(store_no);
+	set = storeSvc.getProdsByStore_no(store_no);
 	pageContext.setAttribute("set", set);
 	StoreVO storeVO=storeSvc.getonestore(store_no);
 	pageContext.setAttribute("storeVO", storeVO); 
@@ -48,6 +48,20 @@
 			</ul>
 		</div>
 	</div>
+	<div>
+	<%-- 錯誤表列 --%>
+	<c:if test="${not empty errorMsgs}">
+		<font color='red'>請修正以下錯誤:
+			<ul>
+				<c:forEach var="message" items="${errorMsgs}">
+					<li>${message}</li>
+				</c:forEach>
+			</ul>
+		</font>
+	</c:if>
+	</div>
+	
+	
 	
 	<div class="shop">
 		<div class="product col-sm-8">
@@ -194,7 +208,7 @@
 				</tr>
 				<tr>
 					<td>重量 lb(小數後1位)*</td>
-					<td><input type="numeber" name="prod_wt" value="${(prodvo==null) ? 0.5 : ""}" ></td>
+					<td><input type="number" name="prod_wt" value="${(prodvo==null) ? 0.5 : ""}" ></td>
 					<td></td>
 				</tr>
 				<tr>

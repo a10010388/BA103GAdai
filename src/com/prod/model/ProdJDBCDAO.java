@@ -5,6 +5,10 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.util.*;
+
+import com.ord_list.model.Ord_listVO;
+import com.store.model.StoreVO;
+
 import java.sql.*;
 
 
@@ -111,6 +115,8 @@ public class ProdJDBCDAO implements ProdDAO_interface {
 	
 	//快速更改資料庫圖片(測試用)
 	private static final String UPDATE_IMG1 = "UPDATE PROD SET PROD_PIC1 =? WHERE PROD_NO =?";
+	//查詢訂單細目
+	private static final String GET_ORD_LISTBYPROD_NO = "SELECT * from ORD_LIST where PROD_NO=?";
 	
 	@Override
 	public void insert(ProdVO prodVO) {
@@ -775,6 +781,42 @@ public class ProdJDBCDAO implements ProdDAO_interface {
 		}
 		return prodVO;
 	}
+	
+	@Override
+	public Set<Ord_listVO> getOrd_listByProd(String prod_no) {
+		Set<Ord_listVO> set = new LinkedHashSet<Ord_listVO>();
+		Ord_listVO ord_listVO = null;
+
+		Connection con = null;
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+
+		try {
+			Class.forName(driver);
+			con = DriverManager.getConnection(url, userid, passwd);
+			pstmt = con.prepareStatement(GET_ORD_LISTBYPROD_NO);
+			pstmt.setString(1, prod_no);
+
+			rs = pstmt.executeQuery();
+			while (rs.next()) {
+				ord_listVO = new Ord_listVO();
+				ord_listVO.setOrd_no(rs.getString("ORD_NO"));
+				ord_listVO.setProd_no(rs.getString("PROD_NO"));
+				ord_listVO.setAmont(rs.getInt("AMONT"));
+				set.add(ord_listVO);
+				
+			}
+
+		} catch (ClassNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+
+		return set;
+	}
 
 	public static void main (String[] args) throws IOException{
 		ProdJDBCDAO dao = new ProdJDBCDAO();		
@@ -785,7 +827,8 @@ public class ProdJDBCDAO implements ProdDAO_interface {
 //		getImageTest(dao);
 //		getAllTest(dao);
 //		getAllNoImgTest(dao);
-		getOneNoImgTest(dao);
+//		getOneNoImgTest(dao);
+		getord_listbyprod_no(dao);
 		//只新增照片方法，暫為測試用
 //		for(int i = 1; i<10 ;i++){
 //			String prod_no = "P100000000" + i;
@@ -793,6 +836,8 @@ public class ProdJDBCDAO implements ProdDAO_interface {
 //		}
 		
 	}
+	
+	
 	
 	public static void insertTest(ProdJDBCDAO dao) throws IOException{
 		ProdVO prodVO01 = new ProdVO();
@@ -1029,4 +1074,18 @@ public class ProdJDBCDAO implements ProdDAO_interface {
 			System.out.println();
 		
 	}
+	
+	public static void getord_listbyprod_no(ProdJDBCDAO dao){
+		
+		Set<Ord_listVO> set = dao.getOrd_listByProd("P1000000002");
+		for (Ord_listVO ord_listVO : set) {
+			System.out.print(ord_listVO.getProd_no() + ", ");
+			System.out.print(ord_listVO.getOrd_no() + ", ");
+			System.out.print(ord_listVO.getAmont() + ", ");
+			
+			System.out.println();
+		}
+	}
+
+	
 }

@@ -91,7 +91,7 @@ public class StoreService {
 	public List<StoreVO> getstatstr(String store_stat){
 		return dao.getAll_stat(store_stat);
 	}
-	public Set<ProdVO> getProdsByStore(String store_no){
+	public Set<ProdVO> getProdsByStore_no(String store_no){
 		return dao.getProdsByStore_no(store_no);
 	}
 	

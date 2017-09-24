@@ -2,6 +2,9 @@ package com.prod.model;
 
 import java.sql.Date;
 import java.util.List;
+import java.util.Set;
+
+import com.ord_list.model.Ord_listVO;
 
 public class ProdService {
 	
@@ -16,7 +19,7 @@ public class ProdService {
 			String roast, Integer bean_attr_acid, Integer bean_attr_aroma, Integer bean_attr_body,
 			Integer bean_attr_after, Integer bean_attr_bal, String bean_aroma, Integer prod_price, Double prod_wt,
 			Integer send_fee, Integer prod_sup, String prod_cont, byte[] prod_pic1, byte[] prod_pic2, byte[] prod_pic3,
-			String prod_stat, java.sql.Date ed_time) {
+			String prod_stat) {
 		
 		ProdVO prodVO = new ProdVO();
 		
@@ -46,7 +49,7 @@ public class ProdService {
 		prodVO.setProd_pic2(prod_pic2);
 		prodVO.setProd_pic3(prod_pic3);
 		prodVO.setProd_stat(prod_stat);
-		prodVO.setEd_time(ed_time);
+		prodVO.setEd_time(Date.valueOf(java.time.LocalDate.now()));
 		dao.insert(prodVO);
 		
 		return prodVO;
@@ -173,6 +176,9 @@ public class ProdService {
 	
 	public ProdVO getOneProdNoImg(String prod_no) {
 		return dao.findByPrimaryKeyNoImg(prod_no);
+	}
+	public Set<Ord_listVO> getOrd_listByProd(String prod_no){
+		return dao.getOrd_listByProd(prod_no);
 	}
 	
 }

@@ -3,16 +3,30 @@
 <%@ page import="java.util.*"%>
 <%@ page import="com.store.model.*"%>
 <%@ page import="com.prod.model.*"%>
+<%@ page import="com.ord.model.*"%>
+<%@ page import="com.ord_list.model.*"%>
 <%-- 此頁採用 JSTL 與 EL 取值 --%>
 <%
 	pageContext.setAttribute("store_no", "S1000000002");
 	String store_no = (String) pageContext.getAttribute("store_no");
 	StoreService storeSvc = new StoreService();
-	Set<ProdVO> set;
-	set = storeSvc.getProdsByStore(store_no);
-	pageContext.setAttribute("set", set);
+	ProdService prodSvc = new ProdService();
+	OrdService ordSvc = new OrdService();
+	
 	StoreVO storeVO=(StoreVO)storeSvc.getonestore(store_no);
 	pageContext.setAttribute("storeVO",storeVO);
+	
+	Set<OrdVO> ordVOs= null;
+	Set<ProdVO> prodVOs = storeSvc.getProdsByStore_no(store_no);
+	pageContext.setAttribute("prodVOs", prodVOs);
+	for(ProdVO prodVO : prodVOs){
+		Set<Ord_listVO> ord_listVOs = prodSvc.getOrd_listByProd(prodVO.getProd_no());
+		for(Ord_listVO ord_listVO : ord_listVOs){
+			ordVOs.add(ordSvc.getOrdByOrdno(ord_listVO.getOrd_no()));
+		}
+	}
+	pageContext.setAttribute("ordVOs",ordVOs);
+	
 %>
 
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
@@ -50,34 +64,26 @@
 					</ul>
 				</div>
 				<div class="col-xs-12 col-sm-4">
-					<table class="table_order">
-				<caption>
-					<big>最新訂單</big><a href="#"><small>更多</small></a>
-				</caption>
-				<tr>
-					<th>下單日期</th>
-					<th>買家名稱</th>
-					<th>商品</th>
-					<th>總金額</th>
-				</tr>
-				<tr>
-					<td>下單日期</td>
-					<td>買家名稱</td>
-					<td>商品</td>
-					<td>總金額</td>
-				</tr>
-				<tr>
-					<td>下單日期</td>
-					<td>買家名稱</td>
-					<td>商品</td>
-					<td>總金額</td>
-				</tr>
-				<tr>
-					<td>下單日期</td>
-					<td>買家名稱</td>
-					<td>商品</td>
-					<td>總金額</td>
-				</tr>
+					<table class="table-bordered table-responsive ord_table">
+						<caption>
+					<big>我的訂單</big><a href="<%=request.getContextPath()%>/FrontEnd/prod/listAllpro_bystore.jsp"><small>更多</small></a>
+						</caption>
+					<tr>
+						<th>商品名稱</th>
+						<th>商品圖片</th>
+						<th>商品價格</th>
+						<th>烘焙度</th>
+						<th>狀態</th>
+					</tr>
+				<c:forEach var="ProdVO" items="${prodVOs}" begin="0" end="4">
+					<tr>
+						<td>${ProdVO.prod_name}</td>
+						<td><img src="<%=request.getContextPath()%>/prod/prodImg.do?prod_no=${ProdVO.prod_no}&index=1" class="product_photo"></td>
+						<td>${ProdVO.prod_price}</td>
+						<td>${ProdVO.roast}</td>
+						<td>${ProdVO.prod_stat}</td>
+					</tr>
+				</c:forEach>
 			</table>
 				</div>
 				<div class="col-xs-12 col-sm-4">
@@ -92,7 +98,7 @@
 						<th>烘焙度</th>
 						<th>狀態</th>
 					</tr>
-				<c:forEach var="ProdVO" items="${set}" begin="0" end="4">
+				<c:forEach var="ProdVO" items="${prodVOs}" begin="0" end="4">
 					<tr>
 						<td>${ProdVO.prod_name}</td>
 						<td><img src="<%=request.getContextPath()%>/prod/prodImg.do?prod_no=${ProdVO.prod_no}&index=1" class="product_photo"></td>

@@ -13,7 +13,9 @@ public interface OrdDAO_interface {
      public void delete(String ord_no);
      
      
-     public List<OrdVO> getAll();
+     public Set<OrdVO> getAll();
      public OrdVO findByPrimaryKey(String ord_no);
+     //查某筆訂單細目
      public Set<Ord_listVO> getOrd_listByOrd(String ord_no);
+     
 }

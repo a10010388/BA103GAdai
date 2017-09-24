@@ -27,11 +27,11 @@ public class OrdJDBCDAO implements OrdDAO_interface {
 
 	private static final String INSERT_STMT = "INSERT INTO ord (ORD_NO,MEM_AC,SEND_FEE,TOTAL_PAY,ORD_NAME,ORD_PHONE,ORD_ADD,"
 			+ "PAY_INFO,ORD_STAT,ORD_DATE,PAY_DATE,PAY_CHK_DATE,SEND_DATE,SEND_ID) VALUES ('O'||ORD_NO_SEQ.NEXTVAL, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
-	private static final String GET_ALL_STMT = "SELECT * FROM ord order by ORD_NO";
+	private static final String GET_ALL_STMT = "SELECT * FROM ord order by ORD_DATE desc";
 	private static final String GET_ONE_STMT = "SELECT ORD_NO,MEM_AC,SEND_FEE,TOTAL_PAY,ORD_NAME,ORD_PHONE,ORD_ADD,"
 			+ "PAY_INFO,ORD_STAT,ORD_DATE,PAY_DATE,PAY_CHK_DATE,SEND_DATE,SEND_ID FROM ord where ORD_NO = ?";
 	private static final String DELETE = "DELETE FROM ord where ORD_NO = ?";
-	private static final String UPDATE = "UPDATE ord set ORD_NAME=?, ORD_PHONE=?, ORD_ADD=? where ORD_NO = ?";
+	private static final String UPDATE_STAT = "UPDATE ord set ORD_STAT=?, PAY_CHK_DATE=?, SEND_DATE=? ,SEND_ID=? where ORD_NO = ?";
 	private static final String GET_ALL_ORDER_LIST = "select * from ord_list where ORD_NO=?";
 
 	@Override
@@ -92,12 +92,13 @@ public class OrdJDBCDAO implements OrdDAO_interface {
 		try {
 			Class.forName(driver);
 			con = DriverManager.getConnection(url, userid, passwd);
-			pstmt = con.prepareStatement(UPDATE);
+			pstmt = con.prepareStatement(UPDATE_STAT);
 			
-			pstmt.setString(1, ordVO.getOrd_name());
-			pstmt.setString(2, ordVO.getOrd_phone());
-			pstmt.setString(3, ordVO.getOrd_add());
-			pstmt.setString(4, ordVO.getOrd_no());
+			pstmt.setString(1, ordVO.getOrd_stat());
+			pstmt.setDate(2, ordVO.getPay_chk_date());
+			pstmt.setDate(3, ordVO.getSend_date());
+			pstmt.setString(4, ordVO.getSend_id());
+			pstmt.setString(5, ordVO.getOrd_no ());
 			pstmt.executeUpdate();
 			
 		} catch (ClassNotFoundException e) {
@@ -230,8 +231,8 @@ public class OrdJDBCDAO implements OrdDAO_interface {
 	}
 
 	@Override
-	public List<OrdVO> getAll() {
-		List<OrdVO> list = new ArrayList<OrdVO>();
+	public Set<OrdVO> getAll() {
+		Set<OrdVO> set = new LinkedHashSet<OrdVO>();
 		OrdVO ordVO = null;
 		
 		Connection con = null;
@@ -259,7 +260,7 @@ public class OrdJDBCDAO implements OrdDAO_interface {
 				ordVO.setPay_chk_date(rs.getDate("PAY_CHK_DATE"));
 				ordVO.setSend_date(rs.getDate("SEND_DATE"));
 				ordVO.setSend_id(rs.getString("SEND_ID"));
-				list.add(ordVO);
+				set.add(ordVO);
 			}
 			
 		} catch (ClassNotFoundException e) {
@@ -294,7 +295,7 @@ public class OrdJDBCDAO implements OrdDAO_interface {
 		}
 		
 		
-		return list;
+		return set;
 	}
 	
 	@Override
@@ -383,10 +384,15 @@ public class OrdJDBCDAO implements OrdDAO_interface {
 
 		// 修改
 //		OrdVO ordVO2 = new OrdVO();
-//		ordVO2.setOrd_name("神雕大俠");
-//		ordVO2.setOrd_phone("0935882186");
-//		ordVO2.setOrd_add("終南山古墓派");
-//		ordVO2.setOrd_no("O1000000003");
+//		ordVO2.setOrd_stat("已出貨");
+//		java.util.Date S_DATE = new java.util.Date();
+//		java.sql.Date PAY_CHK_DATE = new java.sql.Date(S_DATE.getTime());
+//		
+//		java.sql.Date SEND_DATE = new java.sql.Date(S_DATE.getTime());
+//		ordVO2.setPay_chk_date(PAY_CHK_DATE);
+//		ordVO2.setSend_date(SEND_DATE);
+//		ordVO2.setSend_id("75757576");
+//		ordVO2.setOrd_no("O1000000002");
 //		dao.update(ordVO2);
 		//刪除
 //		dao.delete("O1000000013");
@@ -409,26 +415,26 @@ public class OrdJDBCDAO implements OrdDAO_interface {
 //		System.out.println("---------------------");
 //		
 		//查詢所有訂單
-//		List<OrdVO> list =dao.getAll();
-//		for(OrdVO aord:list){
-//			System.out.println(aord.getOrd_no());
-//			System.out.println(aord.getMem_ac());
-//			System.out.println(aord.getSend_fee());
-//			System.out.println(aord.getTotal_pay());
-//			System.out.println(aord.getOrd_name());
-//			System.out.println(aord.getOrd_phone());
-//			System.out.println(aord.getOrd_add());
-//			System.out.println(aord.getPay_info());
-//			System.out.println(aord.getOrd_stat());
-//			System.out.println(aord.getOrd_date());
-//			System.out.println(aord.getPay_date());
-//			System.out.println(aord.getPay_chk_date());
-//			System.out.println(aord.getSend_date());
-//			System.out.println(aord.getSend_id());
-//			System.out.println("---------------------");
-//			
-//		}
-		//查詢單筆訂單細目
+		Set<OrdVO> set =dao.getAll();
+		for(OrdVO aord:set){
+			System.out.println(aord.getOrd_no());
+			System.out.println(aord.getMem_ac());
+			System.out.println(aord.getSend_fee());
+			System.out.println(aord.getTotal_pay());
+			System.out.println(aord.getOrd_name());
+			System.out.println(aord.getOrd_phone());
+			System.out.println(aord.getOrd_add());
+			System.out.println(aord.getPay_info());
+			System.out.println(aord.getOrd_stat());
+			System.out.println(aord.getOrd_date());
+			System.out.println(aord.getPay_date());
+			System.out.println(aord.getPay_chk_date());
+			System.out.println(aord.getSend_date());
+			System.out.println(aord.getSend_id());
+			System.out.println("---------------------");
+			
+		}
+		//查詢某單筆訂單的細目
 //		Set<Ord_listVO> set = dao.getOrd_listByOrd("O1000000012");
 //		for(Ord_listVO ordlist:set){
 //			System.out.println(ordlist.getOrd_no());

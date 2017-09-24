@@ -237,7 +237,7 @@
 				</tr>
 				<tr>
 					<td>重量 lb(小數後1位)*</td>
-					<td><input type="text" name="prod_wt"
+					<td><input type="number" name="prod_wt"
 						value="${prodvo.prod_wt}" ></td>
 					<td></td>
 				</tr>
@@ -262,17 +262,17 @@
 				<tr>
 					<td>商品圖片-1*</td>
 					<td><img src="<%=request.getContextPath()%>/prod/prodImg.do?prod_no=${prodvo.prod_no}&index=1"></td>
-					<td><input type="file" name="prod_pic1"></td>
+					<td><input type="file" name="prod_pic1" id="propic1"><output id="pic1"></output></td>
 				</tr>
 				<tr>
 					<td>商品圖片-2</td>
 					<td><img src="<%=request.getContextPath()%>/prod/prodImg.do?prod_no=${prodvo.prod_no}&index=2"></td>
-					<td><input type="file" name="prod_pic2"></td>
+					<td><input type="file" name="prod_pic2" id="propic2"><output id="pic2"></output></td>
 				</tr>
 				<tr>
 					<td>商品圖片-3</td>
 					<td><img src="<%=request.getContextPath()%>/prod/prodImg.do?prod_no=${prodvo.prod_no}&index=3"></td>
-					<td><input type="file" name="prod_pic3"></td>
+					<td><input type="file" name="prod_pic3" id="propic3"><output id="pic3"></output></td>
 				</tr>
 				<tr>
 					<td>上架狀態</td>
@@ -303,6 +303,123 @@
 	$(".pro_one img:first-child").css(
 	    {"width":"70px"}
 	)
+	
+	
+function handleFileSelect1(evt) {
+	$("#pic1").empty();
+
+	var files = evt.target.files; // FileList object
+
+	// Loop through the FileList and render image files as thumbnails.
+	for (var i = 0, f; f = files[i]; i++) {
+
+		// Only process image files.
+		if (!f.type.match('image.*')) {
+			continue;
+		}
+
+		var reader = new FileReader();
+
+		// Closure to capture the file information.
+		reader.onload = (function(theFile) {
+			return function(e) {
+				// Render thumbnail.
+				var span = document.createElement('span');
+				span.innerHTML = [ '<img class="thumb" src="',
+						e.target.result, '" title="', escape(theFile.name),
+						'"/>' ].join('');
+				document.getElementById('pic1').insertBefore(span, null);
+				$(".thumb").width(150);
+
+			};
+		})(f);
+
+		// Read in the image file as a data URL.
+		reader.readAsDataURL(f);
+	}
+}
+document.getElementById('propic1').addEventListener('change',
+		handleFileSelect1, false);
+
+//=======================================================================================
+
+function handleFileSelect2(evt) {
+	$("#pic2").empty();
+
+	var files = evt.target.files; // FileList object
+
+	// Loop through the FileList and render image files as thumbnails.
+	for (var i = 0, f; f = files[i]; i++) {
+
+		// Only process image files.
+		if (!f.type.match('image.*')) {
+			continue;
+		}
+
+		var reader = new FileReader();
+
+		// Closure to capture the file information.
+		reader.onload = (function(theFile) {
+			return function(e) {
+				// Render thumbnail.
+				var span = document.createElement('span');
+				span.innerHTML = [ '<img class="thumb" src="',
+						e.target.result, '" title="', escape(theFile.name),
+						'"/>' ].join('');
+				document.getElementById('pic2').insertBefore(span, null);
+				$(".thumb").width(150);
+
+			};
+		})(f);
+
+		// Read in the image file as a data URL.
+		reader.readAsDataURL(f);
+	}
+}
+document.getElementById('propic2').addEventListener('change',
+		handleFileSelect2, false);
+
+//=======================================================================================
+
+function handleFileSelect3(evt) {
+	$("#pic3").empty();
+
+	var files = evt.target.files; // FileList object
+
+	// Loop through the FileList and render image files as thumbnails.
+	for (var i = 0, f; f = files[i]; i++) {
+
+		// Only process image files.
+		if (!f.type.match('image.*')) {
+			continue;
+		}
+
+		var reader = new FileReader();
+
+		// Closure to capture the file information.
+		reader.onload = (function(theFile) {
+			return function(e) {
+				// Render thumbnail.
+				var span = document.createElement('span');
+				span.innerHTML = [ '<img class="thumb" src="',
+						e.target.result, '" title="', escape(theFile.name),
+						'"/>' ].join('');
+				document.getElementById('pic3').insertBefore(span, null);
+				$(".thumb").width(150);
+				
+			};
+		})(f);
+
+		// Read in the image file as a data URL.
+		reader.readAsDataURL(f);
+	}
+}
+document.getElementById('propic3').addEventListener('change',
+		handleFileSelect3, false);
+
+
+
+
 	</script>
 </body>
 </html>
