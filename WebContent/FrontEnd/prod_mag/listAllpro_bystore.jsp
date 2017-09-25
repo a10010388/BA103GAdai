@@ -69,7 +69,7 @@
 				<caption >
 					<font size="20">我的商品</font>
 					<ul class="verticnav">
-						<li><small><a href="<%=request.getContextPath()%>/FrontEnd/prod/addprod.jsp">新增商品</a></small></li>
+						<li><small><a href="<%=request.getContextPath()%>/FrontEnd/prod_mag/addprod.jsp">新增商品</a></small></li>
 					</ul>	
 				</caption>
 				<tr>

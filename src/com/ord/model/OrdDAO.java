@@ -23,7 +23,7 @@ public class OrdDAO implements OrdDAO_interface {
 	static {
 		try {
 			Context ctx = new InitialContext();
-			ds = (DataSource) ctx.lookup("java:comp/env/jdbc/TestDB1");
+			ds = (DataSource) ctx.lookup("java:comp/env/jdbc/BA103G4DB");
 		} catch (NamingException e) {
 			e.printStackTrace();
 		}
@@ -36,6 +36,7 @@ public class OrdDAO implements OrdDAO_interface {
 	private static final String DELETE = "DELETE FROM ord where ORD_NO = ?";
 	//賣家改狀態
 	private static final String UPDATE_STAT = "UPDATE ord set ORD_STAT=?, PAY_CHK_DATE=?, SEND_DATE=? ,SEND_ID=? where ORD_NO = ?";
+	//查詢某訂單細目
 	private static final String GET_ALL_ORDER_LIST = "select * from ord_list where ORD_NO=?";
 
 	@Override
@@ -208,6 +209,7 @@ public class OrdDAO implements OrdDAO_interface {
 				}
 			}
 		}
+
 		return ordVO;
 	}
 

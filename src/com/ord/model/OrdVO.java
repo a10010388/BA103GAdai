@@ -103,6 +103,107 @@ public class OrdVO implements Serializable{
 	public void setSend_id(String send_id) {
 		this.send_id = send_id;
 	}
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = prime * result + ((mem_ac == null) ? 0 : mem_ac.hashCode());
+		result = prime * result + ((ord_add == null) ? 0 : ord_add.hashCode());
+		result = prime * result + ((ord_date == null) ? 0 : ord_date.hashCode());
+		result = prime * result + ((ord_name == null) ? 0 : ord_name.hashCode());
+		result = prime * result + ((ord_no == null) ? 0 : ord_no.hashCode());
+		result = prime * result + ((ord_phone == null) ? 0 : ord_phone.hashCode());
+		result = prime * result + ((ord_stat == null) ? 0 : ord_stat.hashCode());
+		result = prime * result + ((pay_chk_date == null) ? 0 : pay_chk_date.hashCode());
+		result = prime * result + ((pay_date == null) ? 0 : pay_date.hashCode());
+		result = prime * result + ((pay_info == null) ? 0 : pay_info.hashCode());
+		result = prime * result + ((send_date == null) ? 0 : send_date.hashCode());
+		result = prime * result + ((send_fee == null) ? 0 : send_fee.hashCode());
+		result = prime * result + ((send_id == null) ? 0 : send_id.hashCode());
+		result = prime * result + ((total_pay == null) ? 0 : total_pay.hashCode());
+		return result;
+	}
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		OrdVO other = (OrdVO) obj;
+		if (mem_ac == null) {
+			if (other.mem_ac != null)
+				return false;
+		} else if (!mem_ac.equals(other.mem_ac))
+			return false;
+		if (ord_add == null) {
+			if (other.ord_add != null)
+				return false;
+		} else if (!ord_add.equals(other.ord_add))
+			return false;
+		if (ord_date == null) {
+			if (other.ord_date != null)
+				return false;
+		} else if (!ord_date.equals(other.ord_date))
+			return false;
+		if (ord_name == null) {
+			if (other.ord_name != null)
+				return false;
+		} else if (!ord_name.equals(other.ord_name))
+			return false;
+		if (ord_no == null) {
+			if (other.ord_no != null)
+				return false;
+		} else if (!ord_no.equals(other.ord_no))
+			return false;
+		if (ord_phone == null) {
+			if (other.ord_phone != null)
+				return false;
+		} else if (!ord_phone.equals(other.ord_phone))
+			return false;
+		if (ord_stat == null) {
+			if (other.ord_stat != null)
+				return false;
+		} else if (!ord_stat.equals(other.ord_stat))
+			return false;
+		if (pay_chk_date == null) {
+			if (other.pay_chk_date != null)
+				return false;
+		} else if (!pay_chk_date.equals(other.pay_chk_date))
+			return false;
+		if (pay_date == null) {
+			if (other.pay_date != null)
+				return false;
+		} else if (!pay_date.equals(other.pay_date))
+			return false;
+		if (pay_info == null) {
+			if (other.pay_info != null)
+				return false;
+		} else if (!pay_info.equals(other.pay_info))
+			return false;
+		if (send_date == null) {
+			if (other.send_date != null)
+				return false;
+		} else if (!send_date.equals(other.send_date))
+			return false;
+		if (send_fee == null) {
+			if (other.send_fee != null)
+				return false;
+		} else if (!send_fee.equals(other.send_fee))
+			return false;
+		if (send_id == null) {
+			if (other.send_id != null)
+				return false;
+		} else if (!send_id.equals(other.send_id))
+			return false;
+		if (total_pay == null) {
+			if (other.total_pay != null)
+				return false;
+		} else if (!total_pay.equals(other.total_pay))
+			return false;
+		return true;
+	}
 	
 	
 	

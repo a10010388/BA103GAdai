@@ -16,16 +16,21 @@
 	StoreVO storeVO=(StoreVO)storeSvc.getonestore(store_no);
 	pageContext.setAttribute("storeVO",storeVO);
 	
-	Set<OrdVO> ordVOs= null;
+	
 	Set<ProdVO> prodVOs = storeSvc.getProdsByStore_no(store_no);
-	pageContext.setAttribute("prodVOs", prodVOs);
+	pageContext.setAttribute("prodVOs",prodVOs);
+	
+	
+	Set<OrdVO> ordVOs= new LinkedHashSet<OrdVO>();
 	for(ProdVO prodVO : prodVOs){
+		
 		Set<Ord_listVO> ord_listVOs = prodSvc.getOrd_listByProd(prodVO.getProd_no());
 		for(Ord_listVO ord_listVO : ord_listVOs){
 			ordVOs.add(ordSvc.getOrdByOrdno(ord_listVO.getOrd_no()));
 		}
 	}
 	pageContext.setAttribute("ordVOs",ordVOs);
+	
 	
 %>
 
@@ -66,22 +71,22 @@
 				<div class="col-xs-12 col-sm-4">
 					<table class="table-bordered table-responsive ord_table">
 						<caption>
-					<big>我的訂單</big><a href="<%=request.getContextPath()%>/FrontEnd/prod/listAllpro_bystore.jsp"><small>更多</small></a>
+					<big>我的訂單</big><a href="<%=request.getContextPath()%>/FrontEnd/prod/listAl"><small>更多</small></a>
 						</caption>
 					<tr>
-						<th>商品名稱</th>
-						<th>商品圖片</th>
-						<th>商品價格</th>
-						<th>烘焙度</th>
-						<th>狀態</th>
+						<th>訂單編號</th>
+						<th>收貨人姓名</th>
+						<th>結帳商品總金額</th>
+						<th>訂單成立時間</th>
+						<th>訂單狀態</th>
 					</tr>
-				<c:forEach var="ProdVO" items="${prodVOs}" begin="0" end="4">
+				<c:forEach var="ordVOs" items="${ordVOs}" begin="0" end="4">
 					<tr>
-						<td>${ProdVO.prod_name}</td>
-						<td><img src="<%=request.getContextPath()%>/prod/prodImg.do?prod_no=${ProdVO.prod_no}&index=1" class="product_photo"></td>
-						<td>${ProdVO.prod_price}</td>
-						<td>${ProdVO.roast}</td>
-						<td>${ProdVO.prod_stat}</td>
+						<td>${ordVOs.ord_no}</td>
+						<td>${ordVOs.ord_name}</td>
+						<td>${ordVOs.total_pay}</td>
+						<td>${ordVOs.ord_date}</td>
+						<td>${ordVOs.ord_stat}</td>
 					</tr>
 				</c:forEach>
 			</table>
@@ -89,7 +94,7 @@
 				<div class="col-xs-12 col-sm-4">
 					<table class="table-bordered table-responsive prod_table">
 						<caption>
-					<big>我的商品</big><a href="<%=request.getContextPath()%>/FrontEnd/prod/listAllpro_bystore.jsp"><small>更多</small></a>
+					<big>我的商品</big><a href="<%=request.getContextPath()%>/FrontEnd/prod_mag/listAllpro_bystore.jsp"><small>更多</small></a>
 						</caption>
 					<tr>
 						<th>商品名稱</th>

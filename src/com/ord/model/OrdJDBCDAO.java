@@ -414,33 +414,33 @@ public class OrdJDBCDAO implements OrdDAO_interface {
 //		System.out.println(ordVO3.getSend_id());
 //		System.out.println("---------------------");
 //		
-		//查詢所有訂單
-		Set<OrdVO> set =dao.getAll();
-		for(OrdVO aord:set){
-			System.out.println(aord.getOrd_no());
-			System.out.println(aord.getMem_ac());
-			System.out.println(aord.getSend_fee());
-			System.out.println(aord.getTotal_pay());
-			System.out.println(aord.getOrd_name());
-			System.out.println(aord.getOrd_phone());
-			System.out.println(aord.getOrd_add());
-			System.out.println(aord.getPay_info());
-			System.out.println(aord.getOrd_stat());
-			System.out.println(aord.getOrd_date());
-			System.out.println(aord.getPay_date());
-			System.out.println(aord.getPay_chk_date());
-			System.out.println(aord.getSend_date());
-			System.out.println(aord.getSend_id());
-			System.out.println("---------------------");
-			
-		}
-		//查詢某單筆訂單的細目
-//		Set<Ord_listVO> set = dao.getOrd_listByOrd("O1000000012");
-//		for(Ord_listVO ordlist:set){
-//			System.out.println(ordlist.getOrd_no());
-//			System.out.println(ordlist.getProd_no());
-//			System.out.println(ordlist.getAmont());
+//		//查詢所有訂單
+//		Set<OrdVO> set =dao.getAll();
+//		for(OrdVO aord:set){
+//			System.out.println(aord.getOrd_no());
+//			System.out.println(aord.getMem_ac());
+//			System.out.println(aord.getSend_fee());
+//			System.out.println(aord.getTotal_pay());
+//			System.out.println(aord.getOrd_name());
+//			System.out.println(aord.getOrd_phone());
+//			System.out.println(aord.getOrd_add());
+//			System.out.println(aord.getPay_info());
+//			System.out.println(aord.getOrd_stat());
+//			System.out.println(aord.getOrd_date());
+//			System.out.println(aord.getPay_date());
+//			System.out.println(aord.getPay_chk_date());
+//			System.out.println(aord.getSend_date());
+//			System.out.println(aord.getSend_id());
+//			System.out.println("---------------------");
+//			
 //		}
+		//查詢某單筆訂單的細目
+		Set<Ord_listVO> set = dao.getOrd_listByOrd("O1000000012");
+		for(Ord_listVO ordlist:set){
+			System.out.println(ordlist.getOrd_no());
+			System.out.println(ordlist.getProd_no());
+			System.out.println(ordlist.getAmont());
+		}
 	}
 
 	
