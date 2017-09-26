@@ -31,7 +31,6 @@
 			<td>
 				<h3>會員申請店家 - regstore.jsp</h3>
 			</td>
-
 		</tr>
 	</table>
 
@@ -48,8 +47,7 @@
 	</c:if>
 
 	<FORM METHOD="POST"
-		ACTION="<%=request.getContextPath()%>/store/ToStore.do" name="form1"
-		enctype="multipart/form-data">
+		ACTION="<%=request.getContextPath()%>/store/ToStore.do" name="form1" enctype="multipart/form-data">
 		<table border="1">
 			<caption>
 				您好：<%=mem_ac%></caption>
@@ -79,9 +77,16 @@
 			<tr>
 				<td>店家介紹:</td>
 				<td><textarea rows="4" cols="50" name="store_cont"
-						value=""></textarea></td>
+						placeholder="媽媽嘴曾經發生命案糾咪"></textarea></td>
 			</tr>
-
+			<tr>
+				<td>匯款資訊：</td>
+				<td><textarea rows="4" cols="50" name="store_atm_info"
+						placeholder="匯款銀行：彰化銀行 蘆洲分行 
+戶名：陳建儒 
+銀行代碼：009  
+銀行帳號：9832-51-326845-00"></textarea></td>
+			</tr>
 
 			<tr>
 				<td>免運費金額:</td>

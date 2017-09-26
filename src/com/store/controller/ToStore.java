@@ -78,23 +78,32 @@ public class ToStore extends HttpServlet {
 			List<String> errorMsgs = new LinkedList<String>();
 			
 			req.setAttribute("errorMsgs", errorMsgs);
-
+			
 			try {
 				/***********************
 				 * 1.接收請求參數 - 輸入格式的錯誤處理
 				 *************************/
 				String mem_ac = req.getParameter("mem_ac").trim();
+				
 				String store_name = req.getParameter("store_name").trim();
 				String tax_id_no = req.getParameter("tax_id_no").trim();
+				
 				String store_phone = req.getParameter("store_phone").trim();
+				
 				String store_add = req.getParameter("store_add").trim();
-				String store_cont = req.getParameter("store_cont").trim();
-
+				
+				String store_cont = req.getParameter("store_cont").replaceAll("\r\n|\n\r", "<br>");
+				
 				String store_add_lat = req.getParameter("store_add_lat").trim();
+				
 				String store_add_lon = req.getParameter("store_add_lon").trim();
-
+				
 				Integer store_free_ship = new Integer(req.getParameter("store_free_ship").trim());
-
+				
+				String  store_atm_info = req.getParameter("store_atm_info").replaceAll("\r\n|\n\r", "<br>");
+				System.out.println(store_atm_info);
+				
+				
 				InputStream win_id_pic = req.getPart("win_id_pic").getInputStream();
 				ByteArrayOutputStream id_pic = new ByteArrayOutputStream();
 				int idpic;
@@ -171,7 +180,10 @@ public class ToStore extends HttpServlet {
 				if (sphoto1_1.length == 0) {
 					errorMsgs.add("店家照1不可為空");
 				}
-
+				if(store_atm_info==null||(store_atm_info.length()==0)){
+					errorMsgs.add("匯款資訊不可為空");
+				}
+				
 				// Send the use back to the form, if there were errors
 				if (!errorMsgs.isEmpty()) {
 					RequestDispatcher failureView = req.getRequestDispatcher("/FrontEnd/reg_store/UpToStore.jsp");
@@ -194,7 +206,7 @@ public class ToStore extends HttpServlet {
 				storeVO.setStore_pic1(sphoto1_1);
 				storeVO.setStore_pic2(sphoto2_1);
 				storeVO.setStore_pic3(sphoto3_1);
-				
+				storeVO.setStore_atm_info(store_atm_info);
 				storeVO.setStore_free_ship(store_free_ship);
 				// Send the use back to the form, if there were errors
 				if (!errorMsgs.isEmpty()) {
@@ -207,7 +219,7 @@ public class ToStore extends HttpServlet {
 				/*************************** 2.開始新增資料 ***************************************/
 				StoreService storeSvc = new StoreService();
 				storeVO = storeSvc.addStore(mem_ac, tax_id_no, idimg1, store_phone, store_add, store_add_lat,
-						store_add_lon, store_name, store_cont, sphoto1_1, sphoto2_1, sphoto3_1, store_free_ship);
+						store_add_lon, store_name, store_cont, sphoto1_1, sphoto2_1, sphoto3_1, store_free_ship, store_atm_info);
 				
 				/***************************
 				 * 3.新增完成,準備轉交(Send the Success view)

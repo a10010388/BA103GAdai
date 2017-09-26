@@ -2,6 +2,7 @@ package com.store.model;
 
 import java.io.Serializable;
 import java.sql.Date;
+import java.util.Arrays;
 
 public class StoreVO implements Serializable {
 	private String store_no;
@@ -18,6 +19,8 @@ public class StoreVO implements Serializable {
 	private byte[] store_pic2;
 	private byte[] store_pic3;
 	private Integer store_free_ship;
+	private String store_atm_info;
+	
 	private String store_stat;
 	private String store_stat_cont;
 	private Date store_stat_cdate;
@@ -124,6 +127,125 @@ public class StoreVO implements Serializable {
 	}
 	public void setStore_stat_cdate(Date store_stat_cdate) {
 		this.store_stat_cdate = store_stat_cdate;
+	}
+	public String getStore_atm_info() {
+		return store_atm_info;
+	}
+	public void setStore_atm_info(String store_atm_info) {
+		this.store_atm_info = store_atm_info;
+	}
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = prime * result + ((mem_ac == null) ? 0 : mem_ac.hashCode());
+		result = prime * result + ((store_add == null) ? 0 : store_add.hashCode());
+		result = prime * result + ((store_add_lat == null) ? 0 : store_add_lat.hashCode());
+		result = prime * result + ((store_add_lon == null) ? 0 : store_add_lon.hashCode());
+		result = prime * result + ((store_atm_info == null) ? 0 : store_atm_info.hashCode());
+		result = prime * result + ((store_cont == null) ? 0 : store_cont.hashCode());
+		result = prime * result + ((store_free_ship == null) ? 0 : store_free_ship.hashCode());
+		result = prime * result + ((store_name == null) ? 0 : store_name.hashCode());
+		result = prime * result + ((store_no == null) ? 0 : store_no.hashCode());
+		result = prime * result + ((store_phone == null) ? 0 : store_phone.hashCode());
+		result = prime * result + Arrays.hashCode(store_pic1);
+		result = prime * result + Arrays.hashCode(store_pic2);
+		result = prime * result + Arrays.hashCode(store_pic3);
+		result = prime * result + ((store_stat == null) ? 0 : store_stat.hashCode());
+		result = prime * result + ((store_stat_cdate == null) ? 0 : store_stat_cdate.hashCode());
+		result = prime * result + ((store_stat_cont == null) ? 0 : store_stat_cont.hashCode());
+		result = prime * result + ((tax_id_no == null) ? 0 : tax_id_no.hashCode());
+		result = prime * result + Arrays.hashCode(win_id_pic);
+		return result;
+	}
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		StoreVO other = (StoreVO) obj;
+		if (mem_ac == null) {
+			if (other.mem_ac != null)
+				return false;
+		} else if (!mem_ac.equals(other.mem_ac))
+			return false;
+		if (store_add == null) {
+			if (other.store_add != null)
+				return false;
+		} else if (!store_add.equals(other.store_add))
+			return false;
+		if (store_add_lat == null) {
+			if (other.store_add_lat != null)
+				return false;
+		} else if (!store_add_lat.equals(other.store_add_lat))
+			return false;
+		if (store_add_lon == null) {
+			if (other.store_add_lon != null)
+				return false;
+		} else if (!store_add_lon.equals(other.store_add_lon))
+			return false;
+		if (store_atm_info == null) {
+			if (other.store_atm_info != null)
+				return false;
+		} else if (!store_atm_info.equals(other.store_atm_info))
+			return false;
+		if (store_cont == null) {
+			if (other.store_cont != null)
+				return false;
+		} else if (!store_cont.equals(other.store_cont))
+			return false;
+		if (store_free_ship == null) {
+			if (other.store_free_ship != null)
+				return false;
+		} else if (!store_free_ship.equals(other.store_free_ship))
+			return false;
+		if (store_name == null) {
+			if (other.store_name != null)
+				return false;
+		} else if (!store_name.equals(other.store_name))
+			return false;
+		if (store_no == null) {
+			if (other.store_no != null)
+				return false;
+		} else if (!store_no.equals(other.store_no))
+			return false;
+		if (store_phone == null) {
+			if (other.store_phone != null)
+				return false;
+		} else if (!store_phone.equals(other.store_phone))
+			return false;
+		if (!Arrays.equals(store_pic1, other.store_pic1))
+			return false;
+		if (!Arrays.equals(store_pic2, other.store_pic2))
+			return false;
+		if (!Arrays.equals(store_pic3, other.store_pic3))
+			return false;
+		if (store_stat == null) {
+			if (other.store_stat != null)
+				return false;
+		} else if (!store_stat.equals(other.store_stat))
+			return false;
+		if (store_stat_cdate == null) {
+			if (other.store_stat_cdate != null)
+				return false;
+		} else if (!store_stat_cdate.equals(other.store_stat_cdate))
+			return false;
+		if (store_stat_cont == null) {
+			if (other.store_stat_cont != null)
+				return false;
+		} else if (!store_stat_cont.equals(other.store_stat_cont))
+			return false;
+		if (tax_id_no == null) {
+			if (other.tax_id_no != null)
+				return false;
+		} else if (!tax_id_no.equals(other.tax_id_no))
+			return false;
+		if (!Arrays.equals(win_id_pic, other.win_id_pic))
+			return false;
+		return true;
 	}
 	
 

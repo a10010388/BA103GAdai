@@ -23,7 +23,7 @@ import javax.sql.DataSource;
 
 import com.prod.model.ProdVO;
 
-public class StoreDAO implements StoreDAO_interface{
+public class StoreJNDIDAO implements StoreDAO_interface{
 	
 	private static DataSource ds = null;
 	static {
@@ -35,15 +35,15 @@ public class StoreDAO implements StoreDAO_interface{
 		}
 	}
 	private static final String INSERT_STMT = "INSERT INTO store (STORE_NO,MEM_AC,TAX_ID_NO,WIN_ID_PIC,STORE_PHONE,STORE_ADD,STORE_ADD_LAT,"
-			+ "STORE_ADD_LON,STORE_NAME,STORE_CONT,STORE_PIC1,STORE_PIC2,STORE_PIC3,STORE_FREE_SHIP,STORE_ATM_INFO,"
-			+ "STORE_STAT,STORE_STAT_CONT,STORE_STAT_CDATE) VALUES ('S'||STORE_NO_SEQ.NEXTVAL, ?, ?, ?, ?, ?, ?, ?, ?,?, ?, ?, ?, ?, ?, '待審中', null, sysdate)";
+			+ "STORE_ADD_LON,STORE_NAME,STORE_CONT,STORE_PIC1,STORE_PIC2,STORE_PIC3,STORE_FREE_SHIP,"
+			+ "STORE_STAT,STORE_STAT_CONT,STORE_STAT_CDATE) VALUES ('S'||STORE_NO_SEQ.NEXTVAL, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, '待審中', null, sysdate)";
 	private static final String GET_ALL_STMT = "SELECT * FROM store order by STORE_NO";
 	private static final String GET_ONE_STMT = "SELECT STORE_NO,MEM_AC,TAX_ID_NO,WIN_ID_PIC,STORE_PHONE,STORE_ADD,STORE_ADD_LAT,"
-			+ "STORE_ADD_LON,STORE_NAME,STORE_CONT,STORE_PIC1,STORE_PIC2,STORE_PIC3,STORE_FREE_SHIP,STORE_ATM_INFO,"
+			+ "STORE_ADD_LON,STORE_NAME,STORE_CONT,STORE_PIC1,STORE_PIC2,STORE_PIC3,STORE_FREE_SHIP,"
 			+ "STORE_STAT,STORE_STAT_CONT,STORE_STAT_CDATE FROM store where STORE_NO = ?";
 	private static final String GET_ONE_BY_MEM = "SELECT * FROM store where mem_ac = ?";
 	private static final String DELETE = "DELETE FROM store where STORE_NO = ?";
-	private static final String UPDATE = "UPDATE store set TAX_ID_NO=?, WIN_ID_PIC=?, STORE_PHONE=? ,STORE_ADD=?,STORE_ADD_LAT=?,STORE_ADD_LON=?,STORE_NAME=?,STORE_CONT=?,STORE_PIC1=?,STORE_PIC2=?,STORE_PIC3=?,STORE_FREE_SHIP=?,STORE_ATM_INFO=?,STORE_STAT=?,STORE_STAT_CDATE=?  where STORE_NO = ? ";
+	private static final String UPDATE = "UPDATE store set TAX_ID_NO=?, WIN_ID_PIC=?, STORE_PHONE=? ,STORE_ADD=?,STORE_ADD_LAT=?,STORE_ADD_LON=?,STORE_NAME=?,STORE_CONT=?,STORE_PIC1=?,STORE_PIC2=?,STORE_PIC3=?,STORE_FREE_SHIP=?,STORE_STAT='待審中',STORE_STAT_CDATE=sysdate  where STORE_NO = ? and STORE_STAT like '%審核不通過%'";
 	private static final String UPDATE_STAT ="UPDATE store set STORE_STAT=?,store_stat_cdate=sysdate,STORE_STAT_CONT=? where STORE_NO = ?";
 	private static final String SELECT_STAT = "select * from store where store_stat like ?";
 	private static final String GET_PROD_BY_STORE = "SELECT * FROM PROD WHERE STORE_NO = ? order by prod_no";
@@ -90,7 +90,7 @@ public class StoreDAO implements StoreDAO_interface{
 			
 			
 			pstmt.setInt(13, storeVO.getStore_free_ship());
-			pstmt.setString(14, storeVO.getStore_atm_info());
+
 			pstmt.executeUpdate();
 
 			// Handle any driver errors
@@ -158,11 +158,9 @@ public class StoreDAO implements StoreDAO_interface{
 			pstmt.setBlob(11, blobSTORE_PIC3);
 			
 			pstmt.setInt(12, storeVO.getStore_free_ship());
-			pstmt.setString(13, storeVO.getStore_atm_info());
-			pstmt.setString(14, storeVO.getStore_stat());
-			pstmt.setDate(15, storeVO.getStore_stat_cdate());
-			pstmt.setString(16, storeVO.getStore_no());
+			pstmt.setString(13, storeVO.getStore_no());
 			pstmt.executeUpdate();
+
 			// Handle any driver errors
 		} catch (SQLException se) {
 			throw new RuntimeException("A database error occured. " + se.getMessage());
@@ -289,7 +287,6 @@ public class StoreDAO implements StoreDAO_interface{
 				storeVO.setStore_pic2(rs.getBytes("store_pic2"));
 				storeVO.setStore_pic3(rs.getBytes("store_pic3"));
 				storeVO.setStore_free_ship(rs.getInt("store_free_ship"));
-				storeVO.setStore_atm_info(rs.getString("store_atm_info"));
 				storeVO.setStore_stat(rs.getString("store_stat"));
 				storeVO.setStore_stat_cont(rs.getString("store_stat_cont"));
 				storeVO.setStore_stat_cdate(rs.getDate("store_stat_cdate"));

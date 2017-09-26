@@ -210,6 +210,7 @@ public class Prod_manag extends HttpServlet {
 						bean_region, bean_farm, bean_farmer, bean_el, proc, roast, bean_attr_acid, bean_attr_aroma,
 						bean_attr_body, bean_attr_after, bean_attr_bal, bean_aroma, prod_price, prod_wt, send_fee,
 						prod_sup, prod_cont, prod_pic1, prod_pic2, prod_pic3, prod_stat);
+				
 				/***************************
 				 * 
 				 * 3.修改完成,準備轉交(Send the Success view)
@@ -265,34 +266,34 @@ public class Prod_manag extends HttpServlet {
 				Integer prod_sup = new Integer(req.getParameter("prod_sup").trim());
 				String prod_cont = (req.getParameter("prod_cont").trim());
 
-				InputStream prod_pic1 = req.getPart("prod_pic1").getInputStream();
-				ByteArrayOutputStream pro_pic1 = new ByteArrayOutputStream();
+				InputStream is1 = req.getPart("prod_pic1").getInputStream();
+				ByteArrayOutputStream pro1 = new ByteArrayOutputStream();
 				int pic1;
 				byte[] proimg1 = new byte[16384];
 
-				while ((pic1 = prod_pic1.read(proimg1, 0, proimg1.length)) != -1) {
-					pro_pic1.write(proimg1, 0, pic1);
+				while ((pic1 = is1.read(proimg1, 0, proimg1.length)) != -1) {
+					pro1.write(proimg1, 0, pic1);
 				}
-				byte[] proimg1_1 = pro_pic1.toByteArray();
+				byte[] prod_pic1 = pro1.toByteArray();
 
-				InputStream prod_pic2 = req.getPart("prod_pic2").getInputStream();
-				ByteArrayOutputStream pro_pic2 = new ByteArrayOutputStream();
+				InputStream is2 = req.getPart("prod_pic2").getInputStream();
+				ByteArrayOutputStream pro2 = new ByteArrayOutputStream();
 				int pic2;
 				byte[] proimg2 = new byte[16384];
 
-				while ((pic2 = prod_pic2.read(proimg2, 0, proimg2.length)) != -1) {
-					pro_pic2.write(proimg2, 0, pic2);
+				while ((pic2 = is2.read(proimg2, 0, proimg2.length)) != -1) {
+					pro2.write(proimg2, 0, pic2);
 				}
-				byte[] proimg1_2 = pro_pic2.toByteArray();
+				byte[] prod_pic2 = pro2.toByteArray();
 
-				InputStream prod_pic3 = req.getPart("prod_pic3").getInputStream();
-				ByteArrayOutputStream pro_pic3 = new ByteArrayOutputStream();
+				InputStream is3 = req.getPart("prod_pic3").getInputStream();
+				ByteArrayOutputStream pro3 = new ByteArrayOutputStream();
 				int pic3;
 				byte[] proimg3 = new byte[16384];
-				while ((pic3 = prod_pic3.read(proimg3, 0, proimg3.length)) != -1) {
-					pro_pic3.write(proimg3, 0, pic3);
+				while ((pic3 = is3.read(proimg3, 0, proimg3.length)) != -1) {
+					pro3.write(proimg3, 0, pic3);
 				}
-				byte[] proimg1_3 = pro_pic3.toByteArray();
+				byte[] prod_pic_3 = pro3.toByteArray();
 
 				// 驗證
 				if (prod_name == null || (prod_name.trim()).length() == 0) {
@@ -320,7 +321,7 @@ public class Prod_manag extends HttpServlet {
 					errorMsgs.add("請輸入商品描述");
 				}
 
-				if (proimg1_1.length == 0) {
+				if (prod_pic1.length == 0) {
 					errorMsgs.add("商品照1不可為空");
 				}
 
@@ -357,9 +358,9 @@ public class Prod_manag extends HttpServlet {
 				prodVO.setProd_cont(prod_cont);
 				prodVO.setProd_sup(prod_sup);
 
-				prodVO.setProd_pic1(proimg1_1);
-				prodVO.setProd_pic1(proimg1_2);
-				prodVO.setProd_pic1(proimg1_3);
+				prodVO.setProd_pic1(prod_pic1);
+				prodVO.setProd_pic1(prod_pic2);
+				prodVO.setProd_pic1(prod_pic_3);
 				// Send the use back to the form, if there were errors
 				if (!errorMsgs.isEmpty()) {
 					req.setAttribute("prodVO", prodVO); // 含有輸入格式錯誤的empVO物件,也存入req
@@ -373,7 +374,7 @@ public class Prod_manag extends HttpServlet {
 				prodVO = prodSvc.addProd(store_no, prod_name, bean_type, bean_grade, bean_contry, bean_region,
 						bean_farm, bean_farmer, bean_el, proc, roast, bean_attr_acid, bean_attr_aroma, bean_attr_body,
 						bean_attr_after, bean_attr_bal, bean_aroma, prod_price, prod_wt, send_fee, prod_sup, prod_cont,
-						proimg1_1, proimg1_2, proimg1_3, prod_stat);
+						prod_pic1, prod_pic2, prod_pic_3, prod_stat);
 				/***************************
 				 * 3.新增完成,準備轉交(Send the Success view)
 				 ***********/
