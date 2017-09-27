@@ -1,6 +1,5 @@
 package com.ord.model;
 
-import java.util.List;
 import java.util.Set;
 
 import com.ord_list.model.Ord_listVO;
@@ -22,6 +21,10 @@ private OrdDAO_interface dao;
 	//查詢某訂單細目
 	public  Set<Ord_listVO> getOrd_listByOrd(String ord_no){
 		return dao.getOrd_listByOrd(ord_no);
+	}
+	
+	public String newAnOrder(OrdVO ordVO, Set<Ord_listVO> ord_listVOs){
+		return dao.insertWithOrd_list(ordVO, ord_listVOs);
 	}
 	
 }

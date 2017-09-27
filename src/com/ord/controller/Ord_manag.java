@@ -1,7 +1,6 @@
 package com.ord.controller;
 
 import java.io.IOException;
-import java.util.LinkedHashSet;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Set;
@@ -14,8 +13,6 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import com.ord.model.OrdService;
-import com.ord.model.OrdVO;
-import com.ord_list.model.Ord_listService;
 import com.ord_list.model.Ord_listVO;
 import com.prod.model.ProdService;
 import com.prod.model.ProdVO;
@@ -51,18 +48,13 @@ public class Ord_manag extends HttpServlet {
 
 				/*************************** 2.開始查詢資料 ****************************************/
 				OrdService ordSvc = new OrdService();
-				
-				Set<Ord_listVO>  ord_listVOs = ordSvc.getOrd_listByOrd(ord_no);
-				OrdVO  ordVO =ordSvc.getOrdByOrdno(ord_no);
-				
-				
-				
+				Set<Ord_listVO>  ord_listVO = ordSvc.getOrd_listByOrd(ord_no);
+
 				/***************************
 				 * 3.查詢完成,準備轉交(Send the Success view)
 				 ************/
-				req.setAttribute("ord_listVOs", ord_listVOs); // 資料庫取出的empVO物件,存入req
-				req.setAttribute("ordVO", ordVO);
-				String url = "/FrontEnd/ord_mag/Ord_listforUpdate.jsp";
+				req.setAttribute("ord_listVO", ord_listVO); // 資料庫取出的empVO物件,存入req
+				String url = "/FrontEnd/prod_mag/getprod_forupdate.jsp";
 				RequestDispatcher successView = req.getRequestDispatcher(url);// 成功轉交
 				// update_emp_input.jsp
 				successView.forward(req, res);
@@ -71,7 +63,7 @@ public class Ord_manag extends HttpServlet {
 			} catch (Exception e) {
 
 				errorMsgs.add("無法取得要修改的資料:" + e.getMessage());
-				RequestDispatcher failureView = req.getRequestDispatcher("/FrontEnd/ord_mag/listAllorder_bystore.jsp");
+				RequestDispatcher failureView = req.getRequestDispatcher("/FrontEnd/prod_mag/listAllpro_bystore.jsp");
 				failureView.forward(req, res);
 			}
 		}
