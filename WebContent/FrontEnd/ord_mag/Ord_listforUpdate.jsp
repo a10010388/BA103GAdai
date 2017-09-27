@@ -134,8 +134,8 @@ OrdVO ordVO=(OrdVO) request.getAttribute("ordVO");
 					<div class="col-xs-12 col-sm-12">
 						<br>
 						<table class="bar ">
-							<tr><td class="bar1" >訂單成立</td><td  class="w1" ${ordVO.ord_stat!='未付款'? "bgcolor=#FFFF00":''}>已付款</td><td  class="w1" ${(ordVO.ord_stat!='未付款'||ordVO.ord_stat!='已付款')? "bgcolor=#FFFF00":''}>已確認付款</td><td  class="w1" ${ordVO.ord_stat=='已出貨'? "bgcolor=#FFFF00":''}>已出貨</td></tr>
-							<tr><td class="bar1">${ordVO.ord_date}</td><td  class="w1" ${ordVO.ord_stat!='未付款'? "bgcolor=#FFFF00":''}>${ordVO.pay_date}</td><td  class="w1" ${(ordVO.ord_stat!='未付款'||ordVO.ord_stat!='已付款')? "bgcolor=#FFFF00":''}>${ordVO.pay_chk_date}</td><td  class="w1" ${ordVO.ord_stat=='已出貨'? "bgcolor=#FFFF00":''}>${ordVO.send_date}</td></tr>
+							<tr><td class="bar1" >訂單成立</td><td  class="w1" >已付款</td><td  class="w1">已確認付款</td><td  class="w1" >已出貨</td></tr>
+							<tr><td class="bar1">${ordVO.ord_date}</td><td  class="w1">${ordVO.pay_date}</td><td  class="w1">${ordVO.pay_chk_date}</td><td  class="w1">${ordVO.send_date}</td></tr>
 						</table>
 						<br>
 						訂單狀態：${ordVO.ord_stat}
@@ -170,7 +170,7 @@ OrdVO ordVO=(OrdVO) request.getAttribute("ordVO");
        	 width:180px;
        	 text-align: center;
        	 padding-bottom: 2px;
-       	 background-color:#FFFF00;
+       	 
        	 text-indent : -2em ;
        }
 	.bar{

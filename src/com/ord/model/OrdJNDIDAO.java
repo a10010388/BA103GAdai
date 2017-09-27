@@ -19,7 +19,7 @@ import javax.sql.DataSource;
 import com.ord_list.model.Ord_listJDBCDAO;
 import com.ord_list.model.Ord_listVO;
 
-public class OrdDAO implements OrdDAO_interface {
+public class OrdJNDIDAO implements OrdDAO_interface {
 
 	private static DataSource ds = null;
 	static {
@@ -116,7 +116,7 @@ public class OrdDAO implements OrdDAO_interface {
 			pstmt.executeUpdate();
 			
 			//掘取對應的自增主鍵值
-
+			
 			ResultSet rs = pstmt.getGeneratedKeys();
 			if (rs.next()) {
 				next_ord_no = rs.getString(1);
@@ -173,7 +173,6 @@ public class OrdDAO implements OrdDAO_interface {
 			}
 		}
 		return next_ord_no;
-		
 	}
 
 	@Override
