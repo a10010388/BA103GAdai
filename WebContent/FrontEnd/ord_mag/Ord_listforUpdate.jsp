@@ -1,11 +1,13 @@
 <%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix = "fn" uri = "http://java.sun.com/jsp/jstl/functions"%> 
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%@ page import="java.util.*"%>
 <%@ page import="com.store.model.*"%>
 <%@ page import="com.prod.model.*"%>
 <%@ page import="com.ord.model.*"%>
 <%@ page import="com.ord_list.model.*"%>
+
 <%-- 此頁採用 JSTL 與 EL 取值 --%>
 <%
 pageContext.setAttribute("store_no", "S1000000002");
@@ -123,7 +125,14 @@ OrdVO ordVO=(OrdVO) request.getAttribute("ordVO");
 					<br>
 				</div>
 			
-		
+		<fmt:formatDate value="${ordVO.ord_date}" var="ord_date"  
+                type="both" /> 
+		<fmt:formatDate value="${ordVO.pay_date}" var="pay_date"  
+                type="both" /> 
+        <fmt:formatDate value="${ordVO.pay_chk_date}" var="pay_chk_date"  
+                type="both" /> 
+        <fmt:formatDate value="${ordVO.send_date}" var="send_date"  
+                type="both" /> 
 	
 		
 			<div class="row">
@@ -133,12 +142,30 @@ OrdVO ordVO=(OrdVO) request.getAttribute("ordVO");
 				<div class="col-xs-12 col-sm-8">
 					<div class="col-xs-12 col-sm-12">
 						<br>
-						<table class="bar ">
-							<tr><td class="bar1" >訂單成立</td><td  class="w1" >已付款</td><td  class="w1">已確認付款</td><td  class="w1" >已出貨</td></tr>
-							<tr><td class="bar1">${ordVO.ord_date}</td><td  class="w1">${ordVO.pay_date}</td><td  class="w1">${ordVO.pay_chk_date}</td><td  class="w1">${ordVO.send_date}</td></tr>
+						<table class="bar table-bordered">
+							<tr><td class="bar1" >訂單成立</td><td  class="w1" >${ord_date}</td></tr>
+							<tr><td class="bar1">付款時間</td><td  class="w1">${pay_date}</td></tr>
+							<tr><td class="bar1">確認付款時間</td><td  class="w1">${pay_chk_date}</td></tr>
+							<tr><td class="bar1">出貨時間</td><td  class="w1">${send_date}</td></tr>
 						</table>
 						<br>
-						訂單狀態：${ordVO.ord_stat}
+						訂單目前狀態：${ordVO.ord_stat}<br><br>
+						<FORM METHOD="post"
+										ACTION="<%=request.getContextPath()%>/ord/Ord_manag.do">
+										<input type=${ordVO.ord_stat.equals("已確認付款") ? "text" : "hidden" } name="send_id" value="${ordVO.send_id}" >
+										<input type=${ordVO.ord_stat.equals("未付款")||ordVO.ord_stat.equals("已出貨") ? "hidden" : "submit"} value="${ordVO.ord_stat.equals("已付款") ? "確認已付款" : '發出出貨通知'}" class="btn-info"> 
+										<input type="hidden" name="ord_no" value="${ordVO.ord_no}">
+										<input type="hidden" name="ord_stat" value="${ordVO.ord_stat}">
+										<input type="hidden" name="ord_name" value="${ordVO.ord_name}">
+										<input type="hidden" name="ord_phone" value="${ordVO.ord_phone}">
+										<input type="hidden" name="ord_add" value="${ordVO.ord_add}">
+										<input type="hidden" name="pay_date" value="${ordVO.pay_date}">
+										<input type="hidden" name="send_date" value="${ordVO.send_date}">
+										<input type="hidden" name="pay_info" value="${ordVO.pay_info}">
+										<input type="hidden" name="pay_chk_date" value="${ordVO.pay_chk_date}">
+										<input type="hidden" name="action" value="update_stat">
+										<span>${ordVO.ord_stat.equals("已確認付款") ? "請輸入物流編號並發出出貨通知" : ''}</span>
+							</FORM>
 						
 					</div>
 				</div>
@@ -161,17 +188,15 @@ OrdVO ordVO=(OrdVO) request.getAttribute("ordVO");
 			text-align:center;
 	}
 	.w1{
-       	 width:170px;
+       	 width:300px;
        	 text-align: center;
        	 padding-bottom: 2px;
        	 text-indent : -2em ;
        }
     .bar1{
        	 width:180px;
-       	 text-align: center;
        	 padding-bottom: 2px;
-       	 
-       	 text-indent : -2em ;
+       	 text-indent : 0em ;
        }
 	.bar{
 		text-indent: -7em

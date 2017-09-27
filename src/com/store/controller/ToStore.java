@@ -114,6 +114,7 @@ public class ToStore extends HttpServlet {
 				}
 				byte[] idimg1 = id_pic.toByteArray();
 
+				
 				InputStream storepic1 = req.getPart("store_pic1").getInputStream();
 				ByteArrayOutputStream spic_1 = new ByteArrayOutputStream();
 				int spic1;

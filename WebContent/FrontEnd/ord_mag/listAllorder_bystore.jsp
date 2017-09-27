@@ -103,7 +103,7 @@
 					<tr>
 						<td>
 						<FORM METHOD="post" ACTION="<%=request.getContextPath()%>/ord/Ord_manag.do">
-						<a class="aord">${ordVO.ord_no}</a>
+						${ordVO.ord_no}
 						<input type="hidden" name="ord_no" value="${ordVO.ord_no}">
 						<input type="hidden" name="action" value="getord_display">
 						<input type="hidden" name="whichPage"value="<%=whichPage%>">  

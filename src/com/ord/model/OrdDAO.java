@@ -36,8 +36,8 @@ public class OrdDAO implements OrdDAO_interface {
 	private static final String GET_ONE_STMT = "SELECT ORD_NO,MEM_AC,SEND_FEE,TOTAL_PAY,ORD_NAME,ORD_PHONE,ORD_ADD,"
 			+ "PAY_INFO,ORD_STAT,ORD_DATE,PAY_DATE,PAY_CHK_DATE,SEND_DATE,SEND_ID FROM ord where ORD_NO = ?";
 	private static final String DELETE = "DELETE FROM ord where ORD_NO = ?";
-	//賣家改狀態
-	private static final String UPDATE_STAT = "UPDATE ord set ORD_STAT=?, PAY_CHK_DATE=?, SEND_DATE=? ,SEND_ID=? where ORD_NO = ?";
+	//賣家改狀態or買家資訊
+	private static final String UPDATE = "UPDATE ord set ORD_NAME=?, ORD_PHONE=?, ORD_ADD=? ,PAY_INFO=? ,ORD_STAT=? ,PAY_DATE=? ,PAY_CHK_DATE=?,SEND_DATE=?,SEND_ID=? where ORD_NO = ?";
 	//查詢某訂單細目
 	private static final String GET_ALL_ORDER_LIST = "select * from ord_list where ORD_NO=?";
 
@@ -183,12 +183,18 @@ public class OrdDAO implements OrdDAO_interface {
 
 		try {
 			con = ds.getConnection();
-			pstmt = con.prepareStatement(UPDATE_STAT);
-			pstmt.setString(1, ordVO.getOrd_stat());
-			pstmt.setDate(2, ordVO.getPay_chk_date());
-			pstmt.setDate(3, ordVO.getSend_date());
-			pstmt.setString(4, ordVO.getSend_id());
-			pstmt.setString(5, ordVO.getOrd_no ());
+			pstmt = con.prepareStatement(UPDATE);
+			pstmt.setString(1, ordVO.getOrd_name());
+			pstmt.setString(2, ordVO.getOrd_phone());
+			pstmt.setString(3, ordVO.getOrd_add());
+			pstmt.setString(4, ordVO.getPay_info());
+			pstmt.setString(5, ordVO.getOrd_stat());
+			pstmt.setTimestamp(6, (ordVO.getPay_date()!=null)?new Timestamp(ordVO.getPay_date().getTime()):null);
+			
+			pstmt.setTimestamp(7, (ordVO.getPay_chk_date()!=null)?new Timestamp(ordVO.getPay_chk_date().getTime()):null);
+			pstmt.setTimestamp(8, (ordVO.getSend_date()!=null)?new Timestamp(ordVO.getSend_date().getTime()):null);
+			pstmt.setString(9, ordVO.getSend_id());
+			pstmt.setString(10, ordVO.getOrd_no ());
 			pstmt.executeUpdate();
 
 		} catch (SQLException se) {
