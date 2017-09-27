@@ -5,7 +5,6 @@ import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.LinkedHashSet;
 import java.util.List;
@@ -16,7 +15,6 @@ import javax.naming.InitialContext;
 import javax.naming.NamingException;
 import javax.sql.DataSource;
 
-import com.ord_list.model.Ord_listJDBCDAO;
 import com.ord_list.model.Ord_listVO;
 
 public class OrdDAO implements OrdDAO_interface {
@@ -84,96 +82,6 @@ public class OrdDAO implements OrdDAO_interface {
 			}
 		}
 
-	}
-	
-	@Override
-	public String insertWithOrd_list(OrdVO ordVO, Set<Ord_listVO> ord_listVOs) {
-		
-		Connection con = null;
-		PreparedStatement pstmt = null;
-		String next_ord_no = null;
-		try {
-
-			con = ds.getConnection();
-			String pk[] = {"ord_no"};
-			// 1●設定於 pstm.executeUpdate()之前
-    		con.setAutoCommit(false);
-    		// 先新增部門	
-			pstmt = con.prepareStatement(INSERT_STMT, pk);
-			pstmt.setString(1, ordVO.getMem_ac());
-			pstmt.setInt(2, ordVO.getSend_fee());
-			pstmt.setInt(3, ordVO.getTotal_pay());
-			pstmt.setString(4, null);
-			pstmt.setString(5, null);
-			pstmt.setString(6, null);
-			pstmt.setString(7, null);
-			pstmt.setString(8, "未付款");
-			pstmt.setTimestamp(9, new Timestamp(System.currentTimeMillis()));
-			pstmt.setTimestamp(10, null);
-			pstmt.setTimestamp(11, null);
-			pstmt.setTimestamp(12, null);
-			pstmt.setString(13, null);
-			pstmt.executeUpdate();
-			
-			//掘取對應的自增主鍵值
-
-			ResultSet rs = pstmt.getGeneratedKeys();
-			if (rs.next()) {
-				next_ord_no = rs.getString(1);
-				System.out.println("自增主鍵值= " + next_ord_no +"(剛新增成功的OrdNo)");
-			} else {
-				System.out.println("未取得自增主鍵值");
-			}
-			rs.close();
-			// 再同時新增員工
-			Ord_listJDBCDAO dao = new Ord_listJDBCDAO();
-			System.out.println("set.size()-A="+ord_listVOs.size());
-			for (Ord_listVO ord_listVO : ord_listVOs) {
-				ord_listVO.setOrd_no(next_ord_no);
-				dao.insertByCon(ord_listVO,con);
-			}
-
-			// 2●設定於 pstm.executeUpdate()之後
-			con.commit();
-			con.setAutoCommit(true);
-			System.out.println("list.size()-B="+ord_listVOs.size());
-			System.out.println("新增部門編號" + next_ord_no + "時,共有" + ord_listVOs.size()
-					+ "訂單項目");
-			
-			// Handle any driver errors
-		} catch (SQLException se) {
-			if (con != null) {
-				try {
-					// 3●設定於當有exception發生時之catch區塊內
-					System.err.print("Transaction is being ");
-					System.err.println("rolled back-由-dept");
-					con.rollback();
-				} catch (SQLException excep) {
-					throw new RuntimeException("rollback error occured. "
-							+ excep.getMessage());
-				}
-			}
-			throw new RuntimeException("A database error occured. "
-					+ se.getMessage());
-			// Clean up JDBC resources
-		} finally {
-			if (pstmt != null) {
-				try {
-					pstmt.close();
-				} catch (SQLException se) {
-					se.printStackTrace(System.err);
-				}
-			}
-			if (con != null) {
-				try {
-					con.close();
-				} catch (Exception e) {
-					e.printStackTrace(System.err);
-				}
-			}
-		}
-		return next_ord_no;
-		
 	}
 
 	@Override
