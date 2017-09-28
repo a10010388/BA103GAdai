@@ -35,7 +35,6 @@ public class Ord_manag extends HttpServlet {
 	
 	protected void doPost(HttpServletRequest req, HttpServletResponse res) throws ServletException, IOException {
 		req.setCharacterEncoding("UTF-8");
-
 		System.out.println(req.getParameter("action"));
 		String action = req.getParameter("action");
 
@@ -79,7 +78,7 @@ public class Ord_manag extends HttpServlet {
 			}
 		}
 		if ("update_stat".equals(action)) { // 來自ord_listforupdate.jsp 確認付款
-
+			
 			List<String> errorMsgs = new LinkedList<String>();
 			// Store this set in the request scope, in case we need to
 			// send the ErrorPage view.
@@ -90,15 +89,15 @@ public class Ord_manag extends HttpServlet {
 				/***************************
 				 * 1.接收請求參數 - 輸入格式的錯誤處理
 				 **********************/
-				
+
 				String ord_no = req.getParameter("ord_no");
 				String ord_stat = req.getParameter("ord_stat");
 				String ord_name = req.getParameter("ord_name");
 				String ord_phone = req.getParameter("ord_phone");
 				String ord_add = req.getParameter("ord_add");
 				String pay_info = req.getParameter("pay_info");
-				Date pay_date =java.sql.Date.valueOf(req.getParameter("pay_date").trim());
-				Date send_date = java.sql.Date.valueOf(req.getParameter("send_date").trim());
+				Date pay_date =(req.getParameter("pay_date").trim()=="")?null:java.sql.Date.valueOf(req.getParameter("pay_date").trim());
+				Date send_date = (req.getParameter("send_date").trim()=="")?null:java.sql.Date.valueOf(req.getParameter("send_date").trim());
 				String send_id = req.getParameter("send_id");
 				
 				OrdVO ordVO = new OrdVO();
@@ -147,6 +146,7 @@ public class Ord_manag extends HttpServlet {
 
 				/*************************** 其他可能的錯誤處理 *************************************/
 			} catch (Exception e) {
+				System.out.println(e.toString());
 				errorMsgs.add("修改資料失敗:" + e.getMessage());
 				RequestDispatcher failureView = req.getRequestDispatcher("/FrontEnd/ord_mag/Ord_listforUpdate.jsp");
 				failureView.forward(req, res);

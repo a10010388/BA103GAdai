@@ -18,12 +18,11 @@ StoreService storeSvc = new StoreService();
 StoreVO storeVO=(StoreVO)storeSvc.getonestore(store_no);
 pageContext.setAttribute("storeVO",storeVO);
 
-Set<Ord_listVO> ord_listVOs=(Set<Ord_listVO>) request.getAttribute("ord_listVOs");
 OrdVO ordVO=(OrdVO) request.getAttribute("ordVO");
 %>
 <jsp:useBean id="prodSvc" scope="page" class="com.prod.model.ProdService"/>
 <jsp:useBean id="ordSvc" scope="page" class="com.ord.model.OrdService"/>
-
+<c:set var="ord_listVOs" value="${ordSvc.getOrd_listByOrd(ordVO.ord_no)}"/>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
