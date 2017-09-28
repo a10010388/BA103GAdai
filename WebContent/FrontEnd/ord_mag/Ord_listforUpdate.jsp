@@ -10,13 +10,13 @@
 
 <%-- 此頁採用 JSTL 與 EL 取值 --%>
 <%
-pageContext.setAttribute("store_no", "S1000000002");
-String store_no = (String) pageContext.getAttribute("store_no");
+request.setAttribute("store_no", "S1000000002");
+String store_no = (String) request.getAttribute("store_no");
 StoreService storeSvc = new StoreService();
 
 
 StoreVO storeVO=(StoreVO)storeSvc.getonestore(store_no);
-pageContext.setAttribute("storeVO",storeVO);
+request.setAttribute("storeVO",storeVO);
 
 OrdVO ordVO=(OrdVO) request.getAttribute("ordVO");
 %>
@@ -125,13 +125,13 @@ OrdVO ordVO=(OrdVO) request.getAttribute("ordVO");
 				</div>
 			
 		<fmt:formatDate value="${ordVO.ord_date}" var="ord_date"  
-                type="both" /> 
+                  pattern="yyyy-MM-dd hh:mm:ss"/> 
 		<fmt:formatDate value="${ordVO.pay_date}" var="pay_date"  
-                type="both" /> 
+                 pattern="yyyy-MM-dd hh:mm:ss"/> 
         <fmt:formatDate value="${ordVO.pay_chk_date}" var="pay_chk_date"  
-                type="both" /> 
+                 pattern="yyyy-MM-dd hh:mm:ss"/> 
         <fmt:formatDate value="${ordVO.send_date}" var="send_date"  
-                type="both" /> 
+                pattern="yyyy-MM-dd hh:mm:ss" /> 
 	
 		
 			<div class="row">
@@ -148,7 +148,8 @@ OrdVO ordVO=(OrdVO) request.getAttribute("ordVO");
 							<tr><td class="bar1">出貨時間</td><td  class="w1">${send_date}</td></tr>
 						</table>
 						<br>
-						訂單目前狀態：${ordVO.ord_stat}<br><br>
+						訂單目前狀態：${ordVO.ord_stat}<br>
+						<p ${empty ordVO.send_id ? "hidden" : ""}>出貨物流編號：${ordVO.send_id.equals("") ? "" : ordVO.send_id}<br></p>
 						<FORM METHOD="post"
 										ACTION="<%=request.getContextPath()%>/ord/Ord_manag.do">
 										<input type=${ordVO.ord_stat.equals("已確認付款") ? "text" : "hidden" } name="send_id" value="${ordVO.send_id}" >
@@ -158,10 +159,11 @@ OrdVO ordVO=(OrdVO) request.getAttribute("ordVO");
 										<input type="hidden" name="ord_name" value="${ordVO.ord_name}">
 										<input type="hidden" name="ord_phone" value="${ordVO.ord_phone}">
 										<input type="hidden" name="ord_add" value="${ordVO.ord_add}">
-										<input type="hidden" name="pay_date" value="${ordVO.pay_date}">
-										<input type="hidden" name="send_date" value="${ordVO.send_date}">
+										<input type="hidden" name="ord_date" value="${ord_date}">
+										<input type="hidden" name="pay_date" value="${pay_date}">
+										<input type="hidden" name="send_date" value="${send_date}">
 										<input type="hidden" name="pay_info" value="${ordVO.pay_info}">
-										<input type="hidden" name="pay_chk_date" value="${ordVO.pay_chk_date}">
+										<input type="hidden" name="pay_chk_date" value="${pay_chk_date}">
 										<input type="hidden" name="action" value="update_stat">
 										<span>${ordVO.ord_stat.equals("已確認付款") ? "請輸入物流編號並發出出貨通知" : ''}</span>
 							</FORM>

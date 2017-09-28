@@ -96,15 +96,19 @@ public class Ord_manag extends HttpServlet {
 				String ord_phone = req.getParameter("ord_phone");
 				String ord_add = req.getParameter("ord_add");
 				String pay_info = req.getParameter("pay_info");
-				Date pay_date =(req.getParameter("pay_date").trim()=="")?null:java.sql.Date.valueOf(req.getParameter("pay_date").trim());
-				Date send_date = (req.getParameter("send_date").trim()=="")?null:java.sql.Date.valueOf(req.getParameter("send_date").trim());
+				Date pay_date =(req.getParameter("pay_date").trim()=="")?null:timestampToDate(java.sql.Timestamp.valueOf(req.getParameter("pay_date").trim()));
+				Date pay_chk_date = (req.getParameter("pay_chk_date").trim()=="")?null:timestampToDate(java.sql.Timestamp.valueOf(req.getParameter("pay_chk_date").trim()));
+				Date send_date = (req.getParameter("send_date").trim()=="")?null:timestampToDate(java.sql.Timestamp.valueOf(req.getParameter("send_date").trim()));
 				String send_id = req.getParameter("send_id");
+				Date ord_date =(req.getParameter("ord_date").trim()=="")?null:timestampToDate(java.sql.Timestamp.valueOf(req.getParameter("ord_date").trim()));
 				
+				
+				System.out.println(pay_date);
 				OrdVO ordVO = new OrdVO();
 				if(ord_stat.equals("已付款")){
 					
 					ordVO.setOrd_no(ord_no);
-					ordVO.setOrd_stat("確認已付款");
+					ordVO.setOrd_stat("已確認付款");
 					ordVO.setPay_chk_date(new Date(System.currentTimeMillis()));
 					ordVO.setOrd_name(ord_name);
 					ordVO.setOrd_phone(ord_phone);
@@ -112,6 +116,19 @@ public class Ord_manag extends HttpServlet {
 					ordVO.setPay_info(pay_info);
 					ordVO.setPay_date(pay_date);
 					ordVO.setSend_date(send_date);
+					ordVO.setSend_id(send_id);
+					ordVO.setOrd_date(ord_date);
+				}
+				if(ord_stat.equals("已確認付款")){
+					ordVO.setOrd_no(ord_no);
+					ordVO.setOrd_stat("已出貨");
+					ordVO.setPay_chk_date(pay_chk_date);
+					ordVO.setOrd_name(ord_name);
+					ordVO.setOrd_phone(ord_phone);
+					ordVO.setOrd_add(ord_add);
+					ordVO.setPay_info(pay_info);
+					ordVO.setPay_date(pay_date);
+					ordVO.setSend_date(new Date(System.currentTimeMillis()));
 					ordVO.setSend_id(send_id);
 				}
 				
@@ -151,8 +168,13 @@ public class Ord_manag extends HttpServlet {
 				RequestDispatcher failureView = req.getRequestDispatcher("/FrontEnd/ord_mag/Ord_listforUpdate.jsp");
 				failureView.forward(req, res);
 			}
-		}
-		
+		}	
 	}
+	public static java.sql.Date timestampToDate(java.sql.Timestamp timestamp){
+		java.util.Date test_timestamp = timestamp;
+		java.sql.Date test_date = new java.sql.Date(test_timestamp.getTime());
+		return null;
 
+	}
 }
+	
