@@ -156,14 +156,6 @@ OrdVO ordVO=(OrdVO) request.getAttribute("ordVO");
 										<input type=${ordVO.ord_stat.equals("未付款")||ordVO.ord_stat.equals("已出貨") ? "hidden" : "submit"} value="${ordVO.ord_stat.equals("已付款") ? "確認已付款" : '發出出貨通知'}" class="btn-info"> 
 										<input type="hidden" name="ord_no" value="${ordVO.ord_no}">
 										<input type="hidden" name="ord_stat" value="${ordVO.ord_stat}">
-										<input type="hidden" name="ord_name" value="${ordVO.ord_name}">
-										<input type="hidden" name="ord_phone" value="${ordVO.ord_phone}">
-										<input type="hidden" name="ord_add" value="${ordVO.ord_add}">
-										<input type="hidden" name="ord_date" value="${ord_date}">
-										<input type="hidden" name="pay_date" value="${pay_date}">
-										<input type="hidden" name="send_date" value="${send_date}">
-										<input type="hidden" name="pay_info" value="${ordVO.pay_info}">
-										<input type="hidden" name="pay_chk_date" value="${pay_chk_date}">
 										<input type="hidden" name="action" value="update_stat">
 										<span>${ordVO.ord_stat.equals("已確認付款") ? "請輸入物流編號並發出出貨通知" : ''}</span>
 							</FORM>

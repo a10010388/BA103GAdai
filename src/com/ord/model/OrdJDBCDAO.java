@@ -34,6 +34,7 @@ public class OrdJDBCDAO implements OrdDAO_interface {
 	private static final String DELETE = "DELETE FROM ord where ORD_NO = ?";
 	private static final String UPDATE = "UPDATE ord set ORD_NAME=?, ORD_PHONE=?, ORD_ADD=? ,PAY_INFO=? ,ORD_STAT=? ,PAY_DATE=? ,PAY_CHK_DATE=?,SEND_DATE=?,SEND_ID=? where ORD_NO = ?";
 	private static final String GET_ALL_ORDER_LIST = "select * from ord_list where ORD_NO=?";
+	private static final String GET_ALL_ORD_BY_MEM = "SELECT * FROM ORD WHERE MEM_AC=? order by ord_no desc";
 
 	@Override
 	public void insert(OrdVO ordVO) {
@@ -384,17 +385,31 @@ public class OrdJDBCDAO implements OrdDAO_interface {
 			pstmt.setString(1, ordVO.getMem_ac());
 			pstmt.setInt(2, ordVO.getSend_fee());
 			pstmt.setInt(3, ordVO.getTotal_pay());
-			pstmt.setString(4, null);
-			pstmt.setString(5, null);
-			pstmt.setString(6, null);
-			pstmt.setString(7, null);
-			pstmt.setString(8, "未付款");
-			pstmt.setTimestamp(9, new Timestamp(System.currentTimeMillis()));
-			pstmt.setTimestamp(10, null);
-			pstmt.setTimestamp(11, null);
-			pstmt.setTimestamp(12, null);
-			pstmt.setString(13, null);
+			pstmt.setString(4, ordVO.getOrd_name());
+			pstmt.setString(5, ordVO.getOrd_phone());
+			pstmt.setString(6, ordVO.getOrd_add());
+			pstmt.setString(7, ordVO.getPay_info());
+			pstmt.setString(8, ordVO.getOrd_stat());
+			pstmt.setTimestamp(9, (ordVO.getOrd_date()!=null)? new Timestamp(ordVO.getOrd_date().getTime()):null);
+			pstmt.setTimestamp(10, (ordVO.getPay_date()!=null)?new Timestamp(ordVO.getPay_date().getTime()):null);
+			pstmt.setTimestamp(11, (ordVO.getPay_chk_date()!=null)?new Timestamp(ordVO.getPay_chk_date().getTime()):null);
+			pstmt.setTimestamp(12, (ordVO.getSend_date()!=null)?new Timestamp(ordVO.getSend_date().getTime()):null);
+			pstmt.setString(13, ordVO.getSend_id());
 			pstmt.executeUpdate();
+			
+			/*				pstmt.setString(1, ordVO.getMem_ac());
+			pstmt.setInt(2, ordVO.getSend_fee());
+			pstmt.setInt(3, ordVO.getTotal_pay());
+			pstmt.setString(4, ordVO.getOrd_name());
+			pstmt.setString(5, ordVO.getOrd_phone());
+			pstmt.setString(6, ordVO.getOrd_add());
+			pstmt.setString(7, ordVO.getPay_info());
+			pstmt.setString(8, ordVO.getOrd_stat());
+			pstmt.setTimestamp(9, (ordVO.getOrd_date()!=null)? new Timestamp(ordVO.getOrd_date().getTime()):null);
+			pstmt.setTimestamp(10, (ordVO.getPay_date()!=null)?new Timestamp(ordVO.getPay_date().getTime()):null);
+			pstmt.setTimestamp(11, (ordVO.getPay_chk_date()!=null)?new Timestamp(ordVO.getPay_chk_date().getTime()):null);
+			pstmt.setTimestamp(12, (ordVO.getSend_date()!=null)?new Timestamp(ordVO.getSend_date().getTime()):null);
+			pstmt.setString(13, ordVO.getSend_id());;*/
 			
 			//掘取對應的自增主鍵值
 
@@ -458,6 +473,75 @@ public class OrdJDBCDAO implements OrdDAO_interface {
 			}
 		}
 		return next_ord_no;
+	}
+	
+	
+	@Override
+	public List<OrdVO> getOrdByMem_ac(String mem_ac) {
+		List<OrdVO> list = new ArrayList<OrdVO>();
+		OrdVO ordVO = null;
+		
+		Connection con = null;
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		
+		try {
+			Class.forName(driver);
+			con = DriverManager.getConnection(url, userid, passwd);
+			pstmt = con.prepareStatement(GET_ALL_ORD_BY_MEM);
+			pstmt.setString(1, mem_ac);
+			rs = pstmt.executeQuery();
+			while (rs.next()){
+				ordVO = new  OrdVO();
+				ordVO.setOrd_no(rs.getString("ORD_NO"));
+				ordVO.setMem_ac(rs.getString("MEM_AC"));
+				ordVO.setSend_fee(rs.getInt("SEND_FEE"));
+				ordVO.setTotal_pay(rs.getInt("TOTAL_PAY"));
+				ordVO.setOrd_name(rs.getString("ORD_NAME"));
+				ordVO.setOrd_phone(rs.getString("ORD_PHONE"));
+				ordVO.setOrd_add(rs.getString("ORD_ADD"));
+				ordVO.setPay_info(rs.getString("PAY_INFO"));
+				ordVO.setOrd_stat(rs.getString("ORD_STAT"));
+				ordVO.setOrd_date((rs.getTimestamp("ORD_DATE")!=null)?new Date(rs.getTimestamp("ORD_DATE").getTime()):null);
+				ordVO.setPay_date((rs.getTimestamp("PAY_DATE")!=null)?new Date(rs.getTimestamp("PAY_DATE").getTime()):null);
+				ordVO.setPay_chk_date((rs.getTimestamp("PAY_CHK_DATE")!=null)?new Date(rs.getTimestamp("PAY_CHK_DATE").getTime()):null);
+				ordVO.setSend_date((rs.getTimestamp("SEND_DATE")!=null)?new Date(rs.getTimestamp("SEND_DATE").getTime()):null);				
+				ordVO.setSend_id(rs.getString("SEND_ID"));
+				list.add(ordVO);
+			}
+			
+		} catch (ClassNotFoundException e) {
+			throw new RuntimeException("Couldn't load database driver. " + e.getMessage());
+			// Handle any SQL errors
+		} catch (SQLException se) {
+			throw new RuntimeException("A database error occured. " + se.getMessage());
+			// Clean up JDBC resources
+		} finally {
+			if (rs != null) {
+				try {
+					rs.close();
+				} catch (SQLException se) {
+					se.printStackTrace(System.err);
+				}
+			}
+			if (pstmt != null) {
+				try {
+					pstmt.close();
+				} catch (SQLException se) {
+					se.printStackTrace(System.err);
+				}
+			}
+			if (con != null) {
+				try {
+					con.close();
+				} catch (Exception e) {
+					e.printStackTrace(System.err);
+				}
+			}
+
+		}
+			
+		return list;
 	}
 
 	public static void main(String[] args) {
@@ -574,8 +658,30 @@ public class OrdJDBCDAO implements OrdDAO_interface {
 //		 
 //		 dao.insertWithOrd_list(ordVO, set);
 		 
-	}
+		 
+		/////
+//		List<OrdVO> list = new ArrayList<>();
+//		list = dao.getOrdByMem_ac("amy39");
+//		for(OrdVO aord:list){
+//			System.out.println(aord.getOrd_no());
+//			System.out.println(aord.getMem_ac());
+//			System.out.println(aord.getSend_fee());
+//			System.out.println(aord.getTotal_pay());
+//			System.out.println(aord.getOrd_name());
+//			System.out.println(aord.getOrd_phone());
+//			System.out.println(aord.getOrd_add());
+//			System.out.println(aord.getPay_info());
+//			System.out.println(aord.getOrd_stat());
+//			System.out.println(aord.getOrd_date());
+//			System.out.println(aord.getPay_date());
+//			System.out.println(aord.getPay_chk_date());
+//			System.out.println(aord.getSend_date());
+//			System.out.println(aord.getSend_id());
+//			System.out.println("---------------------");
+//			
+//		}
 
-	
+		 
+	}
 
 }

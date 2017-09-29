@@ -92,44 +92,18 @@ public class Ord_manag extends HttpServlet {
 
 				String ord_no = req.getParameter("ord_no");
 				String ord_stat = req.getParameter("ord_stat");
-				String ord_name = req.getParameter("ord_name");
-				String ord_phone = req.getParameter("ord_phone");
-				String ord_add = req.getParameter("ord_add");
-				String pay_info = req.getParameter("pay_info");
-				Date pay_date =(req.getParameter("pay_date").trim()=="")?null:timestampToDate(java.sql.Timestamp.valueOf(req.getParameter("pay_date").trim()));
-				Date pay_chk_date = (req.getParameter("pay_chk_date").trim()=="")?null:timestampToDate(java.sql.Timestamp.valueOf(req.getParameter("pay_chk_date").trim()));
-				Date send_date = (req.getParameter("send_date").trim()=="")?null:timestampToDate(java.sql.Timestamp.valueOf(req.getParameter("send_date").trim()));
+				
 				String send_id = req.getParameter("send_id");
-				Date ord_date =(req.getParameter("ord_date").trim()=="")?null:timestampToDate(java.sql.Timestamp.valueOf(req.getParameter("ord_date").trim()));
 				
 				
-				System.out.println(pay_date);
 				OrdVO ordVO = new OrdVO();
+				OrdService ordSvc = new OrdService();
 				if(ord_stat.equals("已付款")){
+					ordVO=ordSvc.update_payconiform(ord_no);
 					
-					ordVO.setOrd_no(ord_no);
-					ordVO.setOrd_stat("已確認付款");
-					ordVO.setPay_chk_date(new Date(System.currentTimeMillis()));
-					ordVO.setOrd_name(ord_name);
-					ordVO.setOrd_phone(ord_phone);
-					ordVO.setOrd_add(ord_add);
-					ordVO.setPay_info(pay_info);
-					ordVO.setPay_date(pay_date);
-					ordVO.setSend_date(send_date);
-					ordVO.setSend_id(send_id);
-					ordVO.setOrd_date(ord_date);
 				}
 				if(ord_stat.equals("已確認付款")){
-					ordVO.setOrd_no(ord_no);
-					ordVO.setOrd_stat("已出貨");
-					ordVO.setPay_chk_date(pay_chk_date);
-					ordVO.setOrd_name(ord_name);
-					ordVO.setOrd_phone(ord_phone);
-					ordVO.setOrd_add(ord_add);
-					ordVO.setPay_info(pay_info);
-					ordVO.setPay_date(pay_date);
-					ordVO.setSend_date(new Date(System.currentTimeMillis()));
-					ordVO.setSend_id(send_id);
+					ordVO=ordSvc.update_sendstat(ord_no, send_id);
 				}
 				
 				
@@ -148,14 +122,14 @@ public class Ord_manag extends HttpServlet {
 					return; // 程式中斷
 				}
 				/*************************** 2.開始修改資料 *****************************************/
-				OrdService ordSvc = new OrdService();
-				ordSvc.update_payconiform(ordVO);
+				
+			
 				
 				/***************************
 				 * 
 				 * 3.修改完成,準備轉交(Send the Success view)
 				 *************/
-
+				
 				req.setAttribute("ordVO", ordVO); // 資料庫update成功後,正確的的empVO物件,存入req
 				String url = "/FrontEnd/ord_mag/Ord_listforUpdate.jsp";
 				RequestDispatcher successView = req.getRequestDispatcher(url); // 修改成功後,轉交listOneEmp.jsp
