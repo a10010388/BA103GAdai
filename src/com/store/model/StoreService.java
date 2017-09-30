@@ -82,6 +82,23 @@ public class StoreService {
 	public void updatestore(StoreVO storeVO){
 		updateStore(storeVO);
 	}
+	//通過審核店家修改資料
+	public StoreVO update_bypass(String store_no ,String store_name,Integer store_free_ship,String store_phone,String store_add,String store_add_lat 
+			,String store_add_lon,String store_cont ,byte[] store_pic1,byte[] store_pic2,byte[] store_pic3){
+		StoreVO storevo = dao.findByPrimaryKey(store_no);
+		storevo.setStore_name(store_name);
+		storevo.setStore_free_ship(store_free_ship);
+		storevo.setStore_phone(store_phone);
+		storevo.setStore_add(store_add);
+		storevo.setStore_add_lat(store_add_lat);
+		storevo.setStore_add_lon(store_add_lon);
+		storevo.setStore_cont(store_cont);
+		storevo.setStore_pic1(store_pic1);
+		storevo.setStore_pic2(store_pic2);
+		storevo.setStore_pic3(store_pic3);
+		dao.update(storevo);
+		return storevo;
+	}
 	public StoreVO updateStat(String store_stat,Date store_stat_cdate,String store_no,String store_stat_cont){
 		StoreVO storevo =new StoreVO();
 		storevo.setStore_stat(store_stat);

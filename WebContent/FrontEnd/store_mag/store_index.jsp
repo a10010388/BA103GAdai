@@ -71,7 +71,7 @@
 				<div class="col-xs-12 col-sm-4">
 					<table class="table-bordered table-responsive ord_table">
 						<caption>
-					<big>我的訂單</big><a href="<%=request.getContextPath()%>/FrontEnd/prod/listAl"><small>更多</small></a>
+					<big>我的訂單</big><a href="<%=request.getContextPath()%>/FrontEnd/prod_mag/listAllpro_bystore.jsp"><small>更多</small></a>
 						</caption>
 					<tr>
 						<th>訂單編號</th>

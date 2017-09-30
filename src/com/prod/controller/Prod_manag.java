@@ -264,7 +264,7 @@ public class Prod_manag extends HttpServlet {
 				Integer prod_price = new Integer(req.getParameter("prod_price").trim());
 				Integer send_fee = new Integer(req.getParameter("send_fee").trim());
 				Integer prod_sup = new Integer(req.getParameter("prod_sup").trim());
-				String prod_cont = (req.getParameter("prod_cont").trim());
+				String prod_cont = (req.getParameter("prod_cont").trim().replaceAll("\r\n|\n\r", "<br>"));
 
 				InputStream is1 = req.getPart("prod_pic1").getInputStream();
 				ByteArrayOutputStream pro1 = new ByteArrayOutputStream();
@@ -304,9 +304,6 @@ public class Prod_manag extends HttpServlet {
 					errorMsgs.add("請輸入生產國");
 				}
 
-				if (prod_price == null) {
-					errorMsgs.add("標價不可為空");
-				}
 
 				Double prod_wt = null;
 
