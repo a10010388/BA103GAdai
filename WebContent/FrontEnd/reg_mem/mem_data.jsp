@@ -114,6 +114,7 @@ MemVO memVO=(MemVO) request.getAttribute("memVO");
 			</tr>
 		</table>
 		<input type="submit" value="確定送出"> 
+		<input type="hidden" value="${memVO.mem_ac}" name="mem_ac">
 		<input type="hidden" name="action" value="update_data">
 	</FORM>
 	

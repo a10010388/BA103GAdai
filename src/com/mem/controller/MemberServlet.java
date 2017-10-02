@@ -13,6 +13,7 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import com.mem.model.MemService;
 import com.mem.model.MemVO;
@@ -97,7 +98,8 @@ public class MemberServlet extends HttpServlet {
 				/***************************
 				 * 3.查詢完成,準備轉交(Send the Success view)
 				 *************/
-				req.setAttribute("memVO", memVO); // 資料庫取出的會員 放入req
+				HttpSession session = req.getSession();
+				session.setAttribute("memVO", memVO); // 資料庫取出的會員 放入req
 				String url = "/FrontEnd/reg_mem/mem_data.jsp";
 				RequestDispatcher successView = req.getRequestDispatcher(url); // 成功轉交
 																				// listOneEmp.jsp
@@ -123,16 +125,18 @@ public class MemberServlet extends HttpServlet {
 				/***************************
 				 * 1.接收請求參數 - 輸入格式的錯誤處理
 				 **********************/
-				String mem_ac = (String)req.getAttribute("mem_ac");
+				String mem_ac = req.getParameter("mem_ac").trim();
 				
-				System.out.println(mem_ac);
+				
 				
 				String mem_lname = req.getParameter("mem_lname").trim();
 				
 				
 				String mem_fname = req.getParameter("mem_fname").trim();
 				
-				String mem_email = req.getParameter("mem_eamil").trim();
+				
+				String mem_email = req.getParameter("mem_email").trim();
+				
 				
 				String mem_add = req.getParameter("mem_add").trim();
 				
@@ -154,11 +158,14 @@ public class MemberServlet extends HttpServlet {
 					req.getSession().setAttribute("mem_pic", mem_pic);
 				}
 				
+				
+				
 				String mem_set1= req.getParameter("mem_set1").trim();
 				String mem_set2= req.getParameter("mem_set2").trim();
 				String mem_set3= req.getParameter("mem_set3").trim();
 				String mem_set = mem_set1+","+mem_set2+","+mem_set3;
-
+				
+				
 				MemVO memVO = new MemVO();
 				memVO.setMem_lname(mem_lname);
 				memVO.setMem_fname(mem_fname);
@@ -188,7 +195,7 @@ public class MemberServlet extends HttpServlet {
 				 *************/
 
 				req.setAttribute("memVO", memVO); // 資料庫update成功後,正確的的empVO物件,存入req
-				String url = "/FrontEnd/store_mag/store_index.jsp";
+				String url = "/FrontEnd/index/index.jsp";
 				RequestDispatcher successView = req.getRequestDispatcher(url); // 修改成功後,轉交listOneEmp.jsp
 				successView.forward(req, res);
 

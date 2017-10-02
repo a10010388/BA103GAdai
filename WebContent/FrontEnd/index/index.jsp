@@ -101,13 +101,10 @@
 					<div role="tabpanel">
 					    <!-- 標籤面板：標籤區 -->
 					    <ul class="nav nav-tabs " role="tablist">
-					        <li role="presentation" class="active w33p text-center bold">
+					        <li role="presentation" class="active w50p text-center bold">
 					            <a href="#tab1" aria-controls="tab1" role="tab" data-toggle="tab">熱門商品</a>
 					        </li>
-					        <li role="presentation" class="w33p text-center bold">
-					            <a href="#tab2" aria-controls="tab2" role="tab" data-toggle="tab">熱門文章</a>
-					        </li>
-					        <li role="presentation" class="w33p text-center bold">
+					        <li role="presentation" class="w50p text-center bold">
 					            <a href="#tab3" aria-controls="tab3" role="tab" data-toggle="tab">熱門活動</a>
 					        </li>
 					    </ul>
@@ -222,124 +219,6 @@ var $btn = $("#${prodVO.prod_no}").click(function(){
 
 
 
-
-
-
-
-
-
-
-
-
-
-							<!-- tab22222222222222222222222222222 -->
-							<div role="tabpanel" class="tab-pane" id="tab2">
-						        <div class="container-floid">
-
-
-						        	<!-- //////////////////////////////////// -->
-						        	<div class="row cus-art-row zidx0">
-						        		<a href="#">
-							        		<div class="col-xs-12 col-sm-10 fixed-panel">
-							        			<span><h5 class="text-info">Java123　　手沖達人</h5></span>
-							        			<h4 class="inline-b bold">手沖咖啡必知的12個專有名詞</h4><h5 class="inline-b pull-right">2017-09-04</h5>
-							        			<p>电信种子看出校长各国读书最多变，预测优质看来结合球员性能是指具备协助便是威望，一句话知道平衡男性生物限制联系人，命运天天露出名称多媒体。</p>
-
-							        			<button type="button" class="btn btn-default btn-sm zidx5" aria-label="Left Align">
-						        					<span class="tx-gray">42</span>
-													<span class="glyphicon glyphicon-heart tx-gray" aria-hidden="true"></span>
-												</button>
-							        			<button type="button" class="btn btn-default btn-sm zidx5" aria-label="Left Align">
-						        					<span class="tx-gray">42</span>
-													<span class="glyphicon glyphicon-bookmark tx-gray" aria-hidden="true"></span>
-												</button>
-												<span class="mgl20 tx-gray">5則回應</span>
-							        		</div>
-						        		</a>
-						        		<div class="col-xs-12 col-sm-2 vam-div150 padt10">
-						        			<img class="img-responsive mg-auto vam-img" src="res/img/w1.jpg">
-						        		</div>
-						        	</div>
-
-						        	<!-- ///////////////////////////////// -->
-						        	<div class="row cus-art-row zidx0">
-						        		<a href="#">
-							        		<div class="col-xs-12 col-sm-10 fixed-panel">
-							        			<span><h5 class="text-info">Java123　　手沖達人</h5></span>
-							        			<h4 class="inline-b bold">手沖咖啡必知的12個專有名詞</h4><h5 class="inline-b pull-right">2017-09-04</h5>
-							        			<p>准确微微形势风云电信兴趣本报百度解决，表情限制具有水平如有一会儿十年配合屏幕体现画面不可以特，人体用户那天只是尴尬包括清除不见即将大，报名寻求只好合同走到党员学历基本上建筑具备编。</p>
-
-							        			<button type="button" class="btn btn-default btn-sm zidx5 bor-like" aria-label="Left Align">
-						        					<span class="tx-like">42</span>
-													<span class="glyphicon glyphicon-heart tx-like" aria-hidden="true"></span>
-												</button>
-							        			<button type="button" class="btn btn-default btn-sm zidx5 bor-info" aria-label="Left Align">
-						        					<span class="text-info">42</span>
-													<span class="glyphicon glyphicon-bookmark text-info" aria-hidden="true"></span>
-												</button>
-												<span class="mgl20 tx-gray">5則回應</span>
-							        		</div>
-						        		</a>
-						        		<div class="col-xs-12 col-sm-2 vam-div150 padt10">
-						        			<img class="img-responsive mg-auto vam-img" src="res/img/w2.jpg">
-						        		</div>
-						        	</div>
-						        	
-						        	<!-- //////////////////////////////////// -->
-						        	<div class="row cus-art-row zidx0">
-						        		<a href="#">
-							        		<div class="col-xs-12 col-sm-10 fixed-panel">
-							        			<span><h5 class="text-info">Java123　　手沖達人</h5></span>
-							        			<h4 class="inline-b bold">手沖咖啡必知的12個專有名詞</h4><h5 class="inline-b pull-right">2017-09-04</h5>
-							        			<p>电信种子看出校长各国读书最多变，预测优质看来结合球员性能是指具备协助便是威望，一句话知道平衡男性生物限制联系人，命运天天露出名称多媒体。</p>
-
-							        			<button type="button" class="btn btn-default btn-sm zidx5" aria-label="Left Align">
-						        					<span class="tx-gray">42</span>
-													<span class="glyphicon glyphicon-heart tx-gray" aria-hidden="true"></span>
-												</button>
-							        			<button type="button" class="btn btn-default btn-sm zidx5" aria-label="Left Align">
-						        					<span class="tx-gray">42</span>
-													<span class="glyphicon glyphicon-bookmark tx-gray" aria-hidden="true"></span>
-												</button>
-												<span class="mgl20 tx-gray">5則回應</span>
-							        		</div>
-						        		</a>
-						  <!--       		<div class="col-xs-12 col-sm-2 vam-div150 padt10">
-						        			<img class="img-responsive mg-auto vam-img" src="">
-						        		</div> -->
-						        	</div>
-
-						        	<!-- ///////////////////////////////// -->
-						        	<div class="row cus-art-row zidx0">
-						        		<a href="#">
-							        		<div class="col-xs-12 col-sm-10 fixed-panel">
-							        			<span><h5 class="text-info">Java123　　手沖達人</h5></span>
-							        			<h4 class="inline-b bold">手沖咖啡必知的12個專有名詞</h4><h5 class="inline-b pull-right">2017-09-04</h5>
-							        			<p>准确微微形势风云电信兴趣本报百度解决，表情限制具有水平如有一会儿十年配合屏幕体现画面不可以特，人体用户那天只是尴尬包括清除不见即将大，报名寻求只好合同走到党员学历基本上建筑具备编。</p>
-
-							        			<button type="button" class="btn btn-default btn-sm zidx5 bor-like" aria-label="Left Align">
-						        					<span class="tx-like">42</span>
-													<span class="glyphicon glyphicon-heart tx-like" aria-hidden="true"></span>
-												</button>
-							        			<button type="button" class="btn btn-default btn-sm zidx5 bor-info" aria-label="Left Align">
-						        					<span class="text-info">42</span>
-													<span class="glyphicon glyphicon-bookmark text-info" aria-hidden="true"></span>
-												</button>
-												<span class="mgl20 tx-gray">5則回應</span>
-							        		</div>
-						        		</a>
-						        		<div class="col-xs-12 col-sm-2 vam-div150 padt10">
-						        			<img class="img-responsive mg-auto vam-img" src="res/img/w2.jpg">
-						        		</div>
-						        	</div>
-
-
-
-
-
-
-						        </div>
-					        </div>
 
 
 

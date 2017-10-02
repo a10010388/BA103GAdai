@@ -10,11 +10,12 @@
 <%@ page import="com.mem.model.*"%>
 <%-- 此頁採用 JSTL 與 EL 取值 --%>
 <%
-	request.setAttribute("mem_ac", "mrbrown");
+	
 	request.setAttribute("store_no", "S1000000002");
 	String store_no = (String) request.getAttribute("store_no");
-	OrdVO ordVO = (OrdVO) request.getAttribute("ordVO");
+	
 %>
+<c:set var="mem_ac" value="${sessionScope.mem_ac}" scope="page"/>
 <jsp:useBean id="storeSvc" scope="page" class="com.store.model.StoreService" />
 <jsp:useBean id="memSvc" scope="page" class="com.mem.model.MemService" />
 <c:set var="memVO" value="${memSvc.findByPrimaryKeyNoImg(mem_ac)}"/>
