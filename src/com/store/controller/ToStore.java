@@ -94,7 +94,7 @@ public class ToStore extends HttpServlet {
 
 				String store_add = req.getParameter("store_add").trim();
 
-				String store_cont = req.getParameter("store_cont").replaceAll("\r\n|\n\r", "<br>");
+				String store_cont = req.getParameter("store_cont");
 
 				String store_add_lat = req.getParameter("store_add_lat").trim();
 
@@ -102,7 +102,7 @@ public class ToStore extends HttpServlet {
 
 				Integer store_free_ship = new Integer(req.getParameter("store_free_ship").trim());
 
-				String store_atm_info = req.getParameter("store_atm_info").trim().replaceAll("\r\n|\n\r", "<br>");
+				String store_atm_info = req.getParameter("store_atm_info").trim();
 				System.out.println(store_atm_info);
 
 				InputStream win_id_pic = req.getPart("win_id_pic").getInputStream();

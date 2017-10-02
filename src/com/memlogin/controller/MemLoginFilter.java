@@ -39,13 +39,13 @@ public class MemLoginFilter implements Filter {
 		if (mem_ac == null) {
 //			session.setAttribute("location", req.getRequestURI());
 //			res.sendRedirect(req.getContextPath() + "/login.html");
-			session.setAttribute("mem_ac","mrbrown");
+			session.setAttribute("mem_ac","ergdsfgs");
 //			System.out.println("filterSet");
 			chain.doFilter(request, response);
 			return;
 		} else {
 //			System.out.println("filterElse");
-			session.setAttribute("mem_ac","mrbrown");
+			session.setAttribute("mem_ac","ergdsfgs");
 			chain.doFilter(request, response);
 		}
 	}
