@@ -4,10 +4,10 @@
 <%@ page import="com.store.model.*"%>
 <%-- 此頁採用 JSTL 與 EL 取值 --%>
 <%
-pageContext.setAttribute("mem_ac", "doctor32");
-String mem_ac = (String) pageContext.getAttribute("mem_ac");
-%>
 
+
+%>
+<c:set var="mem_ac" value="${sessionScope.mem_ac}" scope="page"/>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
@@ -19,7 +19,7 @@ String mem_ac = (String) pageContext.getAttribute("mem_ac");
 	href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/css/bootstrap.min.css">
 </head>
 <body>
-	你好<%=mem_ac%>
+	你好${mem_ac}
 	<FORM METHOD="post"
 		ACTION="<%=request.getContextPath()%>/store/ToStore.do">
 		<input type="submit" value="申請店家"> 

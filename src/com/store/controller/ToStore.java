@@ -47,8 +47,8 @@ public class ToStore extends HttpServlet {
 				/***************************
 				 * 1.接收請求參數 - 輸入格式的錯誤處理
 				 **********************/
-				String mem_ac = req.getParameter("mem_ac");
-				if (mem_ac == null || (mem_ac.trim()).length() == 0) {
+				String mem_ac = req.getParameter("mem_ac").trim();
+				if (mem_ac == null || (mem_ac).length() == 0) {
 					errorMsgs.add("請登入會員");
 				}
 				// Send the use back to the form, if there were errors
@@ -145,15 +145,15 @@ public class ToStore extends HttpServlet {
 				byte[] sphoto3_1 = spic_3.toByteArray();
 
 				// 驗證
-				if (mem_ac == null || (mem_ac.trim()).length() == 0) {
+				if (mem_ac == null || (mem_ac).length() == 0) {
 					errorMsgs.add("請登入會員");
 				}
 
-				if (store_name == null || (store_name.trim()).length() == 0) {
+				if (store_name == null || (store_name).length() == 0) {
 					errorMsgs.add("請輸入店家名稱");
 				}
 
-				if (store_phone == null || (store_phone.trim()).length() == 0) {
+				if (store_phone == null || (store_phone).length() == 0) {
 					errorMsgs.add("請輸入電話");
 				}
 
@@ -170,7 +170,7 @@ public class ToStore extends HttpServlet {
 					errorMsgs.add("統一編號錯誤");
 				}
 
-				if (store_add == null || (store_add.trim()).length() == 0) {
+				if (store_add == null || (store_add).length() == 0) {
 					errorMsgs.add("請輸入地址");
 				}
 

@@ -1,24 +1,3 @@
-//func bar toogle
-var scrollPos = 0;
-window.onscroll = function() {myFunction()};
-
-function myFunction() {
-  if (document.body.scrollTop < 1) {
-    $("#funcbar").stop(true);
-        $("#funcbar").slideDown("300");
-        scrollPos = document.body.scrollTop;
-        return;
-  }
-    if ((document.body.scrollTop-scrollPos) >= 0) {
-      $("#funcbar").stop(true);
-        $("#funcbar").slideUp("300");
-        scrollPos = document.body.scrollTop;
-    } else {
-      $("#funcbar").stop(true);
-        $("#funcbar").slideDown("300");
-        scrollPos = document.body.scrollTop;
-    }
-}
 
 //odd row change side
 $(document).ready(function(){
@@ -31,6 +10,29 @@ jQuery(document).ready(function(){
     jQuery('.scrollbar-macosx').scrollbar();
 });
 
+/* Number only text */
+$(document).ready(function(){
+	var textValTmp="";
+	$('.textNumOnly').keydown(function(e){
+		textValTmp = $(this).val();
+	});
+	$('.textNumOnly').keyup(function(e){
+		if(isNaN(Number($(this).val()))){
+			console.log(textValTmp);
+			$(this).val(textValTmp);
+			textValTmp="";
+		}
+	});
+	$('.textNumOnly').keypress(function(e){
+		if(isNaN(Number($(this).val()))){
+			$(this).val(textValTmp);
+			textValTmp="";
+		}
+	});
+});
+
+
+var isAdd = false;
 
 //$(document).ready(function () {
 // $("a[href='#prod${param.prodNo}']").click();

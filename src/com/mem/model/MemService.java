@@ -1,6 +1,9 @@
 package com.mem.model;
 
+import java.sql.Date;
 import java.util.List;
+
+
 
 public class MemService {
 	private MemDAO_interface dao;
@@ -39,6 +42,21 @@ public class MemService {
 	public void addMem(MemVO memVO){
 		dao.insert(memVO);
 	}
+	//簡易註冊
+	public MemVO reg_mem(String mem_ac, String mem_pwd,String mem_phone){
+		MemVO memVO = new MemVO();
+		memVO.setMem_ac(mem_ac);
+		memVO.setMem_pwd(mem_pwd);
+		memVO.setMem_phone(mem_phone);
+		memVO.setMem_total_pt(0);
+		memVO.setMem_pt(0);
+		memVO.setGrade_no(1);
+		memVO.setMem_stat("正常");
+		memVO.setMem_reg_date(new Date(System.currentTimeMillis()));
+		dao.insert(memVO);
+		return memVO;
+		
+	}
 	
 	public MemVO updateMem(String mem_ac, String mem_pwd, String mem_lname,
 			String mem_fname, String mem_email, String mem_phone, String mem_add,
@@ -70,12 +88,25 @@ public class MemService {
 	public void updateMem(MemVO memVO) {
 		dao.update(memVO);
 	}
+	//完善資料 mem_data.jsp
+	public MemVO update_databyres(String mem_ac,String mem_lname,String mem_fname,String mem_email,String mem_add,byte[] mem_pic,String mem_set) {
+		MemVO memVO = dao.findByPrimaryKey(mem_ac);
+		memVO.setMem_lname(mem_lname);
+		memVO.setMem_fname(mem_fname);
+		memVO.setMem_email(mem_email);
+		memVO.setMem_add(mem_add);
+		memVO.setMem_pic(mem_pic);
+		memVO.setMem_set(mem_set);
+		
+		dao.update(memVO);
+		return memVO;
+	}
 	
 	public void deleteMem(String mem_ac) {
 		dao.delete(mem_ac);
 	}
 	
-	public MemVO getOneProd(String mem_ac) {
+	public MemVO getOneMem(String mem_ac) {
 		return dao.findByPrimaryKey(mem_ac);
 	}
 

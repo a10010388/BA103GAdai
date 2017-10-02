@@ -5,8 +5,9 @@
 <%-- 此頁採用 JSTL 與 EL 取值 --%>
 
 <%
-	String mem_ac = (String) request.getAttribute("mem_ac");
+	
 %>
+<c:set var="mem_ac" value="${sessionScope.mem_ac}" scope="page"/>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
@@ -50,7 +51,7 @@
 		ACTION="<%=request.getContextPath()%>/store/ToStore.do" name="form1" enctype="multipart/form-data">
 		<table border="1">
 			<caption>
-				您好：<%=mem_ac%></caption>
+				您好：${mem_ac}</caption>
 			<tr>
 				<td>店家名稱:</td>
 				<td><input type="TEXT" name="store_name" size="45"
@@ -116,7 +117,7 @@
 			</tr>
 		</table>
 		<br> <input type="hidden" name="action" value="insert"> 
-		<input	type="hidden" name="mem_ac" value="<%=mem_ac%>"> 
+		<input	type="hidden" name="mem_ac" value="${mem_ac}"> 
 		<input	type="hidden" name="store_add_lat" id="lat" size="45" value="" />
 		<input	type="hidden" name="store_add_lon" id="lng" size="45" value="" /> 
 		<input	type="submit" value="送出新增" />
