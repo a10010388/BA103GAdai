@@ -206,6 +206,67 @@ public class MemberServlet extends HttpServlet {
 				failureView.forward(req, res);
 			}
 		}
+		
+		if ("login".equals(action)) { // 來自reg_member.jsp的請求
+
+			List<String> errorMsgs = new LinkedList<String>();
+			
+			req.setAttribute("errorMsgs", errorMsgs);
+
+			try {
+				/***************************
+				 * 1.接收請求參數 - 輸入格式的錯誤處理
+				 **********************/
+				String mem_ac = req.getParameter("mem_ac").trim();
+				String mem_pwd = req.getParameter("mem_pwd").trim();
+				
+				if (mem_ac == null || (mem_ac).length() == 0) {
+					errorMsgs.add("請輸入會員帳號");
+				}
+				
+				if(mem_pwd==null||(mem_pwd).length()==0){
+					errorMsgs.add("請輸入會員密碼");
+				}
+				MemService memSvc = new MemService();
+				List<MemVO> memVOs=memSvc.getAll();
+				HttpSession session = req.getSession();
+				
+				for(int i =0 ; i<memVOs.size();i++){
+					
+					if(memVOs.get(i).getMem_ac().equals(mem_ac)){
+						System.out.println("帳號正確");
+						if(memVOs.get(i).getMem_pwd().equals(mem_pwd)){
+							  session.setAttribute("memVO", memVOs.get(i));
+						}
+					}
+				}
+				
+				
+				
+				
+				// Send the use back to the form, if there were errors
+				if (!errorMsgs.isEmpty()) {
+					RequestDispatcher failureView = req.getRequestDispatcher("/FrontEnd/reg_mem/reg_member.jsp");
+					failureView.forward(req, res);
+					return;// 程式中斷
+				}
+				/*************************** 2.開始新增資料 ***************************************/
+				
+				/***************************
+				 * 3.查詢完成,準備轉交(Send the Success view)
+				 *************/
+				String url = "/FrontEnd/index/index.jsp";
+				RequestDispatcher successView = req.getRequestDispatcher(url); // 成功轉交
+																				// listOneEmp.jsp
+				successView.forward(req, res);
+
+				/*************************** 其他可能的錯誤處理 *************************************/
+			} catch (Exception e) {
+				errorMsgs.add("無法取得資料:" + e.getMessage());
+				RequestDispatcher failureView = req.getRequestDispatcher("/FrontEnd/reg_mem/reg_member.jsp");
+				failureView.forward(req, res);
+			}
+		}
 	}
 
 }

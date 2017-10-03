@@ -7,18 +7,18 @@
 <%@ page import="com.ord_list.model.*"%>
 <%-- 此頁採用 JSTL 與 EL 取值 --%>
 <%
-	pageContext.setAttribute("store_no", "S1000000002");
-	String store_no = (String) pageContext.getAttribute("store_no");
+	session.setAttribute("store_no", "S1000000002");
+	String store_no = (String) session.getAttribute("store_no");
 	StoreService storeSvc = new StoreService();
 	ProdService prodSvc = new ProdService();
 	OrdService ordSvc = new OrdService();
 	
 	StoreVO storeVO=(StoreVO)storeSvc.getonestore(store_no);
-	pageContext.setAttribute("storeVO",storeVO);
+	session.setAttribute("storeVO",storeVO);
 	
 	
 	Set<ProdVO> prodVOs = storeSvc.getProdsByStore_no(store_no);
-	pageContext.setAttribute("prodVOs",prodVOs);
+	session.setAttribute("prodVOs",prodVOs);
 	
 	
 	Set<OrdVO> ordVOs= new LinkedHashSet<OrdVO>();
@@ -29,7 +29,7 @@
 			ordVOs.add(ordSvc.getOrdByOrdno(ord_listVO.getOrd_no()));
 		}
 	}
-	pageContext.setAttribute("ordVOs",ordVOs);
+	session.setAttribute("ordVOs",ordVOs);
 	
 %>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
@@ -85,7 +85,17 @@
 		<div class="product col-sm-8">
 			<table class="table-bordered table-responsive ord_all">
 				<caption >
-					<font size="20">我的訂單</font>
+					<font size="20">我的訂單</font>請選擇狀態
+					<FORM METHOD="post" ACTION="<%=request.getContextPath()%>/ord/Ord_manag.do">
+						<select name="ord_stat" id="stat">
+							<option value="未付款">未付款</option>
+							<option value="已付款">已付款</option>
+							<option value="已確認付款">已確認付款</option>
+							<option value="已出貨">已出貨</option>
+						</select>
+						<input type="hidden" name="action" value="selectstat">
+						<input type="hidden" name="mem_ac" value="${mem_ac}">
+					</FORM>
 				</caption>
 				<tr>
 					<th>訂單編號</th>
@@ -132,3 +142,11 @@
 
 </body>
 </html>
+<script>
+$("#stat").change(function(){
+	$(this).parent().submit();
+})
+if(${not empty openModal}){
+	$("#modal-id").modal({show:true});
+}
+</script>

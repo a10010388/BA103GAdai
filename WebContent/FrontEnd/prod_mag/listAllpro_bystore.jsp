@@ -5,14 +5,15 @@
 <%@ page import="com.prod.model.*"%>
 <%-- 此頁採用 JSTL 與 EL 取值 --%>
 <%
-	pageContext.setAttribute("store_no", "S1000000002");
-	String store_no = (String) pageContext.getAttribute("store_no");
+	session.setAttribute("store_no", "S1000000002");
+	session.getAttribute("store_no");
+	String store_no = (String) session.getAttribute("store_no");
 	StoreService storeSvc = new StoreService();
 	Set<ProdVO> set;
 	set = storeSvc.getProdsByStore_no(store_no);
-	pageContext.setAttribute("set", set);
+	session.setAttribute("set", set);
 	StoreVO storeVO=storeSvc.getonestore(store_no);
-	pageContext.setAttribute("storeVO", storeVO); 
+	session.setAttribute("storeVO", storeVO); 
 %>
 
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">

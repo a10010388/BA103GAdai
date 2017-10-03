@@ -117,7 +117,6 @@
 										</select>
 											<input type="submit" value="送出"> 
 											<input	type="hidden" name="action" value="selstat">
-											<input	type="hidden" name="store_stat1" value="selstat">
 								</FORM>	
 							</td>
 							<td>目前查詢狀態：${(param.store_stat1==null||param.store_stat1=='%%')? '查詢全部':param.store_stat1}</td>

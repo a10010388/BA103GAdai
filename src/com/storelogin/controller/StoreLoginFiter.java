@@ -1,4 +1,4 @@
-package com.memlogin.controller;
+package com.storelogin.controller;
 
 import java.io.IOException;
 import javax.servlet.Filter;
@@ -13,46 +13,47 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 /**
- * Servlet Filter implementation class MemLogin
+ * Servlet Filter implementation class StoreLogin
  */
-@WebFilter("/MemLogin")
-public class MemLoginFilter implements Filter {
+@WebFilter("/StoreLoginFiter")
+public class StoreLoginFiter implements Filter {
 	private FilterConfig config;
-
-    public MemLoginFilter() {
+    
+    public StoreLoginFiter() {
+       
     }
 
-
 	public void destroy() {
-		config = null;
+		config=null;
 	}
 
-
+	/**
+	 * @see Filter#doFilter(ServletRequest, ServletResponse, FilterChain)
+	 */
 	public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain) throws IOException, ServletException {
-		
 		HttpServletRequest req = (HttpServletRequest) request;
 		HttpServletResponse res = (HttpServletResponse) response;
 		// 【取得 session】
 		HttpSession session = req.getSession();
 		// 【從 session 判斷此user是否登入過】
-		Object mem_ac = session.getAttribute("mem_ac");
-		if (mem_ac == null) {
-//			session.setAttribute("location", req.getRequestURI());
-//			res.sendRedirect(req.getContextPath() + "/login.html");
-			session.setAttribute("mem_ac","mrbrown");
+		Object store_no = session.getAttribute("store_no");
+		if (store_no == null) {
+			session.setAttribute("location", req.getRequestURI());
+			res.sendRedirect(req.getContextPath() + "/FrontEnd/reg_store/ToStore.jsp");
+//			session.setAttribute("mem_ac","mrbrown");
 //			System.out.println("filterSet");
 			chain.doFilter(request, response);
 			return;
 		} else {
 //			System.out.println("filterElse");
-			session.setAttribute("mem_ac","mrbrown");
+			session.setAttribute("store_no",store_no);
 			chain.doFilter(request, response);
 		}
 	}
 
 	
-	public void init(FilterConfig config) throws ServletException {
-		this.config = config;
+	public void init(FilterConfig fConfig) throws ServletException {
+		this.config=config;
 	}
 
 }

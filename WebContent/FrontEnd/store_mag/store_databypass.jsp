@@ -10,9 +10,8 @@
 <%@ page import="com.mem.model.*"%>
 <%-- 此頁採用 JSTL 與 EL 取值 --%>
 <%
-	
-	request.setAttribute("store_no", "S1000000002");
-	String store_no = (String) request.getAttribute("store_no");
+	session.setAttribute("store_no", "S1000000002");
+	String store_no = (String) session.getAttribute("store_no");
 	
 %>
 <c:set var="mem_ac" value="${sessionScope.mem_ac}" scope="page"/>
