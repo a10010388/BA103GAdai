@@ -14,11 +14,11 @@
 	OrdService ordSvc = new OrdService();
 	
 	StoreVO storeVO=(StoreVO)storeSvc.getonestore(store_no);
-	session.setAttribute("storeVO",storeVO);
+	request.setAttribute("storeVO",storeVO);
 	
 	
 	Set<ProdVO> prodVOs = storeSvc.getProdsByStore_no(store_no);
-	session.setAttribute("prodVOs",prodVOs);
+	request.setAttribute("prodVOs",prodVOs);
 	
 	
 	Set<OrdVO> ordVOs= new LinkedHashSet<OrdVO>();
@@ -29,9 +29,10 @@
 			ordVOs.add(ordSvc.getOrdByOrdno(ord_listVO.getOrd_no()));
 		}
 	}
+
 	session.setAttribute("ordVOs",ordVOs);
-	
 %>
+
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
@@ -85,17 +86,19 @@
 		<div class="product col-sm-8">
 			<table class="table-bordered table-responsive ord_all">
 				<caption >
-					<font size="20">我的訂單</font>請選擇狀態
+					<font size="20">我的訂單</font><br>請選擇狀態
 					<FORM METHOD="post" ACTION="<%=request.getContextPath()%>/ord/Ord_manag.do">
 						<select name="ord_stat" id="stat">
-							<option value="未付款">未付款</option>
-							<option value="已付款">已付款</option>
-							<option value="已確認付款">已確認付款</option>
-							<option value="已出貨">已出貨</option>
+							<option value="getAll">請選擇</option>
+							<option value="未付款" ${(param.ord_stat=='未付款')? 'selected':''}>未付款</option>
+	　						<option value="已付款" ${(param.ord_stat=='已付款')? 'selected':''}>已付款</option>
+							<option value="已確認付款" ${(param.ord_stat=='已確認付款')? 'selected':''}>已確認付款</option>
+	　						<option value="已出貨" ${(param.ord_stat=='已出貨')? 'selected':''}>已出貨</option>
 						</select>
 						<input type="hidden" name="action" value="selectstat">
 						<input type="hidden" name="mem_ac" value="${mem_ac}">
 					</FORM>
+					目前查詢狀態：${(param.ord_stat==null||param.ord_stat=='getAll')? '查詢全部':param.ord_stat}
 				</caption>
 				<tr>
 					<th>訂單編號</th>
@@ -146,7 +149,5 @@
 $("#stat").change(function(){
 	$(this).parent().submit();
 })
-if(${not empty openModal}){
-	$("#modal-id").modal({show:true});
-}
+
 </script>

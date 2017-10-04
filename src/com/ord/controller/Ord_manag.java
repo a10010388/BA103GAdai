@@ -4,6 +4,7 @@ import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.sql.Date;
+import java.util.ArrayList;
 import java.util.LinkedHashSet;
 import java.util.LinkedList;
 import java.util.List;
@@ -15,6 +16,7 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import com.ord.model.OrdService;
 import com.ord.model.OrdVO;
@@ -142,19 +144,30 @@ public class Ord_manag extends HttpServlet {
 				 **********************/
 
 				String ord_stat = req.getParameter("ord_stat");
-				String mem_ac = req.getParameter("mem_ac");
+				
 				System.out.println(ord_stat);
-				System.out.println(mem_ac);
-				OrdVO ordVO = new OrdVO();
-				OrdService ordSvc = new OrdService();
-				List<OrdVO> ordVOs1 = ordSvc.getOrdByMem_ac(mem_ac);
-				List<OrdVO> ordVOs = null ;
-				for(OrdVO ordvo : ordVOs1){
-					if(ordvo.getOrd_stat().equals(ord_stat)){
-						ordVOs.add(ordvo);
+				
+				
+				
+				
+				Set<OrdVO> ordVOs  = new LinkedHashSet<OrdVO>();
+				HttpSession session =req.getSession();
+				Set<OrdVO> ordvos_stat=(Set<OrdVO>) session.getAttribute("ordVOs");
+				
+				if(ord_stat.equals("getAll")){
+					ordVOs.addAll(ordvos_stat);
+				}else {
+					for (OrdVO ordvo : ordvos_stat){
+						 if(ordvo.getOrd_stat().equals(ord_stat)){
+							ordVOs.add(ordvo);
+						}
+						
 					}
 				}
-
+				
+				
+				System.out.println(ordVOs);
+				
 				// Send the use back to the form, if there were errors
 				if (!errorMsgs.isEmpty()) {
 					req.setAttribute("ordVOs", ordVOs); // 含有輸入格式錯誤的empVO物件,也存入req
