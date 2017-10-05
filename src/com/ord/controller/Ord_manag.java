@@ -4,6 +4,7 @@ import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.sql.Date;
+import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.LinkedHashSet;
 import java.util.LinkedList;
@@ -24,6 +25,8 @@ import com.ord_list.model.Ord_listService;
 import com.ord_list.model.Ord_listVO;
 import com.prod.model.ProdService;
 import com.prod.model.ProdVO;
+import com.sys_msg.model.Sys_msgService;
+import com.sys_msg.model.Sys_msgVO;
 
 @WebServlet("/ord/Ord_manag.do")
 public class Ord_manag extends HttpServlet {
@@ -90,15 +93,26 @@ public class Ord_manag extends HttpServlet {
 				String ord_stat = req.getParameter("ord_stat");
 
 				String send_id = req.getParameter("send_id");
+				String ordmem_ac = req.getParameter("ordmem_ac");
 
 				OrdVO ordVO = new OrdVO();
 				OrdService ordSvc = new OrdService();
+				Sys_msgVO sys_msgVO = new Sys_msgVO();
+				Sys_msgService sys_msgSvc = new Sys_msgService();
+				sys_msgVO.setMem_ac(ordmem_ac);
+				sys_msgVO.setMsg_cont("您訂購的商品已出貨");
+				java.sql.Date msg_send_date = new java.sql.Date(new java.util.Date().getTime());
+				sys_msgVO.setMsg_send_date(msg_send_date);
+				
+				
 				if (ord_stat.equals("已付款")) {
 					ordVO = ordSvc.update_payconiform(ord_no);
 
 				}
 				if (ord_stat.equals("已確認付款")) {
 					ordVO = ordSvc.update_sendstat(ord_no, send_id);
+					
+					sys_msgVO = sys_msgSvc.addSys_msg(sys_msgVO);
 				}
 
 				// Send the use back to the form, if there were errors

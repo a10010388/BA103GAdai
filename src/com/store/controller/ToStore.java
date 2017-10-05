@@ -398,6 +398,132 @@ public class ToStore extends HttpServlet {
 				failureView.forward(req, res);
 			}
 		}
+		
+if ("update_forAud".equals(action)) { // 來自store_index.jsp
+			
+			List<String> errorMsgs = new LinkedList<String>();
+			// Store this set in the request scope, in case we need to
+			// send the ErrorPage view.
+			req.setAttribute("errorMsgs", errorMsgs);
+
+			try {
+
+				/***************************
+				 * 1.接收請求參數 - 輸入格式的錯誤處理
+				 **********************/
+				
+				String store_no = req.getParameter("store_no").trim();
+				
+				String store_name = req.getParameter("store_name").trim();
+				
+				String store_phone = req.getParameter("store_phone").trim();
+				
+				String store_add = req.getParameter("store_add").trim();
+				
+				String store_cont = req.getParameter("store_cont").trim();
+				
+				Integer store_free_ship = new Integer(req.getParameter("store_free_ship").trim());
+				String store_add_lat = req.getParameter("store_add_lat").trim();
+				String store_add_lon = req.getParameter("store_add_lon").trim();
+				
+				
+
+				InputStream is = req.getPart("store_pic1").getInputStream();
+				byte[] store_pic1 = null;
+				if (!req.getPart("store_pic1").getContentType().contains("image")) {
+					StoreService storeSvc = new StoreService();
+					StoreVO storevo = storeSvc.getOneStore(store_no);
+					store_pic1 = storevo.getStore_pic1();
+				} else {
+					ByteArrayOutputStream sto_1 = new ByteArrayOutputStream();
+					int p1;
+					byte[] pho1 = new byte[16384];
+					while ((p1 = is.read(pho1)) != -1) {
+						sto_1.write(pho1, 0, p1);
+					}
+					store_pic1 = sto_1.toByteArray();
+					req.getSession().setAttribute("store_pic1", store_pic1);
+				}
+
+				InputStream is2 = req.getPart("store_pic2").getInputStream();
+				byte[] store_pic2 = null;
+				if (!req.getPart("store_pic2").getContentType().contains("image")) {
+					StoreService storeSvc = new StoreService();
+					StoreVO storevo = storeSvc.getOneStore(store_no);
+					store_pic2 = storevo.getStore_pic2();
+				} else {
+					ByteArrayOutputStream pro_2 = new ByteArrayOutputStream();
+					int p2;
+					byte[] pho2 = new byte[16384];
+					while ((p2 = is2.read(pho2)) != -1) {
+						pro_2.write(pho2, 0, p2);
+					}
+					store_pic2 = pro_2.toByteArray();
+					req.getSession().setAttribute("store_pic2", store_pic2);
+				}
+
+				InputStream is3 = req.getPart("store_pic3").getInputStream();
+				byte[] store_pic3 = null;
+				if (!req.getPart("store_pic3").getContentType().contains("image")) {
+					StoreService storeSvc = new StoreService();
+					StoreVO storevo = storeSvc.getOneStore(store_no);
+					store_pic3 = storevo.getStore_pic3();
+				} else {
+					ByteArrayOutputStream pro_3 = new ByteArrayOutputStream();
+					int p3;
+					byte[] pho3 = new byte[16384];
+					while ((p3 = is3.read(pho3)) != -1) {
+						pro_3.write(pho3, 0, p3);
+					}
+					store_pic3 = pro_3.toByteArray();
+					req.getSession().setAttribute("store_pic3", store_pic3);
+				}
+
+				
+				
+				StoreVO storeVO = new StoreVO();
+				storeVO.setStore_name(store_name);
+				storeVO.setStore_no(store_no);
+				
+
+				storeVO.setStore_phone(store_phone);
+				storeVO.setStore_add(store_add);
+				storeVO.setStore_cont(store_cont);
+				storeVO.setStore_free_ship(store_free_ship);
+				storeVO.setStore_add_lat(store_add_lat);
+				storeVO.setStore_add_lon(store_add_lon);
+				storeVO.setStore_pic1(store_pic1);
+				storeVO.setStore_pic2(store_pic2);
+				storeVO.setStore_pic3(store_pic3);
+				
+				// Send the use back to the form, if there were errors
+				if (!errorMsgs.isEmpty()) {
+					req.setAttribute("storeVO", storeVO); // 含有輸入格式錯誤的empVO物件,也存入req
+					RequestDispatcher failureView = req
+							.getRequestDispatcher("/FrontEnd/store_mag/store_databypass.jsp");
+					failureView.forward(req, res);
+					return; // 程式中斷
+				}
+				
+				/*************************** 2.開始修改資料 *****************************************/
+				StoreService storeSvc = new StoreService();
+				storeVO = storeSvc.update_bynotpass(store_no, store_name, store_free_ship, store_phone, store_add, store_add_lat, store_add_lon, store_cont, store_pic1, store_pic2, store_pic3);
+				/***************************
+				 * 3.修改完成,準備轉交(Send the Success view)
+				 *************/
+
+				req.setAttribute("storeVO", storeVO); // 資料庫update成功後,正確的的empVO物件,存入req
+				String url = "/FrontEnd/store_mag/store_index.jsp";
+				RequestDispatcher successView = req.getRequestDispatcher(url); // 修改成功後,轉交listOneEmp.jsp
+				successView.forward(req, res);
+
+				/*************************** 其他可能的錯誤處理 *************************************/
+			} catch (Exception e) {
+				errorMsgs.add("修改資料失敗:" + e.getMessage());
+				RequestDispatcher failureView = req.getRequestDispatcher("/FrontEnd/store_mag/store_databypass.jsp");
+				failureView.forward(req, res);
+			}
+		}
 	}
 
 	// 驗證統編

@@ -168,7 +168,7 @@
 										<input type="hidden" name="store_stat_cont" value="${storeVO.store_stat_cont}">
 										<input type="hidden" name="whichPage"	value="<%=whichPage%>">  
 										<input type="hidden" name="action" value="getOne_For_Update">
-										<input	type="hidden" name="store_stat1" value="${param.store_stat1}">
+										<input	type="hidden" name="store_stat1" value="${(param.store_stat1==null) ? "%%" :param.store_stat1}">
 									</FORM>
 								</td>
 								<td>${storeVO.store_stat_cdate}</td>

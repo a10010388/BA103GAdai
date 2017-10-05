@@ -7,7 +7,7 @@
 <%@ page import="com.ord_list.model.*"%>
 <%-- 此頁採用 JSTL 與 EL 取值 --%>
 <%
-	session.setAttribute("store_no", "S1000000002");
+// 	session.setAttribute("store_no", "S1000000002");
 	String store_no = (String) session.getAttribute("store_no");
 	StoreService storeSvc = new StoreService();
 	ProdService prodSvc = new ProdService();

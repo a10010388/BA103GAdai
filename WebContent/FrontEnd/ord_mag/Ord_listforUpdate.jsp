@@ -10,7 +10,7 @@
 
 <%-- 此頁採用 JSTL 與 EL 取值 --%>
 <%
-session.setAttribute("store_no", "S1000000002");
+
 String store_no = (String) session.getAttribute("store_no");
 StoreService storeSvc = new StoreService();
 
@@ -157,6 +157,7 @@ OrdVO ordVO=(OrdVO) session.getAttribute("ordVO");
 										<input type="hidden" name="ord_no" value="${ordVO.ord_no}">
 										<input type="hidden" name="ord_stat" value="${ordVO.ord_stat}">
 										<input type="hidden" name="action" value="update_stat">
+										<input type="hidden" name="ordmem_ac" value="${ordVO.mem_ac}">
 										<span>${ordVO.ord_stat.equals("已確認付款") ? "請輸入物流編號並發出出貨通知" : ''}</span>
 							</FORM>
 						

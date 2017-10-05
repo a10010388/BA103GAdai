@@ -62,11 +62,11 @@
   </filter-mapping>
   
    <filter>
-    <filter-name>StoreLoginFiter</filter-name>
-    <filter-class>com.storelogin.controller.StoreLoginFiter</filter-class>
+    <filter-name>StoreLoginFilter</filter-name>
+    <filter-class>com.storelogin.controller.StoreLoginFilter</filter-class>
   </filter>
   <filter-mapping>
-    <filter-name>StoreLoginFiter</filter-name>
+    <filter-name>StoreLoginFilter</filter-name>
     <url-pattern>/FrontEnd/ord_mag/*</url-pattern>
     <url-pattern>/FrontEnd/prod_mag/*</url-pattern>
     <url-pattern>/FrontEnd/store_mag/*</url-pattern>

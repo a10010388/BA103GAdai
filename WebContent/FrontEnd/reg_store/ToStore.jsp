@@ -3,10 +3,7 @@
 <%@ page import="java.util.*"%>
 <%@ page import="com.store.model.*"%>
 <%-- 此頁採用 JSTL 與 EL 取值 --%>
-<%
 
-
-%>
 <c:set var="mem_ac" value="${sessionScope.mem_ac}" scope="page"/>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
@@ -23,7 +20,7 @@
 	<FORM METHOD="post"
 		ACTION="<%=request.getContextPath()%>/store/ToStore.do">
 		<input type="submit" value="申請店家"> 
-		<input type="hidden" name="mem_ac" value="doctor32">
+		<input type="hidden" name="mem_ac" value="${mem_ac}">
 		<input type="hidden" name="action" value="Application">
 	</FORM>
 1111111111111111

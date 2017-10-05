@@ -4,9 +4,7 @@
 <%@ page import="com.store.model.*"%>
 <%-- 此頁採用 JSTL 與 EL 取值 --%>
 
-<%
-	
-%>
+
 <c:set var="mem_ac" value="${sessionScope.mem_ac}" scope="page"/>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>

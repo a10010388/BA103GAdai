@@ -4,7 +4,7 @@
 <%@ page import="com.store.model.*"%>
 <%-- 此頁採用 JSTL 與 EL 取值 --%>
 <%
-String mem_ac = (String) request.getParameter("mem_ac");
+String mem_ac = (String) session.getAttribute("mem_ac");
 %>
 
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">

@@ -7,8 +7,8 @@
 <%@ page import="com.ord_list.model.*"%>
 <%-- 此頁採用 JSTL 與 EL 取值 --%>
 <%
-	pageContext.setAttribute("store_no", "S1000000002");
-	String store_no = (String) pageContext.getAttribute("store_no");
+	
+	String store_no = (String) session.getAttribute("store_no");
 	StoreService storeSvc = new StoreService();
 	ProdService prodSvc = new ProdService();
 	OrdService ordSvc = new OrdService();
@@ -71,7 +71,7 @@
 				<div class="col-xs-12 col-sm-4">
 					<table class="table-bordered table-responsive ord_table">
 						<caption>
-					<big>我的訂單</big><a href="<%=request.getContextPath()%>/FrontEnd/prod_mag/listAllpro_bystore.jsp"><small>更多</small></a>
+					<big>我的訂單</big><a href="<%=request.getContextPath()%>/FrontEnd/ord_mag/listAllorder_bystore.jsp"><small>更多</small></a>
 						</caption>
 					<tr>
 						<th>訂單編號</th>

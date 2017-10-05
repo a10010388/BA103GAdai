@@ -9,11 +9,7 @@
 <%@ page import="com.ord_list.model.*"%>
 <%@ page import="com.mem.model.*"%>
 <%-- 此頁採用 JSTL 與 EL 取值 --%>
-<%
-	
-	String store_no = (String) session.getAttribute("store_no");
-	
-%>
+
 <c:set var="mem_ac" value="${sessionScope.mem_ac}" scope="page"/>
 <jsp:useBean id="storeSvc" scope="page" class="com.store.model.StoreService" />
 <jsp:useBean id="memSvc" scope="page" class="com.mem.model.MemService" />
@@ -73,7 +69,7 @@
 		ACTION="<%=request.getContextPath()%>/store/ToStore.do" name="form1" enctype="multipart/form-data">
 			<table class="table_shop">
 				<caption>
-					<big><b>修改店家資料</b></big><br>
+					<big><b>要求重審店家資格</b></big><br>
 					<ul class="data">
 						<li>這是您的會員資料，請確認下列資料是否正確。</li>
 						<li>星號 * 為必填欄位。</li>
@@ -106,7 +102,7 @@
 				</tr>
 				<tr>
 					<td>公司統一編號</td>
-					<td>${storeVO.tax_id_no}</td>
+					<td><input type="text" name="tax_id_no"value="${storeVO.tax_id_no}"></td>
 					<td></td>
 				</tr>
 				<tr>
@@ -146,7 +142,7 @@
 					<td><input type="file" name="store_pic3" value="上傳" id="storepic3"></td>
 				</tr>
 			</table>
-					<input type="hidden" name="action" value="update_data"> 
+					<input type="hidden" name="action" value="update_forAud"> 
 					<input	type="hidden" name="store_add_lat" id="lat" size="45" value="${storeVO.store_add_lat}" />
 					<input	type="hidden" name="store_add_lon" id="lng" size="45" value="${storeVO.store_add_lon}" />
 					<input	type="hidden" name="store_no"  size="45" value="${storeVO.store_no}" />
