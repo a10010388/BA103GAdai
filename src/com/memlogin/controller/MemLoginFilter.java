@@ -38,14 +38,14 @@ public class MemLoginFilter implements Filter {
 		Object mem_ac = session.getAttribute("mem_ac");
 		if (mem_ac == null) {
 //			session.setAttribute("location", req.getRequestURI());
-//			res.sendRedirect(req.getContextPath() + "/login.html");
-			session.setAttribute("mem_ac","ts6000");
+//			res.sendRedirect(req.getContextPath() + "/FrontEnd/login/memlogin.jsp");
+			session.setAttribute("mem_ac","jijijijji");
 //			System.out.println("filterSet");
 			chain.doFilter(request, response);
 			return;
 		} else {
 //			System.out.println("filterElse");
-			session.setAttribute("mem_ac","ts6000");
+			session.setAttribute("mem_ac","jijijijji");
 			chain.doFilter(request, response);
 		}
 	}

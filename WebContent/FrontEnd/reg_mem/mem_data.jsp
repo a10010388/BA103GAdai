@@ -7,7 +7,7 @@
 <%@ page import="com.prod.model.*"%>
 <%-- 此頁採用 JSTL 與 EL 取值 --%>
 <%
-MemVO memVO=(MemVO) request.getAttribute("memVO");
+
 
 %>
 <jsp:useBean id="prodSvc" scope="page" class="com.prod.model.ProdService"/>
@@ -54,22 +54,22 @@ MemVO memVO=(MemVO) request.getAttribute("memVO");
 			<tr>
 				<td>會員姓氏:</td>
 				<td><input type="TEXT" name="mem_lname" size="45"
-					value="" /></td>
+					value="${memVO.mem_lname}" /></td>
 			</tr>
 			<tr>
 				<td>會員名字:</td>
 				<td><input type="TEXT" name="mem_fname" size="45" 
-					value="" /></td>
+					value="${memVO.mem_fname}" /></td>
 			</tr>
 			<tr>
 				<td>會員Email:</td>
 				<td><input type="TEXT"  name="mem_email" size="45"
-					 value="" /></td>
+					 value="${memVO.mem_email}" /></td>
 			</tr>
 			<tr>
 				<td>會員地址:</td>
 				<td><input type="TEXT"  name="mem_add" size="45"
-					 value="" /></td>
+					 value="${memVO.mem_add}" /></td>
 			</tr>
 			<tr>
 				<td>會員圖片:</td>

@@ -79,6 +79,10 @@ public class MemberServlet extends HttpServlet {
 				if(mem_phone==null||(mem_phone).length()==0){
 					errorMsgs.add("請輸入電話");
 				}
+				String mem_phone_reg=("^09\\d{2}-?\\d{3}-?\\d{3}$");
+				if(mem_phone.matches(mem_phone_reg)==false){
+					errorMsgs.add("手機不符合格式");
+				}
 				
 				MemVO memVO = new MemVO();
 				memVO.setMem_ac(mem_ac);
@@ -88,6 +92,7 @@ public class MemberServlet extends HttpServlet {
 				
 				// Send the use back to the form, if there were errors
 				if (!errorMsgs.isEmpty()) {
+					req.setAttribute("memVO", memVO);
 					RequestDispatcher failureView = req.getRequestDispatcher("/FrontEnd/reg_mem/reg_member.jsp");
 					failureView.forward(req, res);
 					return;// 程式中斷
@@ -135,8 +140,11 @@ public class MemberServlet extends HttpServlet {
 				String mem_fname = req.getParameter("mem_fname").trim();
 				
 				
+				String mem_email_req=("^([a-zA-Z0-9._%-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,4})*$");
 				String mem_email = req.getParameter("mem_email").trim();
-				
+				if (mem_email.matches(mem_email_req)==false){
+					errorMsgs.add("電子郵件不符合格式");
+				}
 				
 				String mem_add = req.getParameter("mem_add").trim();
 				
@@ -238,6 +246,9 @@ public class MemberServlet extends HttpServlet {
 						if(memVOs.get(i).getMem_pwd().equals(mem_pwd)){
 							  session.setAttribute("memVO", memVOs.get(i));
 						}
+						else{
+							errorMsgs.add("帳號密碼錯誤");
+						}
 					}
 				}
 				
@@ -246,7 +257,7 @@ public class MemberServlet extends HttpServlet {
 				
 				// Send the use back to the form, if there were errors
 				if (!errorMsgs.isEmpty()) {
-					RequestDispatcher failureView = req.getRequestDispatcher("/FrontEnd/reg_mem/reg_member.jsp");
+					RequestDispatcher failureView = req.getRequestDispatcher("/FrontEnd/login/memlogin.jsp");
 					failureView.forward(req, res);
 					return;// 程式中斷
 				}

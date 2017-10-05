@@ -103,7 +103,7 @@ public class ToStore extends HttpServlet {
 				Integer store_free_ship = new Integer(req.getParameter("store_free_ship").trim());
 
 				String store_atm_info = req.getParameter("store_atm_info").trim();
-				System.out.println(store_atm_info);
+				
 
 				InputStream win_id_pic = req.getPart("win_id_pic").getInputStream();
 				ByteArrayOutputStream id_pic = new ByteArrayOutputStream();
@@ -156,20 +156,23 @@ public class ToStore extends HttpServlet {
 				if (store_phone == null || (store_phone).length() == 0) {
 					errorMsgs.add("請輸入電話");
 				}
+				
+				System.out.println("11111111");
 
 				if (tax_id_no.trim().length() != 8) {
 					errorMsgs.add("統一編號要8碼");
 				}
+				
 				try {
 					Integer.valueOf(tax_id_no);
 				} catch (NumberFormatException err) {
 					errorMsgs.add("統一編號要數字 ");
 				}
-
+				
 				if (chknum(tax_id_no) == false) {
 					errorMsgs.add("統一編號錯誤");
 				}
-
+				System.out.println("2223333332");
 				if (store_add == null || (store_add).length() == 0) {
 					errorMsgs.add("請輸入地址");
 				}
@@ -185,13 +188,8 @@ public class ToStore extends HttpServlet {
 					errorMsgs.add("匯款資訊不可為空");
 				}
 
-				// Send the use back to the form, if there were errors
-				if (!errorMsgs.isEmpty()) {
-					RequestDispatcher failureView = req.getRequestDispatcher("/FrontEnd/reg_store/UpToStore.jsp");
-					failureView.forward(req, res);
-					return;// 程式中斷
-				}
-
+				
+				
 				StoreVO storeVO = new StoreVO();
 				storeVO.setStore_name(store_name);
 				storeVO.setTax_id_no(tax_id_no);

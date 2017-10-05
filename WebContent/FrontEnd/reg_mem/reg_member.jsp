@@ -49,18 +49,18 @@
 			<tr>
 				<td>會員帳號:</td>
 				<td><input type="TEXT" name="mem_ac" size="45"
-					value="" /></td>
+					value="${memVO.mem_ac}" /></td>
 			</tr>
 			<tr>
 				<td>會員密碼:</td>
 				<td><input type="password" name="mem_pwd" size="45" 
-					value="" /></td>
+					value="${memVO.mem_pwd}" /></td>
 			</tr>
 			
 			<tr>
 				<td>會員手機:</td>
 				<td><input type="TEXT"  name="mem_phone" size="45"
-					 value="" /></td>
+					 value="${memVO.mem_phone}" /></td>
 			</tr>
 		</table>
 		<input type="submit" value="確定申請會員"> 
