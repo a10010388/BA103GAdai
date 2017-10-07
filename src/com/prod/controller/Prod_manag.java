@@ -160,6 +160,12 @@ public class Prod_manag extends HttpServlet {
 					prod_pic3 = pro_3.toByteArray();
 					req.getSession().setAttribute("prod_pic3", prod_pic3);
 				}
+				
+				
+//				String prod_wt_reg= "(^[0-9]+(.[0-9]{1})?$)";
+//				if(String.valueOf( prod_wt).matches(prod_wt_reg)==false){
+//					errorMsgs.add("重量只能小數點後一位");
+//				}
 
 				ProdVO prodVO = new ProdVO();
 				prodVO.setProd_no(prod_no);

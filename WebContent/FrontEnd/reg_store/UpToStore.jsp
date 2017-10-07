@@ -3,7 +3,7 @@
 <%@ page import="java.util.*"%>
 <%@ page import="com.store.model.*"%>
 <%-- 此頁採用 JSTL 與 EL 取值 --%>
-
+<%StoreVO storeVO = (StoreVO) request.getAttribute("storeVO"); %>
 
 <c:set var="mem_ac" value="${sessionScope.mem_ac}" scope="page"/>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
@@ -89,32 +89,88 @@
 				<td><input type="TEXT" name="store_free_ship" size="45"
 					value="${storeVO.store_free_ship}" /></td>
 			</tr>
-
+	
 			<tr>
 				<td>證件照:</td>
 				<td><input type="file" name="win_id_pic" id="idpic1"></td>
-				<td><output id="mylist1"></output></td>
+				<td><output id="mylist1">
+				<%
+				String win_id_pic="";
+				if(storeVO!=null){
+					byte[] data=storeVO.getWin_id_pic();
+					StringBuilder sb = new StringBuilder();
+					sb.append("data:image/png;base64,");
+					sb.append(com.sun.org.apache.xerces.internal.impl.dv.util.Base64.encode(data));
+					win_id_pic = sb.toString();
+				}else{
+					win_id_pic="";
+				}
+				%>
+				<img src="<%=win_id_pic %>" width="150px">
+				</output></td>
 			</tr>
 			<tr>
 				<td>店家照1:</td>
 				<td><input type="file" name="store_pic1" id="stpic1"></td>
-				<td><output id="mylist2"></output></td>
+				<td><output id="mylist2">
+				<%
+				String store_pic1="";
+				if(storeVO!=null){
+					byte[] data=storeVO.getStore_pic1();
+					StringBuilder sb = new StringBuilder();
+					sb.append("data:image/png;base64,");
+					sb.append(com.sun.org.apache.xerces.internal.impl.dv.util.Base64.encode(data));
+					store_pic1 = sb.toString();
+				}else{
+					store_pic1="";
+				}
+				%>
+				<img src="<%=store_pic1 %>" width="150px">
+				</output></td>
 			</tr>
 			<tr>
 				<td>店家照2:</td>
 				<td><input type="file" name="store_pic2" id="stpic2"></td>
-				<td><output id="mylist3"></output></td>
+				<td><output id="mylist3">
+				<%
+				String store_pic2="";
+				if(storeVO!=null){
+					byte[] data=storeVO.getStore_pic2();
+					StringBuilder sb = new StringBuilder();
+					sb.append("data:image/png;base64,");
+					sb.append(com.sun.org.apache.xerces.internal.impl.dv.util.Base64.encode(data));
+					store_pic2 = sb.toString();
+				}else{
+					store_pic2="";
+				}
+				%>
+				<img src="<%=store_pic2 %>" width="150px">
+				</output></td>
 			</tr>
 			<tr>
 				<td>店家照3:</td>
 				<td><input type="file" name="store_pic3" id="stpic3"></td>
-				<td><output id="mylist4"></output></td>
+				<td><output id="mylist4">
+				<%
+				String store_pic3="";
+				if(storeVO!=null){
+					byte[] data=storeVO.getStore_pic3();
+					StringBuilder sb = new StringBuilder();
+					sb.append("data:image/png;base64,");
+					sb.append(com.sun.org.apache.xerces.internal.impl.dv.util.Base64.encode(data));
+					store_pic3 = sb.toString();
+				}else{
+					store_pic3="";
+				}
+				%>
+				<img src="<%=store_pic3 %>" width="150px">
+				</output></td>
 			</tr>
 		</table>
 		<br> <input type="hidden" name="action" value="insert"> 
 		<input	type="hidden" name="mem_ac" value="${mem_ac}"> 
-		<input	type="hidden" name="store_add_lat" id="lat" size="45" value="" />
-		<input	type="hidden" name="store_add_lon" id="lng" size="45" value="" /> 
+		<input	type="hidden" name="store_add_lat" id="lat" size="45" value="${storeVO.store_add_lat}" />
+		<input	type="hidden" name="store_add_lon" id="lng" size="45" value="${storeVO.store_add_lon}" /> 
 		<input	type="submit" value="送出新增" />
 	</FORM>
 </body>
@@ -129,11 +185,11 @@
 				if (status == google.maps.GeocoderStatus.OK) { //判斷狀態
 					$lat = results[0].geometry.location.lat();
 					var lat = $lat;
-					var lat1 = lat.toFixed(12);
+					var lat1 = lat.toFixed(11);
 					$("#lat").val(lat1);
 					$lng = results[0].geometry.location.lng();
 					var lng = $lng;
-					var lng1 = lng.toFixed(12);
+					var lng1 = lng.toFixed(11);
 					$("#lng").val(lng1);
 
 				}

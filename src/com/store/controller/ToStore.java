@@ -105,44 +105,85 @@ public class ToStore extends HttpServlet {
 				String store_atm_info = req.getParameter("store_atm_info").trim();
 				
 
-				InputStream win_id_pic = req.getPart("win_id_pic").getInputStream();
-				ByteArrayOutputStream id_pic = new ByteArrayOutputStream();
-				int idpic;
-				byte[] idimg = new byte[16384];
-
-				while ((idpic = win_id_pic.read(idimg, 0, idimg.length)) != -1) {
-					id_pic.write(idimg, 0, idpic);
+				
+				
+				
+				InputStream is = req.getPart("win_id_pic").getInputStream();
+				byte[] win_id_pic = null;
+				if (!req.getPart("win_id_pic").getContentType().contains("image")) {
+					win_id_pic =  (byte[])req.getSession().getAttribute("win_id_pic");
+					if(win_id_pic==null){
+						errorMsgs.add("請上傳證件照");
+					}
+				} else {
+					ByteArrayOutputStream pro_1 = new ByteArrayOutputStream();
+					int p1;
+					byte[] idpic1 = new byte[16384];
+					while ((p1 = is.read(idpic1)) != -1) {
+						pro_1.write(idpic1, 0, p1);
+					}
+					win_id_pic = pro_1.toByteArray();
+					req.getSession().setAttribute("win_id_pic", win_id_pic);
 				}
-				byte[] idimg1 = id_pic.toByteArray();
-
-				InputStream storepic1 = req.getPart("store_pic1").getInputStream();
-				ByteArrayOutputStream spic_1 = new ByteArrayOutputStream();
-				int spic1;
-				byte[] sphoto1 = new byte[16384];
-
-				while ((spic1 = storepic1.read(sphoto1, 0, sphoto1.length)) != -1) {
-					spic_1.write(sphoto1, 0, spic1);
+				
+				
+				
+				InputStream is1 = req.getPart("store_pic1").getInputStream();
+				byte[] store_pic1 = null;
+				if (!req.getPart("store_pic1").getContentType().contains("image")) {
+					store_pic1 =  (byte[])req.getSession().getAttribute("store_pic1");
+					if(store_pic1==null){
+						errorMsgs.add("請上傳店家照1");
+					}
+				} else {
+					ByteArrayOutputStream pro_1 = new ByteArrayOutputStream();
+					int p1;
+					byte[] idpic1 = new byte[16384];
+					while ((p1 = is1.read(idpic1)) != -1) {
+						pro_1.write(idpic1, 0, p1);
+					}
+					store_pic1 = pro_1.toByteArray();
+					req.getSession().setAttribute("store_pic1", store_pic1);
 				}
-				byte[] sphoto1_1 = spic_1.toByteArray();
-
-				InputStream storepic2 = req.getPart("store_pic2").getInputStream();
-				ByteArrayOutputStream spic_2 = new ByteArrayOutputStream();
-				int spic2;
-				byte[] sphoto2 = new byte[16384];
-				while ((spic2 = storepic2.read(sphoto2, 0, sphoto2.length)) != -1) {
-					spic_2.write(sphoto2, 0, spic2);
+				
+				
+				
+				
+				InputStream is2 = req.getPart("store_pic2").getInputStream();
+				byte[] store_pic2 = null;
+				if (!req.getPart("store_pic2").getContentType().contains("image")) {
+					store_pic2 =  (byte[])req.getSession().getAttribute("store_pic2");
+					
+				} else {
+					ByteArrayOutputStream pro_1 = new ByteArrayOutputStream();
+					int p1;
+					byte[] idpic1 = new byte[16384];
+					while ((p1 = is2.read(idpic1)) != -1) {
+						pro_1.write(idpic1, 0, p1);
+					}
+					store_pic2 = pro_1.toByteArray();
+					req.getSession().setAttribute("store_pic2", store_pic2);
 				}
-				byte[] sphoto2_1 = spic_2.toByteArray();
-
-				InputStream storepic3 = req.getPart("store_pic3").getInputStream();
-				ByteArrayOutputStream spic_3 = new ByteArrayOutputStream();
-				int spic3;
-				byte[] sphoto3 = new byte[16384];
-
-				while ((spic3 = storepic3.read(sphoto3, 0, sphoto3.length)) != -1) {
-					spic_3.write(sphoto3, 0, spic3);
+				
+				
+				
+				InputStream is3 = req.getPart("store_pic3").getInputStream();
+				byte[] store_pic3 = null;
+				if (!req.getPart("store_pic3").getContentType().contains("image")) {
+					store_pic3 =  (byte[])req.getSession().getAttribute("store_pic3");
+					
+				} else {
+					ByteArrayOutputStream pro_1 = new ByteArrayOutputStream();
+					int p1;
+					byte[] idpic1 = new byte[16384];
+					while ((p1 = is3.read(idpic1)) != -1) {
+						pro_1.write(idpic1, 0, p1);
+					}
+					store_pic3 = pro_1.toByteArray();
+					req.getSession().setAttribute("store_pic3", store_pic3);
 				}
-				byte[] sphoto3_1 = spic_3.toByteArray();
+				
+				
 
 				// 驗證
 				if (mem_ac == null || (mem_ac).length() == 0) {
@@ -158,32 +199,21 @@ public class ToStore extends HttpServlet {
 				}
 				
 				System.out.println("11111111");
-
-				if (tax_id_no.trim().length() != 8) {
-					errorMsgs.add("統一編號要8碼");
-				}
 				
-				try {
-					Integer.valueOf(tax_id_no);
-				} catch (NumberFormatException err) {
-					errorMsgs.add("統一編號要數字 ");
-				}
+				
+			
 				
 				if (chknum(tax_id_no) == false) {
-					errorMsgs.add("統一編號錯誤");
+					errorMsgs.add("統一編號格式驗證錯誤");
 				}
 				System.out.println("2223333332");
 				if (store_add == null || (store_add).length() == 0) {
 					errorMsgs.add("請輸入地址");
 				}
 
-				if (idimg1.length == 0) {
-					errorMsgs.add("證件照不可為空");
-				}
+				
 
-				if (sphoto1_1.length == 0) {
-					errorMsgs.add("店家照1不可為空");
-				}
+				
 				if (store_atm_info == null || (store_atm_info.length() == 0)) {
 					errorMsgs.add("匯款資訊不可為空");
 				}
@@ -197,14 +227,17 @@ public class ToStore extends HttpServlet {
 				storeVO.setStore_phone(store_phone);
 				storeVO.setStore_cont(store_cont);
 				storeVO.setMem_ac(mem_ac);
-				storeVO.setWin_id_pic(idimg1);
+				storeVO.setWin_id_pic(win_id_pic);
 				storeVO.setStore_add_lat(store_add_lat);
 				storeVO.setStore_add_lon(store_add_lon);
-				storeVO.setStore_pic1(sphoto1_1);
-				storeVO.setStore_pic2(sphoto2_1);
-				storeVO.setStore_pic3(sphoto3_1);
+				storeVO.setStore_pic1(store_pic1);
+				storeVO.setStore_pic2(store_pic2);
+				storeVO.setStore_pic3(store_pic3);
 				storeVO.setStore_atm_info(store_atm_info);
 				storeVO.setStore_free_ship(store_free_ship);
+				
+				
+				
 				// Send the use back to the form, if there were errors
 				if (!errorMsgs.isEmpty()) {
 					req.setAttribute("storeVO", storeVO); // 含有輸入格式錯誤的empVO物件,也存入req
@@ -215,8 +248,8 @@ public class ToStore extends HttpServlet {
 
 				/*************************** 2.開始新增資料 ***************************************/
 				StoreService storeSvc = new StoreService();
-				storeVO = storeSvc.addStore(mem_ac, tax_id_no, idimg1, store_phone, store_add, store_add_lat,
-						store_add_lon, store_name, store_cont, sphoto1_1, sphoto2_1, sphoto3_1, store_free_ship,
+				storeVO = storeSvc.addStore(mem_ac, tax_id_no, win_id_pic, store_phone, store_add, store_add_lat,
+						store_add_lon, store_name, store_cont, store_pic1, store_pic2, store_pic3, store_free_ship,
 						store_atm_info);
 
 				/***************************
@@ -531,6 +564,9 @@ if ("update_forAud".equals(action)) { // 來自store_index.jsp
 		int SUM = 0;
 
 		String[] cnum = tax_id_no.split("");
+		if(cnum.length!=8){
+			return false;
+		}
 
 		for (int i = 0; i < 8; i++) {
 			SUM += toOneDigi(Integer.parseInt(cnum[i]) * car[i]);
