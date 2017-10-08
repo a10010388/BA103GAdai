@@ -57,12 +57,12 @@
 			</tr>
 			<tr>
 				<td>統一編號:</td>
-				<td><input type="TEXT" name="tax_id_no" size="45" 
+				<td><input type="TEXT" name="tax_id_no" size="45" pattern="[0-9]{8}"
 					value="${storeVO.tax_id_no}" /></td>
 			</tr>
 			<tr>
 				<td>公司電話:</td>
-				<td><input type="TEXT" name="store_phone" size="45"
+				<td><input type="TEXT" name="store_phone" size="45" 
 					value="${storeVO.store_phone}" /></td>
 			</tr>
 			<tr>

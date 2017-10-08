@@ -820,7 +820,7 @@ public class ProdJDBCDAO implements ProdDAO_interface {
 
 	public static void main (String[] args) throws IOException{
 		ProdJDBCDAO dao = new ProdJDBCDAO();		
-//		insertTest(dao);
+		insertTest(dao);
 //		updateTest(dao);
 //		getQueryResultTest("衣索比亞", "水洗", "中焙", "%gg%");
 //		dao.delete("P1000000019");
@@ -828,7 +828,7 @@ public class ProdJDBCDAO implements ProdDAO_interface {
 //		getAllTest(dao);
 //		getAllNoImgTest(dao);
 //		getOneNoImgTest(dao);
-		getord_listbyprod_no(dao);
+//		getord_listbyprod_no(dao);
 		//只新增照片方法，暫為測試用
 //		for(int i = 1; i<10 ;i++){
 //			String prod_no = "P100000000" + i;
@@ -850,7 +850,7 @@ public class ProdJDBCDAO implements ProdDAO_interface {
 		prodVO01.setBean_region("歌迪歐");
 		prodVO01.setBean_farm("班可果丁丁村");
 		prodVO01.setBean_farmer("貝內費加");
-		prodVO01.setBean_el(1800);
+		prodVO01.setBean_el(1500);
 		prodVO01.setProc("水洗");
 		prodVO01.setRoast("中焙");
 		prodVO01.setBean_attr_acid(4);

@@ -237,7 +237,7 @@
 				</tr>
 				<tr>
 					<td>重量 lb(小數後1位)*</td>
-					<td><input type="number" name="prod_wt"
+					<td><input type="number" name="prod_wt" step="0.5"
 						value="${prodvo.prod_wt}" ></td>
 					<td></td>
 				</tr>
@@ -249,8 +249,8 @@
 				</tr>
 				<tr>
 					<td>供應數量*</td>
-					<td><input type="number" name="prod_sup"
-						value="${prodvo.prod_sup}"></td>
+					<td><input type="number" name="prod_sup" 
+						value="${prodvo.prod_sup}" ></td>
 					<td></td>
 				</tr>
 				<tr>

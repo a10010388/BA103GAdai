@@ -12,6 +12,7 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import com.prod.model.*;
 import com.store.model.*;
@@ -244,73 +245,225 @@ public class Prod_manag extends HttpServlet {
 				/***********************
 				 * 1.接收請求參數 - 輸入格式的錯誤處理
 				 *************************/
-
-				String prod_stat = req.getParameter("prod_stat").trim();
+				System.out.println(3333);
+				
 
 				String store_no = req.getParameter("store_no").trim();
 				String prod_name = req.getParameter("prod_name").trim();
+				
+				System.out.println(2222);
+				
+				
+				
+				
+				
 				String bean_type = req.getParameter("bean_type").trim();
-				String bean_grade = req.getParameter("bean_grade").trim();
+				System.out.println("aa");
+				
+				String bean_grade = req.getParameter("bean_grade");
+				System.out.println("aa11");
+				
 				String bean_contry = req.getParameter("bean_contry").trim();
 				String bean_region = req.getParameter("bean_region").trim();
 				String bean_farm = req.getParameter("bean_farm").trim();
 
+				System.out.println(1111);
+				
 				String bean_farmer = req.getParameter("bean_farmer").trim();
-				Integer bean_el = new Integer(req.getParameter("bean_el").trim());
-
+				
+				
+				Integer bean_el =  0;
+				if(!req.getParameter("bean_el").trim().equals("") ){
+					 bean_el = new Integer(req.getParameter("bean_el").trim());
+				}
+				
+				
+				System.out.println(55555);
+				
 				String proc = (req.getParameter("proc").trim());
 
 				String roast = (req.getParameter("roast").trim());
-				Integer bean_attr_acid = new Integer(req.getParameter("bean_attr_acid").trim());
-				Integer bean_attr_aroma = new Integer(req.getParameter("bean_attr_aroma").trim());
-				Integer bean_attr_body = new Integer(req.getParameter("bean_attr_acid").trim());
-				Integer bean_attr_after = new Integer(req.getParameter("bean_attr_after").trim());
-				Integer bean_attr_bal = new Integer(req.getParameter("bean_attr_bal").trim());
+				
+				
+				System.out.println("99aa");
+				Integer bean_attr_acid = null ;
+				if(req.getParameter("bean_attr_acid")!=null){
+					 bean_attr_acid = new Integer(req.getParameter("bean_attr_acid"));
+				} else{
+					errorMsgs.add("請選擇酸度");
+				}
+				
+				
+				
+				
+				System.out.println("88aa");
+				
+				Integer bean_attr_aroma = null;
+				if(req.getParameter("bean_attr_aroma")!=null){
+					bean_attr_aroma = new Integer(req.getParameter("bean_attr_aroma"));
+				} else{
+					errorMsgs.add("請選擇香氣");
+				}
+				
+				System.out.println("11aa");
+				
+				
+				Integer bean_attr_body = null;
+				if(req.getParameter("bean_attr_body")!=null){
+					bean_attr_body = new Integer(req.getParameter("bean_attr_body"));
+				} else{
+					errorMsgs.add("請選擇醇度");
+				}
+				
+				System.out.println("bb123");
+				
+				Integer bean_attr_after = null;
+				if(req.getParameter("bean_attr_after")!=null){
+					bean_attr_after = new Integer(req.getParameter("bean_attr_after"));
+				}else{
+					errorMsgs.add("請選擇餘味");
+				}
+				
+				
+				Integer bean_attr_bal=null;
+				if(req.getParameter("bean_attr_bal")!=null){
+					bean_attr_bal = new Integer(req.getParameter("bean_attr_bal"));
+				} else{
+					errorMsgs.add("請選擇平衡度");
+				}
+				
+				
+				
+				
+				System.out.println("66aa:");
+				
 				String bean_aroma = (req.getParameter("bean_aroma").trim());
-				Integer prod_price = new Integer(req.getParameter("prod_price").trim());
-				Integer send_fee = new Integer(req.getParameter("send_fee").trim());
-				Integer prod_sup = new Integer(req.getParameter("prod_sup").trim());
+				
+				Integer prod_price =  null;
+				if(!req.getParameter("prod_price").trim().equals("") ){
+					prod_price = new Integer(req.getParameter("prod_price").trim());
+				}
+				
+				
+				
+				
+				
+				Integer send_fee = null;
+				if(!req.getParameter("send_fee").trim().equals("") ){
+					send_fee = new Integer(req.getParameter("send_fee").trim());
+				}
+				
+				
+				
+				
+				
+				
+				Integer prod_sup = null;
+				if(!req.getParameter("prod_sup").trim().equals("")){
+					prod_sup = new Integer(req.getParameter("prod_sup").trim());
+				}
+				
+				
+				
+				
 				String prod_cont = (req.getParameter("prod_cont").trim());
+				
+				
 
 				InputStream is1 = req.getPart("prod_pic1").getInputStream();
-				ByteArrayOutputStream pro1 = new ByteArrayOutputStream();
-				int pic1;
-				byte[] proimg1 = new byte[16384];
-
-				while ((pic1 = is1.read(proimg1, 0, proimg1.length)) != -1) {
-					pro1.write(proimg1, 0, pic1);
+				byte[] prod_pic1 = null;
+				if (!req.getPart("prod_pic1").getContentType().contains("image")) {
+					prod_pic1 =  (byte[])req.getSession().getAttribute("prod_pic1");
+					if(prod_pic1==null){
+						errorMsgs.add("請上傳商品照1");
+					}
+				} else {
+					ByteArrayOutputStream pro_1 = new ByteArrayOutputStream();
+					int p1;
+					byte[] idpic1 = new byte[16384];
+					while ((p1 = is1.read(idpic1)) != -1) {
+						pro_1.write(idpic1, 0, p1);
+					}
+					prod_pic1 = pro_1.toByteArray();
+					req.getSession().setAttribute("prod_pic1", prod_pic1);
 				}
-				byte[] prod_pic1 = pro1.toByteArray();
 
 				InputStream is2 = req.getPart("prod_pic2").getInputStream();
-				ByteArrayOutputStream pro2 = new ByteArrayOutputStream();
-				int pic2;
-				byte[] proimg2 = new byte[16384];
-
-				while ((pic2 = is2.read(proimg2, 0, proimg2.length)) != -1) {
-					pro2.write(proimg2, 0, pic2);
+				byte[] prod_pic2 = null;
+				if (!req.getPart("prod_pic2").getContentType().contains("image")) {
+					prod_pic2 =  (byte[])req.getSession().getAttribute("prod_pic2");
+					
+				} else {
+					ByteArrayOutputStream pro_1 = new ByteArrayOutputStream();
+					int p1;
+					byte[] idpic1 = new byte[16384];
+					while ((p1 = is2.read(idpic1)) != -1) {
+						pro_1.write(idpic1, 0, p1);
+					}
+					prod_pic2 = pro_1.toByteArray();
+					req.getSession().setAttribute("prod_pic2", prod_pic2);
 				}
-				byte[] prod_pic2 = pro2.toByteArray();
+				
+				System.out.println(123);
+				
 
 				InputStream is3 = req.getPart("prod_pic3").getInputStream();
-				ByteArrayOutputStream pro3 = new ByteArrayOutputStream();
-				int pic3;
-				byte[] proimg3 = new byte[16384];
-				while ((pic3 = is3.read(proimg3, 0, proimg3.length)) != -1) {
-					pro3.write(proimg3, 0, pic3);
+				byte[] prod_pic3 = null;
+				if (!req.getPart("prod_pic3").getContentType().contains("image")) {
+					prod_pic3 =  (byte[])req.getSession().getAttribute("prod_pic3");
+					
+				} else {
+					ByteArrayOutputStream pro_1 = new ByteArrayOutputStream();
+					int p1;
+					byte[] idpic1 = new byte[16384];
+					while ((p1 = is3.read(idpic1)) != -1) {
+						pro_1.write(idpic1, 0, p1);
+					}
+					prod_pic3 = pro_1.toByteArray();
+					req.getSession().setAttribute("prod_pic3", prod_pic3);
 				}
-				byte[] prod_pic_3 = pro3.toByteArray();
+				
+				System.out.println("789aaaa");
+				
+				
+				
+				String prod_stat=null;
+				if(req.getParameter("prod_stat")!=null){
+					 prod_stat = req.getParameter("prod_stat").trim();
+				} else{
+					errorMsgs.add("請選擇上下架狀態");
+				}
 
-				// 驗證
-				if (prod_name == null || (prod_name.trim()).length() == 0) {
-					errorMsgs.add("請輸入商品名稱");
-				}
+				System.out.println(456);
+				
 
 				if (bean_contry == null || (bean_contry.trim()).length() == 0) {
 					errorMsgs.add("請輸入生產國");
 				}
-
-
+				
+				if(prod_price == null || (prod_price.equals(""))){
+					errorMsgs.add("請輸入價錢");
+				}
+				
+				if(send_fee == null || (send_fee.equals(""))){
+					errorMsgs.add("請輸入運費");
+				}
+				
+				if(prod_sup== null || (send_fee.equals(""))){
+					errorMsgs.add("請輸入供應數量");
+				}
+				if(bean_grade==null){
+					errorMsgs.add("請選擇豆等級");
+				}
+				
+				if (prod_name == null || (prod_name.trim()).length() == 0) {
+					errorMsgs.add("請輸入商品名稱");
+				}
+				
+				if(prod_stat==null){
+					errorMsgs.add("請選擇上下架狀態");
+				}
+				
 				Double prod_wt = null;
 
 				try {
@@ -320,20 +473,13 @@ public class Prod_manag extends HttpServlet {
 					errorMsgs.add("重量請填數字");
 				}
 
+				
+				
 				if (prod_cont == null || (prod_cont.trim()).length() == 0) {
 					errorMsgs.add("請輸入商品描述");
 				}
 
-				if (prod_pic1.length == 0) {
-					errorMsgs.add("商品照1不可為空");
-				}
-
-				// Send the use back to the form, if there were errors
-				if (!errorMsgs.isEmpty()) {
-					RequestDispatcher failureView = req.getRequestDispatcher("/FrontEnd/prod_mag/addprod.jsp");
-					failureView.forward(req, res);
-					return;// 程式中斷
-				}
+				
 
 				ProdVO prodVO = new ProdVO();
 				prodVO.setProd_name(prod_name);
@@ -341,18 +487,28 @@ public class Prod_manag extends HttpServlet {
 				prodVO.setBean_grade(bean_grade);
 				prodVO.setBean_contry(bean_contry);
 				prodVO.setBean_region(bean_region);
+			
 				prodVO.setBean_farm(bean_farm);
 				prodVO.setBean_farmer(bean_farmer);
 				prodVO.setBean_el(bean_el);
 				prodVO.setProc(proc);
 				prodVO.setRoast(roast);
-				prodVO.setBean_attr_acid(bean_attr_acid);
+				if(bean_attr_acid!=null){
+					prodVO.setBean_attr_acid(bean_attr_acid);
+				}
+				
+				
+				
 				prodVO.setBean_attr_aroma(bean_attr_aroma);
 				prodVO.setBean_attr_body(bean_attr_body);
+				
+
 				prodVO.setBean_attr_after(bean_attr_after);
 				prodVO.setBean_attr_bal(bean_attr_bal);
 				prodVO.setBean_aroma(bean_aroma);
 				prodVO.setProd_price(prod_price);
+				
+			
 
 				prodVO.setProd_wt(prod_wt);
 				prodVO.setSend_fee(send_fee);
@@ -360,24 +516,37 @@ public class Prod_manag extends HttpServlet {
 
 				prodVO.setProd_cont(prod_cont);
 				prodVO.setProd_sup(prod_sup);
+				prodVO.setProd_stat(prod_stat);
 
+				
+				
+				
 				prodVO.setProd_pic1(prod_pic1);
-				prodVO.setProd_pic1(prod_pic2);
-				prodVO.setProd_pic1(prod_pic_3);
+				prodVO.setProd_pic2(prod_pic2);
+				prodVO.setProd_pic3(prod_pic3);
+				
 				// Send the use back to the form, if there were errors
+				
 				if (!errorMsgs.isEmpty()) {
+					
 					req.setAttribute("prodVO", prodVO); // 含有輸入格式錯誤的empVO物件,也存入req
 					RequestDispatcher failureView = req.getRequestDispatcher("/FrontEnd/prod_mag/addprod.jsp");
 					failureView.forward(req, res);
 					return;
 				}
-
+				
 				/*************************** 2.開始新增資料 ***************************************/
 				ProdService prodSvc = new ProdService();
 				prodVO = prodSvc.addProd(store_no, prod_name, bean_type, bean_grade, bean_contry, bean_region,
 						bean_farm, bean_farmer, bean_el, proc, roast, bean_attr_acid, bean_attr_aroma, bean_attr_body,
 						bean_attr_after, bean_attr_bal, bean_aroma, prod_price, prod_wt, send_fee, prod_sup, prod_cont,
-						prod_pic1, prod_pic2, prod_pic_3, prod_stat);
+						prod_pic1, prod_pic2, prod_pic3, prod_stat);
+				
+				
+				HttpSession session = req.getSession();
+				session.removeAttribute("prod_pic1");
+				session.removeAttribute("prod_pic2");
+				session.removeAttribute("prod_pic3");
 				/***************************
 				 * 3.新增完成,準備轉交(Send the Success view)
 				 ***********/
@@ -388,6 +557,7 @@ public class Prod_manag extends HttpServlet {
 				/*************************** 其他可能的錯誤處理 **********************************/
 			} catch (Exception e) {
 				errorMsgs.add(e.getMessage());
+				
 				RequestDispatcher failureView = req.getRequestDispatcher("/FrontEnd/prod_mag/addprod.jsp");
 				failureView.forward(req, res);
 			}
@@ -424,7 +594,7 @@ public class Prod_manag extends HttpServlet {
 				/*************************** 2.開始查詢資料 *****************************************/
 				ProdService proSvc = new ProdService();
 				ProdVO prodVO = proSvc.getOneProd(prod_no);
-				System.out.println(prodVO.getBean_type());
+				
 
 				// Send the use back to the form, if there were errors
 				if (!errorMsgs.isEmpty()) {
